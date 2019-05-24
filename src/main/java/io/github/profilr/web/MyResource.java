@@ -1,4 +1,4 @@
-package io.github.profilr;
+package io.github.profilr.web;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
