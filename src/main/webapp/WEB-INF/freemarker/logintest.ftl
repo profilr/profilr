@@ -12,7 +12,6 @@
 	<BODY>
 	
 		<script>
-			console.log("HUH");
 			function onSuccess(user) {
 				var id_token = user.getAuthResponse().id_token;
 				window.location.replace('http://nojosh.com/profilr/authorize?token=' + id_token);

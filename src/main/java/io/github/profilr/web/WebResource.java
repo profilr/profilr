@@ -78,6 +78,10 @@ public class WebResource extends javax.ws.rs.core.Application {
 		return Response.ok(view("name", name)).build();
 	}
 	
+	///////////////////////////////////////////////
+	// Below is the boilerplate code for the app //
+	///////////////////////////////////////////////
+	
 	@GET
 	@Template(name="/404")
 	@Path("{all:.*}")
