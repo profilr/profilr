@@ -13,6 +13,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.Provider;
 
+import io.github.profilr.web.webresources.PageSplash;
+
 @Provider
 @Authorized
 @Priority(Priorities.AUTHENTICATION)
@@ -29,9 +31,8 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 		
 		if (session.get("token") == null) {
 			requestContext.abortWith(Response.seeOther(
-					UriBuilder.fromMethod(WebResource.class, "login")
+					UriBuilder.fromResource(PageSplash.class)
 						.queryParam("redirect", requestContext.getUriInfo().getPath())
-						.queryParam("error", "Log in to continue.")
 						.build())
 					.build()
 			);

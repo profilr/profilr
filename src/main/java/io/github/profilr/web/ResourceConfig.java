@@ -9,7 +9,7 @@ import org.glassfish.jersey.servlet.ServletProperties;
 public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 	
 	public ResourceConfig(){
-		packages("io.github.profilr.web");
+		packages("io.github.profilr.web.webresources");
 		register(FreemarkerMvcFeature.class);
 		property(FreemarkerMvcFeature.CACHE_TEMPLATES, false);
 		property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "/WEB-INF/freemarker");

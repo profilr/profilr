@@ -3,6 +3,7 @@
 	<HEAD>
 	
 		<Title>404</Title>
+		<link rel="stylesheet" href="styles/style.css"/>
 	
 	</HEAD>
 

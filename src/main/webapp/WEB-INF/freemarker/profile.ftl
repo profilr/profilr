@@ -1,16 +1,16 @@
 <HTML>
 
 	<HEAD>
-	
-		<Title>Profilr Profile</Title>
-	
+		<Title>Profilr</Title>
+		<link rel="stylesheet" href="styles/style.css"/>
+		<link rel="stylesheet" href="styles/animate.css"/>
+		
 	</HEAD>
 
 	<BODY>
-		
-		<h1>BIIIG WIP</h1>
-		<p>Welcome, ${name}!</p>
-		
+	
+		<#include "navbar.ftl">
+	
 	</BODY>
 
 </HTML>

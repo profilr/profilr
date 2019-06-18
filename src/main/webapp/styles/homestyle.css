@@ -1,0 +1,16 @@
+#title {
+	margin: auto;
+	width: 25%;
+	margin-top:25%;
+	text-align: center;
+}
+
+#title h1 {
+	font-size: 128px;
+	margin-bottom: 0;
+}
+
+#title p {
+	margin-top: 0;
+	font-style: italic;
+}

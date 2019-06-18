@@ -11,6 +11,10 @@
 			<param-name>javax.ws.rs.Application</param-name>
 			<param-value>io.github.profilr.web.ResourceConfig</param-value>
 		</init-param>
+		<init-param>
+			<param-name>jersey.config.servlet.filter.contextPath</param-name>
+			<param-value>/</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>Jersey Web Application</filter-name>
