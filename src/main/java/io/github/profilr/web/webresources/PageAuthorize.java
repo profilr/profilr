@@ -2,7 +2,6 @@ package io.github.profilr.web.webresources;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -42,15 +41,9 @@ public class PageAuthorize extends WebResource {
 			
 			// This bit is used to set the navbar entry for the profile page to display as the user's name.
 			// The navbar should have been created by this point.... unless somebody is super weird and navigates straight to the authorize endpoint when they first access the app.
-			if (session.containsKey("navElements")) {
-				@SuppressWarnings("unchecked")
-				Map<String, NavElement> navElements = ((Map<String, NavElement>)(session.get("navElements")));
-				
-				if (navElements.containsKey(PageProfile.navElementName)) {
-					NavElement e = ((NavElement)(navElements.get(PageProfile.navElementName)));
-					e.setDisplayName(name);
-				}
-			}
+			NavElement e = super.getNavElement(PageProfile.navElementName);
+			if (e != null)
+				e.setDisplayName(name);
 			
 			// TODO: Here's where we should get a user object using the subject of the token as a primary key and put it into the session.
 			
