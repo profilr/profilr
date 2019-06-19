@@ -47,7 +47,7 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 		navElement.put("highlighted", Boolean.TRUE);
 	}
 	
-	public View getView() {
+	public View getView(Object... args) {
 		if (!session.containsKey("navElements"))
 			session.put("navElements", createNavElements());
 		
@@ -57,6 +57,9 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 		View v = new View(session);
 		v.put("navElements", session.get("navElements"));
 		v.put("urlMappings", session.get("urlMappings"));
+		
+		for (int i = 0; i+1 < args.length; i+=2)
+			v.put((String) args[i], args[i+1]);
 		
 		return v;
 	}
