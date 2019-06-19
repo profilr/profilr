@@ -8,7 +8,9 @@ import lombok.Data;
 public class Course {
 	private int id;
 	private String name;
-	private List<User> admins;
 	private List<Section> sections;
 	private List<Test> tests;
+	
+	public Course() {}
+	
 }

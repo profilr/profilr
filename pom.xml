@@ -67,6 +67,12 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-agroal</artifactId>
+			<version>5.4.3.Final</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 	<properties>
 		<jersey.version>2.28</jersey.version>
