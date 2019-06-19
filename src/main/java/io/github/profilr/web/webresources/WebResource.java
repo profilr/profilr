@@ -61,10 +61,6 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 		return v;
 	}
 	
-	public URI buildUri(Class<?> resource) {
-		return uriInfo.getBaseUriBuilder().path(resource).build();
-	}
-
 	public Map<String, NavElement> createNavElements() {
 		System.out.println("Creating nav elements...");
 		
@@ -90,17 +86,26 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 		return elements.get(element);
 	}
 	
+	public String buildUri(Class<?> resource) {
+		return uriInfo.getBaseUriBuilder().path(resource).build().toString();
+	}
+	
+	private Map<String, String> cachedURLMappings;
+	
 	public Map<String, String> createUrlMappings() {
-		System.out.println("Creating URL mappings...");
-		
-		Map<String, String> params = new HashMap<String, String>();
-		
-		params.put("splashUrl", uriInfo.getBaseUriBuilder().path(PageSplash.class).build().toString());
-		params.put("homeUrl", uriInfo.getBaseUriBuilder().path(PageHome.class).build().toString());
-		params.put("authUrl", uriInfo.getBaseUriBuilder().path(PageAuthorize.class).build().toString());
-		params.put("profileUrl", uriInfo.getBaseUriBuilder().path(PageProfile.class).build().toString());
-		
-		return params;
+		if (cachedURLMappings == null) {
+			System.out.println("Creating URL mappings...");
+			
+			Map<String, String> params = new HashMap<String, String>();
+			
+			params.put("splashUrl", buildUri(PageSplash.class));
+			params.put("homeUrl", buildUri(PageHome.class));
+			params.put("authUrl", buildUri(PageAuthorize.class));
+			params.put("profileUrl", buildUri(PageProfile.class));
+			
+			cachedURLMappings = params;
+		}
+		return cachedURLMappings;
 	}
 	
 }
