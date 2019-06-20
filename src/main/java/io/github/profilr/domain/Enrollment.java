@@ -3,8 +3,8 @@ package io.github.profilr.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -16,12 +16,10 @@ import lombok.Data;
 @Data
 @Entity(name = "Enrollment")
 @Table(name = "enrollments")
+@IdClass(_EnrollmentPrimaryKey.class)
 public class Enrollment {
 
 	@Id
-	@GeneratedValue
-	private int enrollmentID;
-	
 	@ManyToOne
 	@MapsId("user_id")
 	private User user;
@@ -29,6 +27,7 @@ public class Enrollment {
 	@Column(name = "role")
 	private int role;
 	
+	@Id
 	@OneToOne
 	@JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "COURSE_ID_FK"))
 	private Section section;
@@ -40,5 +39,5 @@ public class Enrollment {
 	public Role getTrueRole() {
 		return Role.getRole(getRole());
 	}
-	
+		
 }

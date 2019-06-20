@@ -4,17 +4,22 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "courses")
 public class Course {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int courseID;
 	
 	@Column(name = "course_name")
@@ -43,7 +48,9 @@ public class Course {
 	}
 	
 	public void enroll(User u) {
-		Enrollment e = new Enrollment(u, this);
+		Enrollment e = new Enrollment();
+		e.setUser(u);
+		e.setCourse(this);
 		if (enrollments.contains(e))
 			return;
 		
@@ -52,7 +59,9 @@ public class Course {
 	}
 	
 	public void unenroll(User u) {
-		Enrollment e = new Enrollment(u, this);
+		Enrollment e = new Enrollment();
+		e.setUser(u);
+		e.setCourse(this);
 		if (!enrollments.contains(e))
 			return;
 		
@@ -66,23 +75,10 @@ public class Course {
 	
 	public User getOwner() {
 		for (Enrollment e : enrollments) {
-			if (e.getRole().equals(Role.OWNER))
+			if (e.getTrueRole().equals(Role.OWNER))
 				return e.getUser();
 		}
 		return null;
-	}
-	
-	public boolean equals(Object other) {
-		if (other == this)
-			return true;
-		
-		if (other == null)
-			return false;
-		
-		if (other.getClass() != this.getClass())
-			return false;
-
-		return this.courseID == ((Course)(other)).getCourseID();
 	}
 	
 }
