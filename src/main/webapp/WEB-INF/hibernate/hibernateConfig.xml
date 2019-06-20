@@ -23,9 +23,6 @@
       <property name = "hibernate.connection.password">
          Pr0filr
       </property>
-      
-      <!-- List of XML mapping files -->
-      <mapping resource = "Employee.hbm.xml"/>
-      
+
    </session-factory>
 </hibernate-configuration>

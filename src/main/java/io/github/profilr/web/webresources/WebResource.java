@@ -1,6 +1,5 @@
 package io.github.profilr.web.webresources;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,6 +70,7 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 		
 		addNavElement(elements, new PageHome(session, uriInfo).createNavElement());
 		addNavElement(elements, new PageProfile(session, uriInfo).createNavElement());
+		addNavElement(elements, new PageCourses(session, uriInfo).createNavElement());
 		
 		return elements;
 	}
@@ -105,6 +105,7 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
+			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
 			
 			cachedURLMappings = params;
 		}

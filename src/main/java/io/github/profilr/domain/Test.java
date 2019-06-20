@@ -4,7 +4,11 @@ import lombok.Data;
 
 @Data
 public class Test {
-	private int id;
+	
+	// TODO Annotations
+	
+	private int testID;
+	private String name;
 	private Course course;
 	
 	public Test() {}

@@ -1,40 +1,30 @@
 package io.github.profilr.domain.db;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
 
 import io.github.profilr.domain.User;
 
 public class UserManager {
 
 	public static void addUser(User u) {
-		Session s = HibernateManager.getSessionFactory().openSession();
-		
-		Transaction tx = null;
-		 
-		try {
-			tx = s.beginTransaction();
-			s.save(u);
-			tx.commit();
-		} catch(HibernateException e) {
-			if (tx != null) tx.rollback();
-			e.printStackTrace();
-		} finally {
-			s.close();
-		}
+		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(u);
+		entityManager.getTransaction().commit();
+		entityManager.close();
 	}
 	
 	public static void removeUser(User u) {
-		/* TODO Remove user's record from the user table.
-		 * Need to also remove the references to the user in the enrollment and role tables...
-		 * Should also check if the user being removed is the owner of any sections or courses that should be removed.
-		 */
+		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
+		entityManager.remove(u);
+		entityManager.close();
 	}
 	
-	public static User getUser(int userId) {
-		// TODO Get a user from the users table
-		User u = new User();
+	public static User getUser(String userId) {
+		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
+		User u = entityManager.find(User.class, userId);
+		entityManager.close();
+		
 		return u;
 	}
 	

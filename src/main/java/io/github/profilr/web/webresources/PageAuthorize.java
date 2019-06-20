@@ -18,6 +18,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
+import io.github.profilr.domain.User;
+import io.github.profilr.domain.db.UserManager;
 import io.github.profilr.web.NavElement;
 
 @Path("/authorize")
@@ -35,6 +37,7 @@ public class PageAuthorize extends WebResource {
 		try {
 			GoogleIdToken token = verifier.verify(tokenString);
 			String name = (String)token.getPayload().get("given_name");
+			String userID = (String)token.getPayload().getSubject();
 			
 			session.put("token", token);
 			session.put("username", name);
@@ -45,7 +48,27 @@ public class PageAuthorize extends WebResource {
 			if (e != null)
 				e.setDisplayName(name);
 			
-			// TODO: Here's where we should get a user object using the subject of the token as a primary key and put it into the session.
+			try {
+			
+				User u = UserManager.getUser(userID);
+				
+				if (u == null) {
+					u = new User();
+					u.setUserID(userID);
+					u.setEmailAddress(token.getPayload().getEmail());
+					u.setGivenName(name);
+					u.setFamilyName((String)token.getPayload().get("family_name"));
+					
+					UserManager.addUser(u);
+				}
+				
+				session.put("user", u);
+				
+			} catch (Exception ex) {
+				System.err.println("Error retrieving user " + userID + " from db.");
+				System.err.println(ex);
+				ex.printStackTrace();
+			}
 			
 			return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageHome.class).build()).build();
 		} catch (GeneralSecurityException e) {
