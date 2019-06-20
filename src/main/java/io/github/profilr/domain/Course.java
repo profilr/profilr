@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import io.github.profilr.domain.db.Role;
 import lombok.Data;
 
 @Data

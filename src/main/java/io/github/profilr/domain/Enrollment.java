@@ -11,8 +11,6 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import io.github.profilr.domain.db.Role;
-
 @Entity(name = "Enrollment")
 @Table(name = "enrollments")
 public class Enrollment {

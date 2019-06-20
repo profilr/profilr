@@ -1,4 +1,4 @@
-package io.github.profilr.domain.db;
+package io.github.profilr.domain;
 
 public abstract class Role {
 	

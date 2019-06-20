@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import io.github.profilr.domain.db.Role;
 import lombok.Data;
 
 @Data
