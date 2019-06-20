@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-
 @Entity( name = "user" )
 @Table( name = "USERS" )
 public class User {
@@ -36,40 +35,17 @@ public class User {
 			cascade = CascadeType.ALL,
 			orphanRemoval = true
 	)
+	
 	private List<Enrollment> enrollments = new ArrayList<Enrollment>();
 	
-	public User() {}
-	
-	public User setUserID(String id) {
-		this.userID = id;
-		return this;
-	}
-	
-	public User setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-		return this;
-	}
-	
-	public User setGivenName(String givenName) {
-		this.givenName = givenName;
-		return this;
-	}
-	
-	public User setFamilyName(String familyName) {
-		this.familyName = familyName;
-		return this;
-	}
-	
-	public String getUserID() {
-		return this.userID;
-	}
-	
 	public String getFullName() {
-		return this.familyName + this.givenName;
+		return getFamilyName() + getGivenName();
 	}
 	
 	public void enroll(Course c) {
-		Enrollment e = new Enrollment(this, c);
+		Enrollment e = new Enrollment();
+		e.setUser(this);
+		e.setCourse(c);
 		if (enrollments.contains(e))
 			return;
 		
@@ -78,7 +54,9 @@ public class User {
 	}
 	
 	public void unenroll(Course c) {
-		Enrollment e = new Enrollment(this, c);
+		Enrollment e = new Enrollment();
+		e.setUser(this);
+		e.setCourse(c);
 		if (!enrollments.contains(e))
 			return;
 		
@@ -98,22 +76,10 @@ public class User {
 	public Role getRole(Course c) {
 		for (Enrollment e : enrollments)
 			if (e.getCourse().equals(c))
-				return e.getRole();
+				return e.getTrueRole();
 		
 		return null;
 	}
 	
-	public boolean equals(Object other) {
-		if (other == this)
-			return true;
-		
-		if (other == null)
-			return false;
-		
-		if (other.getClass() != this.getClass())
-			return false;
-
-		return this.userID == ((User)(other)).getUserID();
-	}
 	
 }

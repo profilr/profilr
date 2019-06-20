@@ -11,6 +11,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity(name = "Enrollment")
 @Table(name = "enrollments")
 public class Enrollment {
@@ -34,33 +37,8 @@ public class Enrollment {
 	@MapsId("course_id")
 	private Course course;
 	
-	public Enrollment() {}
-	
-	public Enrollment(User u, Course c) {
-		this.user = u;
-		this.course = c;
-	}
-	
-	public User getUser() {
-		return this.user;
-	}
-	
-	public Role getRole() {
-		return Role.getRole(role);
-	}
-	
-	public Course getCourse() {
-		return this.course;
-	}
-	
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		
-		if (o == null || getClass() != o.getClass())
-			return false;
-		
-		Enrollment that = (Enrollment) o;
-		return this.user.equals(that.user) && this.course.equals(that.course);
+	public Role getTrueRole() {
+		return Role.getRole(getRole());
 	}
 	
 }
