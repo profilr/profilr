@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "sections")
+@Table(name = "Sections")
 public class Section {
 	
 	@Id
@@ -22,11 +22,11 @@ public class Section {
 	@Column(name = "section_id", nullable = false, unique = true)
 	private int sectionID;
 	
-	@Column(name = "section_name")
+	@Column(name = "name")
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "COURSE_ID_FK"))
+	@JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "Course_ID_FK"))
 	private Course course;
 	
 }

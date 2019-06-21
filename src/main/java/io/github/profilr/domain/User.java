@@ -14,28 +14,23 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table( name = "users" )
+@Table( name = "Users" )
 public class User {
 	
 	@Id
 	@Column(name = "user_id", nullable = false, unique = true)
 	private String userID;
 	
-	@Column(name = "email_address")
+	@Column(name = "email_address", nullable = false, unique = true)
 	private String emailAddress;
 	
-	@Column(name = "given_name")
+	@Column(name = "given_name", nullable = false)
 	private String givenName;
 	
-	@Column(name = "family_name")
+	@Column(name = "family_name", nullable = false)
 	private String familyName;
 	
-	@OneToMany (
-			mappedBy = "user",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-	)
-	
+	@OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Enrollment> enrollments = new ArrayList<Enrollment>();
 	
 	public String getFullName() {

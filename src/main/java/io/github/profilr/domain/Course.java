@@ -15,11 +15,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "courses")
+@Table(name = "Courses")
 public class Course {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "course_id", nullable = false, unique = true)
 	private int courseID;
 	
 	@Column(name = "course_name")
