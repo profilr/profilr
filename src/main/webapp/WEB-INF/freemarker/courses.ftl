@@ -15,8 +15,19 @@
 		<div class="bodyContainer">
 			<h1 id="title">Courses</h1>
 			
-			<#if courses??>
-				<#list courses as course>
+			<#if administratedCourses??>
+				<p>Courses you administrate</p>
+				<#list administratedCourses as course>
+					<div class="course">
+						<p class="courseName">${course.name}</p>
+						<p class="courseOwner">${course.owner}</p>
+					</div>
+				</#list>
+			</#if>
+			
+			<#if enrolledCourses??>
+				<p>Courses you're enrolled in</p>
+				<#list enrolledCourses as course>
 					<div class="course">
 						<p class="courseName">${course.name}</p>
 						<p class="courseOwner">${course.owner}</p>

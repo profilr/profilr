@@ -1,13 +1,14 @@
 package io.github.profilr.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*; 
+import java.util.stream.*; 
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -30,50 +31,22 @@ public class User {
 	@Column(name = "family_name", nullable = false)
 	private String familyName;
 	
-	@OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Enrollment> enrollments = new ArrayList<Enrollment>();
+	@ManyToMany (mappedBy = "admins")
+	private List<Course> administratedCourses = new ArrayList<Course>();
+
+	@ManyToMany (mappedBy = "users")
+	private List<Section> sectionsJoined = new ArrayList<Section>();
 	
 	public String getFullName() {
 		return getFamilyName() + getGivenName();
 	}
 	
-	public void enroll(Course c) {
-		Enrollment e = new Enrollment();
-		e.setUser(this);
-		e.setCourse(c);
-		if (enrollments.contains(e))
-			return;
-		
-		enrollments.add(e);
-		c.enroll(this);
-	}
-	
-	public void unenroll(Course c) {
-		Enrollment e = new Enrollment();
-		e.setUser(this);
-		e.setCourse(c);
-		if (!enrollments.contains(e))
-			return;
-		
-		enrollments.remove(e);
-		c.unenroll(this);
+	public List<Course> getAdministratedCourses() {
+		return this.administratedCourses;
 	}
 	
 	public List<Course> getEnrolledCourses() {
-		List<Course> courses = new ArrayList<Course>();
-		
-		for (Enrollment e : enrollments)
-			courses.add(e.getCourse());
-			
-		return courses;
-	}
-	
-	public Role getRole(Course c) {
-		for (Enrollment e : enrollments)
-			if (e.getCourse().equals(c))
-				return e.getTrueRole();
-		
-		return null;
+		return (sectionsJoined.stream().map(s -> s.getCourse()).collect(Collectors.toList()));
 	}
 	
 	

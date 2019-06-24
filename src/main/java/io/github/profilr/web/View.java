@@ -8,6 +8,8 @@ public class View extends HashMap<String, Object> implements Map<String, Object>
 	private static final long serialVersionUID = 1L;
 	private Session session;
 	
+	public View() {}
+	
 	public View(Session session) { 
 		this.session = session;
 	}

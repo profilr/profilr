@@ -1,8 +1,7 @@
 package io.github.profilr.web.webresources;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -46,15 +45,24 @@ public class PageCourses extends WebResource {
 	public View getView() {
 		View v = super.getView();
 		
-		if (session.containsKey("user")) {
-			List<Course> courses = ((User)(session.get("user"))).getEnrolledCourses();
-			for (Course c : courses) {
-				Map<String, String> courseView = new HashMap<String, String>();
-				courseView.put("name", c.getName());
-				courseView.put("owner", c.getOwner().getFullName());
-			}
-		}
+		List<View> enrolledCourses = new ArrayList<View>();
+		if (session.containsKey("user"))
+			((User)(session.get("user"))).getEnrolledCourses().stream().map(c -> buildCourseView(c)).forEach(c -> enrolledCourses.add(c));
+
+		List<View> administratedCourses = new ArrayList<View>();
+		if (session.containsKey("user"))
+			((User)(session.get("user"))).getAdministratedCourses().stream().map(c -> buildCourseView(c)).forEach(c -> administratedCourses.add(c));
 		
+		v.put("enrolledCourses", enrolledCourses);
+		v.put("administratedCourses", administratedCourses);
+		
+		return v;
+	}
+	
+	public View buildCourseView(Course c) {
+		View v = new View();
+		
+		v.put("name", c.getName());
 		
 		return v;
 	}

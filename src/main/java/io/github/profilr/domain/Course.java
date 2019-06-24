@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -35,12 +38,11 @@ public class Course {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Topic> topics;
 	
-	@OneToMany (
-			mappedBy = "course",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-	)
-	private List<Enrollment> enrollments;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable (name = "Course_Admins",
+				joinColumns = {@JoinColumn(name = "user_id")},
+				inverseJoinColumns = {@JoinColumn(name = "course_id")})
+	private List<User> admins;
 	
 	public Course() {}
 
@@ -48,38 +50,8 @@ public class Course {
 		return this.courseID;
 	}
 	
-	public void enroll(User u) {
-		Enrollment e = new Enrollment();
-		e.setUser(u);
-		e.setCourse(this);
-		if (enrollments.contains(e))
-			return;
-		
-		enrollments.add(e);
-		u.enroll(this);
-	}
-	
-	public void unenroll(User u) {
-		Enrollment e = new Enrollment();
-		e.setUser(u);
-		e.setCourse(this);
-		if (!enrollments.contains(e))
-			return;
-		
-		enrollments.remove(e);
-		u.unenroll(this);
-	}
-	
 	public String getName() {
 		return this.name;
-	}
-	
-	public User getOwner() {
-		for (Enrollment e : enrollments) {
-			if (e.getTrueRole().equals(Role.OWNER))
-				return e.getUser();
-		}
-		return null;
 	}
 	
 }
