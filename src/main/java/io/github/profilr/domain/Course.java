@@ -39,7 +39,7 @@ public class Course {
 	private List<Topic> topics;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable (name = "Course_Admins",
+	@JoinTable (name = "CourseAdministrators",
 				joinColumns = {@JoinColumn(name = "user_id")},
 				inverseJoinColumns = {@JoinColumn(name = "course_id")})
 	private List<User> admins;

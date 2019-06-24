@@ -29,23 +29,23 @@ CREATE TABLE `Sections` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `Enrollments` (
-	`user_id` varchar(30) not null,
-	`section_id` int(10) not null,
-	PRIMARY KEY (`user_id`, `section_id`),
-	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
-		ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (`section_id`) REFERENCES `Sections` (`section_id`)
-		ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE `Administrators` (
+CREATE TABLE `CourseAdministrators` (
 	`user_id` varchar(30) not null,
 	`course_id` int(10) not null,
 	PRIMARY KEY (`user_id`, `course_id`),
 	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
+		ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `SectionUsers` (
+	`user_id` varchar(30) not null,
+	`section_id` int(10) not null,
+	PRIMARY KEY (`user_id`, `course_id`),
+	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
+		ON DELETE CASCADE  ON UPDATE CASCADE,	
+	FOREIGN KEY (`section_id`) REFERENCES `Sections` (`section_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
