@@ -42,7 +42,7 @@ CREATE TABLE `CourseAdministrators` (
 CREATE TABLE `SectionUsers` (
 	`user_id` varchar(30) not null,
 	`section_id` int(10) not null,
-	PRIMARY KEY (`user_id`, `course_id`),
+	PRIMARY KEY (`user_id`, `section_id`),
 	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
 		ON DELETE CASCADE  ON UPDATE CASCADE,	
 	FOREIGN KEY (`section_id`) REFERENCES `Sections` (`section_id`)
