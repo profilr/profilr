@@ -2,7 +2,6 @@ package io.github.profilr.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "questions")
+@Table(name = "Questions")
 public class Question {
 	
 
@@ -24,7 +23,7 @@ public class Question {
 	private int questionID;
 	
 	@ManyToOne
-	@JoinColumn(name = "test_id", foreignKey = @ForeignKey(name = "TEST_ID_FK"))
+	@JoinColumn(name = "test_id")
 	private Test parentTest;
 	
 
@@ -32,7 +31,7 @@ public class Question {
 	private String label; // for better identification like #1 or #3b
 	
 	@ManyToOne
-	@JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "TOPIC_ID_FK"))
+	@JoinColumn(name = "topic_id")
 	private Topic topic;
 	
 }

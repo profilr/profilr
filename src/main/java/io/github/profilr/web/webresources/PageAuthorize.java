@@ -18,8 +18,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
+import io.github.profilr.db.UserManager;
 import io.github.profilr.domain.User;
-import io.github.profilr.domain.db.UserManager;
 import io.github.profilr.web.NavElement;
 
 @Path("/authorize")

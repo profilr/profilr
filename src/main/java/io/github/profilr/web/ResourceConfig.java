@@ -5,7 +5,7 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 import org.glassfish.jersey.servlet.ServletProperties;
 
-import io.github.profilr.domain.db.HibernateManager;
+import io.github.profilr.db.HibernateManager;
 
 @ApplicationPath("")
 public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
