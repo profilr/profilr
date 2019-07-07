@@ -8,12 +8,13 @@ import io.github.profilr.domain.User;
 public class DAOTEST {
 
 	public static void main(String[] args) {
-		testInsert();
-//		testUpdate();
-//		testRemove();
+//		testInsertUser();
+//		testUpdateUser();
+//		testRemoveUser();
+		testViewCourses();
 	}
 
-	private static void testInsert() {
+	private static void testInsertUser() {
 		User user = new User();
 		user.setUserID("00000");
 		user.setGivenName("Arjun");
@@ -32,7 +33,7 @@ public class DAOTEST {
 		System.out.println("Completed");
 	}
 
-	private static void testUpdate() {
+	private static void testUpdateUser() {
 		HibernateManager.createSessionFactory();
 
 		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
@@ -45,12 +46,26 @@ public class DAOTEST {
 		System.out.println("Completed");
 	}
 	
-	private static void testRemove() {
+	private static void testRemoveUser() {
 		HibernateManager.createSessionFactory();
 		
 		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
 		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(User.class, "00000"));
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		
+		System.out.println("Completed");
+	}
+	
+	private static void testViewCourses() {
+		HibernateManager.createSessionFactory();
+		
+		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		User user = entityManager.find(User.class, "00000");
+		System.out.println(user.getAdministratedCourses());
 		entityManager.getTransaction().commit();
 		entityManager.close();
 
