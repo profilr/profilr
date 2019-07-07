@@ -1,7 +1,11 @@
 package io.github.profilr.db;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Question;
@@ -16,15 +20,23 @@ public class HibernateManager {
 	
 	public static void createSessionFactory() {
 		try {
-			Configuration conf = new Configuration().addAnnotatedClass(User.class)
-													.addAnnotatedClass(Course.class)
-													.addAnnotatedClass(Section.class)
-													.addAnnotatedClass(Test.class)
-													.addAnnotatedClass(Topic.class)
-													.addAnnotatedClass(Question.class);			
 			
-			sessionFactory = conf.configure().buildSessionFactory();
+			StandardServiceRegistry ssr = new StandardServiceRegistryBuilder()
+					.configure("hibernate.cfg.xml")
+					.build();
 			
+			Metadata metadata = new MetadataSources(ssr)
+					.addAnnotatedClass(User.class)
+					.addAnnotatedClass(Course.class)
+					.addAnnotatedClass(Section.class)
+					.addAnnotatedClass(Test.class)
+					.addAnnotatedClass(Topic.class)
+					.addAnnotatedClass(Question.class)
+					.getMetadataBuilder()
+					.applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
+					.build();
+			
+			sessionFactory = metadata.getSessionFactoryBuilder().build();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 		}

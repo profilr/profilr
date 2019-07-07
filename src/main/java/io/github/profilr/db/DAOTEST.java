@@ -6,6 +6,7 @@ public class DAOTEST {
 
 	public static void main(String[] args) {
 		User user = new User();
+		user.setUserID("00000");
 		user.setGivenName("Arjun");
 		user.setFamilyName("Vikram");
 		user.setEmailAddress("arjvik@gmail.com");
