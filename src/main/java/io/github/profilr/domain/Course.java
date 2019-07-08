@@ -26,31 +26,35 @@ public class Course {
 	@Column(name = "course_id", nullable = false, unique = true)
 	private int courseID;
 	
-	@Column(name = "course_name")
+	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Section> sections;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Test> tests;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Topic> topics;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable (name = "CourseAdministrators",
-				joinColumns = {@JoinColumn(name = "user_id")},
-				inverseJoinColumns = {@JoinColumn(name = "course_id")})
+				joinColumns = {@JoinColumn(name = "course_id")},
+				inverseJoinColumns = {@JoinColumn(name = "user_id")})
 	private List<User> admins;
 	
 	public Course() {}
-
+	
 	public int getCourseID() {
 		return this.courseID;
 	}
 	
 	public String getName() {
+		return this.name;
+	}
+	
+	public String toString() {
 		return this.name;
 	}
 	

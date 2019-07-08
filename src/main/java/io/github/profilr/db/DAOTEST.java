@@ -1,7 +1,10 @@
 package io.github.profilr.db;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 
+import io.github.profilr.domain.Course;
 import io.github.profilr.domain.User;
 
 @SuppressWarnings("unused")
@@ -10,8 +13,10 @@ public class DAOTEST {
 	public static void main(String[] args) {
 //		testInsertUser();
 //		testUpdateUser();
-//		testRemoveUser();
-		testViewCourses();
+		testRemoveUser();
+//		testViewCourses();
+//		testCreateCourse();
+//		testRemoveCourse();
 	}
 
 	private static void testInsertUser() {
@@ -73,4 +78,41 @@ public class DAOTEST {
 		System.out.println("Completed");
 	}
 
+	private static void testCreateCourse() {
+		HibernateManager.createSessionFactory();
+		
+		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		Course c = new Course();
+		c.setName("TestCourse");
+		c.setAdmins(new ArrayList<User>());
+		c.getAdmins().add(entityManager.find(User.class, "00000"));
+		
+		entityManager.persist(c);
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		System.out.println("Completed");
+	}
+	
+	private static void testRemoveCourse() {
+		HibernateManager.createSessionFactory();
+		
+		EntityManager entityManager = HibernateManager.getSessionFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		User u = entityManager.find(User.class, "00000");
+		
+		Course c = u.getAdministratedCourses().get(0);
+		
+		entityManager.remove(c);
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		System.out.println("Completed");
+	}
+	
 }

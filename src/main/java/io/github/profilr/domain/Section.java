@@ -37,8 +37,8 @@ public class Section {
 	
 	@ManyToMany (cascade = CascadeType.ALL)
 	@JoinTable (name = "SectionUsers",
-				joinColumns = { @JoinColumn (name = "user_id") },
-				inverseJoinColumns = {@JoinColumn (name = "section_id")})
+				joinColumns = { @JoinColumn (name = "section_id") },
+				inverseJoinColumns = {@JoinColumn (name = "user_id")})
 	private List<User> users = new ArrayList<User>();
 	
 	public Course getCourse() {

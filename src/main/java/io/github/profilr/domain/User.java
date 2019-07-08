@@ -1,6 +1,8 @@
 package io.github.profilr.domain;
 
-import java.util.*; 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,14 +33,18 @@ public class User {
 	@Column(name = "course_admin_approved", nullable = false)
 	private boolean courseAdminApproved;
 	
-	@ManyToMany (mappedBy = "admins")
+	@ManyToMany(mappedBy = "admins")
 	private List<Course> administratedCourses = new ArrayList<Course>();
 
-	@ManyToMany (mappedBy = "users")
+	@ManyToMany(mappedBy = "users")
 	private List<Section> sectionsJoined = new ArrayList<Section>();
 	
 	public String getFullName() {
 		return getFamilyName() + getGivenName();
+	}
+	
+	public List<Course> getEnrolledCourses() {
+		return sectionsJoined.stream().map(s -> s.getCourse()).collect(Collectors.toList());
 	}
 	
 }
