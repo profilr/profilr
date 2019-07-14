@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.Provider;
 
-import io.github.profilr.web.webresources.PageSplash;
+import io.github.profilr.web.resources.PageSplash;
 
 @Provider
 @Authorized

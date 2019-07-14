@@ -1,37 +1,30 @@
-package io.github.profilr.web.webresources;
+package io.github.profilr.web;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-import io.github.profilr.web.NavElement;
-import io.github.profilr.web.Session;
-import io.github.profilr.web.View;
+import io.github.profilr.web.resources.PageAuthorize;
+import io.github.profilr.web.resources.PageCourses;
+import io.github.profilr.web.resources.PageCreateCourse;
+import io.github.profilr.web.resources.PageHome;
+import io.github.profilr.web.resources.PageProfile;
+import io.github.profilr.web.resources.PageSplash;
 
-public abstract class WebResource extends javax.ws.rs.core.Application {
+public abstract class WebResource {
 	
-	@Context
 	protected ServletContext context;
-	
 	protected Session session;
 	protected UriInfo uriInfo;
 	
-	public WebResource(Session session, @Context UriInfo uriInfo) {
+	protected WebResource(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
 		this.session = session;
 		this.uriInfo = uriInfo;
+		this.context = context;
 	}
-	
-	public WebResource(@Context HttpServletRequest request, @Context UriInfo uriInfo) {
-		this(new Session(request), uriInfo);
-	}
-	
-	public Session getSession() { return this.session; }
-	
-	public UriInfo getUriInfo() { return this.uriInfo; }
 	
 	public void highlightNavElement(NavElement navElement) {
 		if (navElement == null)
@@ -68,9 +61,9 @@ public abstract class WebResource extends javax.ws.rs.core.Application {
 		
 		Map<String, NavElement> elements = new HashMap<String, NavElement>();
 		
-		addNavElement(elements, new PageHome(session, uriInfo).createNavElement());
-		addNavElement(elements, new PageProfile(session, uriInfo).createNavElement());
-		addNavElement(elements, new PageCourses(session, uriInfo).createNavElement());
+		addNavElement(elements, new PageHome(session, uriInfo, context).createNavElement());
+		addNavElement(elements, new PageProfile(session, uriInfo, context).createNavElement());
+		addNavElement(elements, new PageCourses(session, uriInfo, context).createNavElement());
 		
 		return elements;
 	}

@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +18,8 @@ public class Session implements Map<String, Object> {
 	public Session(HttpSession session) {
 		this.session = session;
 	}
-	
+
+	@Inject
 	public Session(HttpServletRequest request) {
 		this(request.getSession());
 	}

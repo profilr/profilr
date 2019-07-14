@@ -1,6 +1,6 @@
-package io.github.profilr.web.webresources;
+package io.github.profilr.web.resources;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -11,16 +11,13 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.web.Session;
+import io.github.profilr.web.WebResource;
 
 @Path("createcourse")
 public class PageCreateCourse extends WebResource {
 	
-	public PageCreateCourse(Session session, @Context UriInfo uriInfo) {
-		super(session, uriInfo);
-	}
-	
-	public PageCreateCourse(@Context HttpServletRequest request, @Context UriInfo uriInfo) {
-		super(request, uriInfo);
+	public PageCreateCourse(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
+		super(session, uriInfo, context);
 	}
 	
 	@GET

@@ -1,8 +1,8 @@
-package io.github.profilr.web.webresources;
+package io.github.profilr.web.resources;
 
 import java.io.File;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -12,11 +12,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import io.github.profilr.web.Session;
+import io.github.profilr.web.WebResource;
+
 @Path("/styles")
 public class StyleSheets extends WebResource {
 
-	public StyleSheets(@Context HttpServletRequest request, @Context UriInfo uriInfo) {
-		super(request, uriInfo);
+	public StyleSheets(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
+		super(session, uriInfo, context);
 	}
 
 	@GET

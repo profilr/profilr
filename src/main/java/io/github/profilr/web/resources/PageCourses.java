@@ -1,9 +1,9 @@
-package io.github.profilr.web.webresources;
+package io.github.profilr.web.resources;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -17,18 +17,15 @@ import io.github.profilr.domain.User;
 import io.github.profilr.web.NavElement;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.View;
+import io.github.profilr.web.WebResource;
 
 @Path("courses")
 public class PageCourses extends WebResource {
 	
 	public static final String navElementName = "courses";
 	
-	public PageCourses(Session session, @Context UriInfo uriInfo) {
-		super(session, uriInfo);
-	}
-	
-	public PageCourses(@Context HttpServletRequest request, @Context UriInfo uriInfo) {
-		super(request, uriInfo);
+	public PageCourses(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
+		super(session, uriInfo, context);
 	}
 	
 	@GET

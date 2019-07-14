@@ -5,15 +5,11 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 import org.glassfish.jersey.servlet.ServletProperties;
 
-import io.github.profilr.db.HibernateManager;
-
 @ApplicationPath("")
 public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 	
 	public ResourceConfig(){
-		HibernateManager.createSessionFactory();
-		
-		packages("io.github.profilr.web.webresources");
+		packages("io.github.profilr.web");
 		register(FreemarkerMvcFeature.class);
 		property(FreemarkerMvcFeature.CACHE_TEMPLATES, false);
 		property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "/WEB-INF/freemarker");
