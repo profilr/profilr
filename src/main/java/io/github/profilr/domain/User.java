@@ -41,7 +41,7 @@ public class User {
 	private Set<Section> sectionsJoined = new HashSet<Section>();
 	
 	public String getFullName() {
-		return getFamilyName() + getGivenName();
+		return getFamilyName() + ", " + getGivenName();
 	}
 	
 	public Set<Course> getEnrolledCourses() {

@@ -87,7 +87,7 @@ public class DAOTEST {
 	private static void testRemoveCourse() {
 		User u = entityManager.find(User.class, "00000");
 		
-		Course c = u.getAdministratedCourses().get(0);
+		Course c = u.getAdministratedCourses().iterator().next();
 		
 		entityManager.remove(c);
 	}
