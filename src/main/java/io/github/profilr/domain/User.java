@@ -1,11 +1,12 @@
 package io.github.profilr.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -33,18 +34,23 @@ public class User {
 	@Column(name = "course_admin_approved", nullable = false)
 	private boolean courseAdminApproved;
 	
-	@ManyToMany(mappedBy = "admins")
-	private List<Course> administratedCourses = new ArrayList<Course>();
+	@ManyToMany(mappedBy = "admins", fetch = FetchType.EAGER)
+	private Set<Course> administratedCourses = new HashSet<Course>();
 
-	@ManyToMany(mappedBy = "users")
-	private List<Section> sectionsJoined = new ArrayList<Section>();
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	private Set<Section> sectionsJoined = new HashSet<Section>();
 	
 	public String getFullName() {
 		return getFamilyName() + getGivenName();
 	}
 	
-	public List<Course> getEnrolledCourses() {
-		return sectionsJoined.stream().map(s -> s.getCourse()).collect(Collectors.toList());
+	public Set<Course> getEnrolledCourses() {
+		return getSectionsJoined().stream().map(s -> s.getCourse()).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("User: %s (%s)", getFullName(), getUserID());
 	}
 	
 }
