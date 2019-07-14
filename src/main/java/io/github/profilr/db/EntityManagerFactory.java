@@ -20,7 +20,6 @@ public class EntityManagerFactory implements DisposableSupplier<EntityManager> {
 	@Override
 	public void dispose(EntityManager e) {
 		if(e.isOpen()) {
-			System.err.println("Commiting transaction");
 			EntityTransaction t = e.getTransaction();
 			if (t.isActive())
 				t.commit();
