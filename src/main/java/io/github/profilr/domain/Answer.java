@@ -13,23 +13,26 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "TestQuestions")
-public class Question {
+@Table(name = "TestQuestionAnswers")
+public class Answer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "question_id", nullable = false, unique = true)
-	private int questionID;
+	@Column(name = "answer_id", nullable = false, unique = true)
+	private int answerID;
 	
 	@ManyToOne
-	@JoinColumn(name = "test_id")
-	private Test test;
+	@JoinColumn(name = "question_id")
+	private Test question;
 
-	@Column(name = "label")
-	private String label; // for better identification like #1 or #3b
+	@Column(name = "correct")
+	private boolean correct;
+	
+	@Column(name = "reason")
+	private String reason;
 
-	@Column(name = "text")
-	private String text;
+	@Column(name = "notes")
+	private String notes; // for better identification like #1 or #3b
 	
 	@ManyToOne
 	@JoinColumn(name = "topic_id")

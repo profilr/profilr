@@ -72,6 +72,7 @@ CREATE TABLE `TestQuestions` (
 	`test_id` int(10) not null,
 	`topic_id` int(10) not null,
 	`label` varchar(30) not null,
+	`text` varchar(50) not null,
 	`weight` int(10) not null,
 	PRIMARY KEY (`question_id`),
 	FOREIGN KEY (`test_id`) REFERENCES `Tests` (`test_id`)
@@ -86,6 +87,7 @@ CREATE TABLE `TestQuestionAnswers` (
 	`user_id` varchar(30) not null,
 	`correct` boolean not null,
 	`reason` varchar(50) not null,
+	`notes` varchar(500) not null,
 	PRIMARY KEY (`answer_id`),
 	FOREIGN KEY (`question_id`) REFERENCES `TestQuestions` (`question_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,
