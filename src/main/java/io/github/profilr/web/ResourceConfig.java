@@ -14,7 +14,7 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 		property(FreemarkerMvcFeature.CACHE_TEMPLATES, false);
 		property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "/WEB-INF/freemarker");
 		property(FreemarkerMvcFeature.TEMPLATE_OBJECT_FACTORY, FreemarkerConfigurationFactory.class.getName());
-		property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "(/(image|js|css|resources|debug)/?.*)|(/.*.(html|jsp))|(/favicon.ico)|(/robots.txt)");
+		property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "(/(styles)/.*)|(/favicon\\.ico)|(/robots\\.txt)");
 	}
 	
 }
