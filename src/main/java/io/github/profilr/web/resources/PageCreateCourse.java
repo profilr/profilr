@@ -1,6 +1,5 @@
 package io.github.profilr.web.resources;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,8 +15,8 @@ import io.github.profilr.web.WebResource;
 @Path("createcourse")
 public class PageCreateCourse extends WebResource {
 	
-	public PageCreateCourse(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
-		super(session, uriInfo, context);
+	public PageCreateCourse(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
 	}
 	
 	@GET

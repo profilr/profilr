@@ -1,6 +1,5 @@
 package io.github.profilr.web.resources;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -15,8 +14,8 @@ import io.github.profilr.web.WebResource;
 @Path("/")
 public class PageSplash extends WebResource {
 
-	public PageSplash(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
-		super(session, uriInfo, context);
+	public PageSplash(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
 	}
 
 	@GET

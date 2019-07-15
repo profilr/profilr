@@ -5,7 +5,6 @@ import java.security.GeneralSecurityException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -31,8 +30,8 @@ public class PageAuthorize extends WebResource {
 	@Inject
 	EntityManager entityManager;
 
-	public PageAuthorize(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
-		super(session, uriInfo, context);
+	public PageAuthorize(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
 	}
 	
 	@GET

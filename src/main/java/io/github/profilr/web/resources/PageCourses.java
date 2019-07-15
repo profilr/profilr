@@ -1,9 +1,8 @@
 package io.github.profilr.web.resources;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -24,23 +23,14 @@ public class PageCourses extends WebResource {
 	
 	public static final String navElementName = "courses";
 	
-	public PageCourses(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
-		super(session, uriInfo, context);
+	public PageCourses(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
 	}
 	
 	@GET
 	@Template(name="/courses")
 	public Response get() {
 		super.highlightNavElement(super.getNavElement(navElementName));
-		return Response.ok(getView()).build();
-	}
-	
-	public NavElement createNavElement() {
-		return new NavElement(navElementName, "Courses", super.buildUri(this.getClass()).toString());
-	}
-	
-	public View getView() {
-		View v = super.getView();
 		
 		List<View> enrolledCourses = new ArrayList<View>();
 		if (session.containsKey("user"))
@@ -50,10 +40,11 @@ public class PageCourses extends WebResource {
 		if (session.containsKey("user"))
 			((User)(session.get("user"))).getAdministratedCourses().stream().map(c -> buildCourseView(c)).forEach(c -> administratedCourses.add(c));
 		
-		v.put("enrolledCourses", enrolledCourses);
-		v.put("administratedCourses", administratedCourses);
-		
-		return v;
+		return Response.ok(getView("enrolledCourses", enrolledCourses, "administratedCourses", administratedCourses)).build();
+	}
+	
+	public NavElement createNavElement() {
+		return new NavElement(navElementName, "Courses", super.buildUri(this.getClass()).toString());
 	}
 	
 	public View buildCourseView(Course c) {

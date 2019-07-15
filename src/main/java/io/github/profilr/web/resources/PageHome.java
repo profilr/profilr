@@ -1,6 +1,5 @@
 package io.github.profilr.web.resources;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -18,8 +17,8 @@ public class PageHome extends WebResource {
 	
 	public static final String navElementName = "home";
 	
-	public PageHome(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
-		super(session, uriInfo, context);
+	public PageHome(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
 	}
 	
 	@GET

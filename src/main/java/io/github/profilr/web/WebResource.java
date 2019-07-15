@@ -3,7 +3,6 @@ package io.github.profilr.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -16,14 +15,12 @@ import io.github.profilr.web.resources.PageSplash;
 
 public abstract class WebResource {
 	
-	protected ServletContext context;
 	protected Session session;
 	protected UriInfo uriInfo;
 	
-	protected WebResource(Session session, @Context UriInfo uriInfo, @Context ServletContext context) {
+	protected WebResource(Session session, @Context UriInfo uriInfo) {
 		this.session = session;
 		this.uriInfo = uriInfo;
-		this.context = context;
 	}
 	
 	public void highlightNavElement(NavElement navElement) {
@@ -61,9 +58,9 @@ public abstract class WebResource {
 		
 		Map<String, NavElement> elements = new HashMap<String, NavElement>();
 		
-		addNavElement(elements, new PageHome(session, uriInfo, context).createNavElement());
-		addNavElement(elements, new PageProfile(session, uriInfo, context).createNavElement());
-		addNavElement(elements, new PageCourses(session, uriInfo, context).createNavElement());
+		addNavElement(elements, new PageHome(session, uriInfo).createNavElement());
+		addNavElement(elements, new PageProfile(session, uriInfo).createNavElement());
+		addNavElement(elements, new PageCourses(session, uriInfo).createNavElement());
 		
 		return elements;
 	}
