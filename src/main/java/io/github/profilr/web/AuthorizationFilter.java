@@ -10,13 +10,11 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.Provider;
 
 import io.github.profilr.web.resources.PageSplash;
 
 @Provider
-@Authorized
 @Priority(Priorities.AUTHENTICATION)
 public class AuthorizationFilter implements ContainerRequestFilter {
 
@@ -27,14 +25,18 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 	HttpServletRequest request;
 
 	public void filter(ContainerRequestContext requestContext) throws IOException {
+
+		if (info.getResourceClass().isAnnotationPresent(PreAuth.class) || info.getResourceMethod().isAnnotationPresent(PreAuth.class))
+			return;
+
 		Session session = new Session(request.getSession());
 		
 		if (session.get("token") == null) {
 			requestContext.abortWith(Response.seeOther(
-					UriBuilder.fromResource(PageSplash.class)
-						.queryParam("redirect", requestContext.getUriInfo().getPath())
-						.build())
-					.build()
+								requestContext.getUriInfo().getBaseUriBuilder()
+											  .path(PageSplash.class)
+											  .build())
+						  .build()
 			);
 		}
 	}

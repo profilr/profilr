@@ -21,10 +21,12 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import io.github.profilr.domain.User;
 import io.github.profilr.web.NavElement;
+import io.github.profilr.web.PreAuth;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
 @Path("/authorize")
+@PreAuth
 public class PageAuthorize extends WebResource {
 	
 	@Inject
