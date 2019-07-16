@@ -95,6 +95,7 @@ public abstract class WebResource {
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
+			params.put("coursesUrl", buildUri(PageCourses.class));
 			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
 			
 			cachedURLMappings = params;

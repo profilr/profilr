@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
+import org.json.JSONObject;
 
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
@@ -26,9 +27,12 @@ public class PageCreateCourse extends WebResource {
 	}
 	
 	@POST
-	public Response create() {
-		// TODO Need to read the course name from the post data and create a course...
-		return Response.ok(getView()).build();
+	public Response create(String data) {
+		JSONObject json = new JSONObject(data);
+		
+		
+		
+		return Response.ok().build();
 	}
 	
 }
