@@ -2,7 +2,6 @@ package io.github.profilr.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +25,7 @@ public class Topic {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "COURSE_ID_FK"))
+	@JoinColumn(name = "course_id")
 	private Course course;
 	
 }
