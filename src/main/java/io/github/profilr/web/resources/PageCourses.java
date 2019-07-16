@@ -34,7 +34,7 @@ public class PageCourses extends WebResource {
 
 		Set<Course> administratedCourses = ((User) session.get("user")).getAdministratedCourses();
 		
-		return Response.ok(getView("enrolledCourses", enrolledCourses, "administratedCourses", administratedCourses)).build();
+		return Response.ok(getView("enrolledCourses", enrolledCourses, "administratedCourses", administratedCourses, "canCreate", ((User)session.get("user")).isCourseAdminApproved())).build();
 	}
 	
 	public NavElement createNavElement() {

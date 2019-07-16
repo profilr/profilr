@@ -36,7 +36,9 @@
 			<p>Enroll button doesn't go anywhere yet...</p>
 			<div class="centered"><div class="row">
 				<a><div class="column button blue">Enroll in a New Course</div></a>
-				<a href="${urlMappings.createCourseUrl}"><div class="column button blue">Create a New Course</div></a>
+				<#if canCreate?? && canCreate>
+					<a href="${urlMappings.createCourseUrl}"><div class="column button blue">Create a New Course</div></a>
+				</#if>
 			</div></div>
 		</div>
 	
