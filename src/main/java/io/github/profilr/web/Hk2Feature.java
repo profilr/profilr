@@ -19,8 +19,11 @@ public class Hk2Feature implements Feature {
 		context.register(new AbstractBinder() {
 			@Override
 			protected void configure() {
-				bind(Session.class).to(Session.class).in(RequestScoped.class);
-				bindFactory(EntityManagerFactory.class, Singleton.class).to(EntityManager.class).in(RequestScoped.class);
+				bind(Session.class)
+						.to(Session.class).in(RequestScoped.class);
+				bindFactory(EntityManagerFactory.class, Singleton.class)
+						.proxy(true).proxyForSameScope(false)
+						.to(EntityManager.class).in(RequestScoped.class);
 			}
 		});
 		return true;

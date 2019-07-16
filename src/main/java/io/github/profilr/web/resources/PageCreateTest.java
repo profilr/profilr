@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,11 +33,11 @@ public class PageCreateTest extends WebResource {
 	}
 	
 	@POST
+	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Test test, @PathParam("courseid") int course_id) {
-		System.out.println(test);
-		// TODO Need to read the test
-		return Response.ok(getView()).build();
+	public String create(Test test, @PathParam("courseid") int course_id) {
+		//TODO Actually create the test
+		return test.toString();
 	}
 	
 }
