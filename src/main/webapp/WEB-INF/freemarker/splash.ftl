@@ -1,7 +1,7 @@
-<HTML>
+<html>
 
-	<HEAD>
-		<Title>Profilr</Title>
+	<head>
+		<title>Profilr</title>
 		<link rel="stylesheet" href="styles/style.css"/>
 		<link rel="stylesheet" href="styles/animate.css"/>
 		<link rel="stylesheet" href="styles/homestyle.css"/>
@@ -11,13 +11,18 @@
 		<script>
 			function onSuccess(user) {
 				var id_token = user.getAuthResponse().id_token;
-				window.location.replace('${urlMappings.authUrl}' + '?token=' + id_token);
+				setTimeout(function() {
+					document.body.classList.add('slideOutUp');
+					setTimeout(function() {
+						window.location.replace('${urlMappings.authUrl}' + '?token=' + id_token);
+					}, 1000);
+				}, 1000);
 			}
 		</script>
 		
-	</HEAD>
+	</head>
 
-	<BODY class="animated bounceInUp">
+	<body class="animated slideInUp">
 		
 		<div id="title">
 			<H1>Profilr</H1>
@@ -25,6 +30,6 @@
 			<div class="g-signin2" data-onsuccess="onSuccess"></div>
 		</div>
 	
-	</BODY>
+	</body>
 
-</HTML>
+</html>
