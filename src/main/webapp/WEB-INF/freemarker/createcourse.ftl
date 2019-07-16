@@ -4,6 +4,7 @@
 		<Title>Profilr</Title>
 		<link rel="stylesheet" href="styles/style.css"/>
 		<link rel="stylesheet" href="styles/animate.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		
 	</HEAD>
 
@@ -17,8 +18,16 @@
 			<p>Course Name</p>
 			<input id="courseName" type="text"/>
 			
-			<div class="button blue" style="float: right;"><p>Create</p></div>
+			<div id="submit" class="button blue" style="float: right;"><p>Create</p></div>
 		</div>
+	
+		<script>
+			$("#submit").on("click", function() {
+				$.post("${urlMappings.createCourseUrl}", JSON.stringify({"course" : {"name": $("#courseName").val()}}), function(data) {
+					window.location.replace("${urlMappings.coursesUrl}");
+				});
+			});
+		</script>
 	
 	</BODY>
 
