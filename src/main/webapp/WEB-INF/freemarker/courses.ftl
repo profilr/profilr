@@ -17,22 +17,20 @@
 			
 			<#if administratedCourses??>
 				<p>Courses you administrate</p>
-				<#list administratedCourses as course>
-					<div class="course">
-						<p class="courseName">${course.name}</p>
-						<p class="courseOwner">${course.owner}</p>
-					</div>
-				</#list>
+				<table>
+					<#list administratedCourses as course>
+						<tr><th><p class="courseName">${course.name}</p></th></tr>
+					</#list>
+				</table>
 			</#if>
 			
 			<#if enrolledCourses??>
 				<p>Courses you're enrolled in</p>
-				<#list enrolledCourses as course>
-					<div class="course">
-						<p class="courseName">${course.name}</p>
-						<p class="courseOwner">${course.owner}</p>
-					</div>
-				</#list>
+				<table>
+					<#list enrolledCourses as course>
+						<tr><th><p class="courseName">${course.name}</p></th></tr>
+					</#list>
+				</table>
 			</#if>
 			
 			<p>Enroll button doesn't go anywhere yet...</p>
