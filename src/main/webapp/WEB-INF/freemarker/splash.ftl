@@ -27,6 +27,7 @@
 		<div id="title">
 			<H1>Profilr</H1>
 			<p>The online test-profiling service</p>
+			<br/><br/>
 			<div class="g-signin2" data-onsuccess="onSuccess"></div>
 		</div>
 	
