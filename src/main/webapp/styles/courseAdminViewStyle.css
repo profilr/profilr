@@ -17,7 +17,7 @@
 }
 
 .tabBar td.highlighted {
-	border-bottom: 5px solid #d55;
+	border-bottom: 5px solid #0080ff;
 }
 
 .tabBar td:hover {
