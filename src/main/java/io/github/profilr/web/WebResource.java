@@ -9,6 +9,7 @@ import javax.ws.rs.core.UriInfo;
 import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourses;
 import io.github.profilr.web.resources.PageCreateCourse;
+import io.github.profilr.web.resources.PageDeleteCourse;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageSplash;
@@ -91,12 +92,14 @@ public abstract class WebResource {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			
+			params.put("stylesheets", uriInfo.getBaseUriBuilder().path("/styles/").toString());
 			params.put("splashUrl", buildUri(PageSplash.class));
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
 			params.put("coursesUrl", buildUri(PageCourses.class));
 			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
+			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
 			
 			cachedURLMappings = params;
 		}

@@ -112,23 +112,35 @@ p {
 	color: #FFF;
 }
 
+.button.blue:hover {
+	box-shadow: 0 4px #0069ee;
+	background-color: #0069ee;
+	color: #FFF;
+}
+
 /* ======================================
    ============== Lists =================
    ====================================== */
 
-.listb {
+.list {
 	color: #000;
 	width: 80%;
 	margin: auto;
 	text-align: left;
+	border-collapse: collapse;
+	border-radius: 5px;
 }
 
-.listb th, td {
+.list th, td {
 	border-bottom: 1px solid #ddd;
 	padding: 8px;
 }
 
-.listb tr:hover {
+.list tr {
+	background-color: #fafafa;
+}
+
+.list tr:hover {
 	background-color:#f2f2f2;
 }
 

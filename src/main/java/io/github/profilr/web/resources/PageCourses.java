@@ -2,6 +2,8 @@ package io.github.profilr.web.resources;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -19,6 +21,9 @@ import io.github.profilr.web.WebResource;
 @Path("courses")
 public class PageCourses extends WebResource {
 	
+	@Inject
+	EntityManager entityManager;
+	
 	public static final String navElementName = "courses";
 	
 	public PageCourses(Session session, @Context UriInfo uriInfo) {
@@ -29,6 +34,8 @@ public class PageCourses extends WebResource {
 	@Template(name="/courses")
 	public Response get() {
 		super.highlightNavElement(super.getNavElement(navElementName));
+		
+		entityManager.refresh(session.get("user"));
 		
 		Set<Course> enrolledCourses = ((User) session.get("user")).getEnrolledCourses();
 

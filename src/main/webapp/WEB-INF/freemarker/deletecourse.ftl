@@ -13,21 +13,24 @@
 		
 		<div class="bodyContainer">
 		
-			<h1 id="title">Create a Course</h1>
-			<p>Course Name</p>
-			<input id="courseName" type="text"/>
+			<h1 id="title">Delete Course?</h1>
+			<p>Are you sure you want to delete ${courseName}?</p>
 			
-			<div id="submit" class="button blue" style="float: right;"><p>Create</p></div>
+			<div class="centered"><div class="row">
+				<div id="yes" class="button blue" style="float: left;"><p>I am sure.</p></div>
+				<p style="float: left;"> </p>
+				<div id="no" class="button blue" style="float: left;"><p>Nevermind.</p></div>
+			</div></div>
 		</div>
 	
 		<script>
-			$("#submit").on("click", function() {
+			$("#yes").on("click", function() {
 				$.ajax({
-	                url: '${urlMappings.createCourseUrl}',
+	                url: '${urlMappings.deleteCourseUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseName=" + $("#courseName").val(),
+	                data: "courseId=${courseId}",
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${urlMappings.coursesUrl}");
 	                },
@@ -36,6 +39,8 @@
 	                }
 	            });
 			});
+			
+			$("#no").on("click", function() { window.location.replace("${urlMappings.coursesUrl}"); });
 		</script>
 	
 	</BODY>

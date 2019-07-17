@@ -2,10 +2,7 @@
 
 	<HEAD>
 		<Title>Profilr</Title>
-		<link rel="stylesheet" href="styles/style.css"/>
-		<link rel="stylesheet" href="styles/animate.css"/>
-		<link rel="stylesheet" href="styles/coursesstyles.css">
-		
+		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 	</HEAD>
 
 	<BODY>
@@ -17,20 +14,24 @@
 			
 			<#if administratedCourses??>
 				<p>Courses you administrate</p>
-				<table>
+				<br/><br/>
+				<table class="list">
 					<#list administratedCourses as course>
-						<tr><th><p class="courseName">${course.name}</p></th></tr>
+						<tr><td><p>${course.name}</p></td><td style="text-align: right;"><a href="${urlMappings.deleteCourseUrl}/course/${course.courseID}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></a></td></tr>
 					</#list>
 				</table>
+				<br/><br/>
 			</#if>
 			
 			<#if enrolledCourses??>
 				<p>Courses you're enrolled in</p>
-				<table>
+				<br/><br/>
+				<table class="list">
 					<#list enrolledCourses as course>
-						<tr><th><p class="courseName">${course.name}</p></th></tr>
+						<tr><th><p>${course.name}</p></th></tr>
 					</#list>
 				</table>
+				<br/><br/>
 			</#if>
 			
 			<p>Enroll button doesn't go anywhere yet...</p>
