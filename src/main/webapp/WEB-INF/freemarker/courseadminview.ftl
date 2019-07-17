@@ -29,9 +29,9 @@
 			
 			<table class="tabBar">
 				<tr>
-					<td class="tabLink highlighted" onclick="openTab(event, 'sectionsTab')" style="width: 33%;"><p>Sections</p></td>
-					<td class="tabLink" onclick="openTab(event, 'topicsTab')" style="width: 33%;"><p>Topics</p></td>
-					<td class="tabLink" onclick="openTab(event, 'testsTab')" style="width: 33%;"><p>Test</p></td>
+					<td class="tabLink highlighted" onclick="openTab(event, 'sectionsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
+					<td class="tabLink" onclick="openTab(event, 'topicsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
+					<td class="tabLink" onclick="openTab(event, 'testsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
 				</tr>
 			</table>
 			

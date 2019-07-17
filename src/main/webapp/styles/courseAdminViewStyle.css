@@ -8,12 +8,21 @@
 }
 
 .tabBar tr {
-	background-color: #fafafa;
+	background-color: #fff;
 }
 
 .tabBar td {
 	border-bottom: 5px solid #ddd;
-	padding: 8px;
+}
+
+.tabBar td p {
+	padding: 10px;
+	margin: 0;
+}
+
+.tabBar td a {
+	text-decoration: none;
+	color: #000;
 }
 
 .tabBar td.highlighted {
