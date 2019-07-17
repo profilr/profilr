@@ -124,25 +124,34 @@ p {
 
 .list {
 	color: #000;
-	width: 80%;
+	width: 95%;
 	margin: auto;
 	text-align: left;
 	border-collapse: collapse;
-	border-radius: 5px;
+	padding: 0px;
 }
 
-.list th, td {
-	border-bottom: 1px solid #ddd;
+.list td { border-bottom: 1px solid #ddd; }
+
+.list th { border-bottom: 5px solid #0080ff; }
+
+.list th,td p {
 	padding: 8px;
+	margin: 0px;
 }
 
-.list tr {
-	background-color: #fafafa;
+.list td a {
+	text-decoration: none;
+	color: #000;
 }
 
-.list tr:hover {
-	background-color:#f2f2f2;
-}
+.list tr { background-color: #fff; }
+
+.list tr.header { background-color: #fff; color: #000; }
+
+.list tr:hover { background-color:#f2f2f2; }
+
+.list tr.header:hover { background-color: #fff; }
 
 /* ======================================
    =========== Arrangement ==============
