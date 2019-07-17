@@ -38,7 +38,7 @@ public class Course {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Topic> topics;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable (name = "CourseAdministrators",
 				joinColumns = {@JoinColumn(name = "course_id")},
 				inverseJoinColumns = {@JoinColumn(name = "user_id")})

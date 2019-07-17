@@ -34,7 +34,7 @@ public class Section {
 	@JoinColumn(name = "course_id")
 	private Course course;
 	
-	@ManyToMany (cascade = CascadeType.ALL)
+	@ManyToMany (cascade = CascadeType.MERGE)
 	@JoinTable (name = "SectionUsers",
 				joinColumns = { @JoinColumn (name = "section_id") },
 				inverseJoinColumns = {@JoinColumn (name = "user_id")})
