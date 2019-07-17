@@ -1,0 +1,29 @@
+.tabBar {
+	color: #000;
+	width: 100%;
+	margin: auto;
+	text-align: left;
+	border-collapse: collapse;
+	border-radius: 5px;
+}
+
+.tabBar tr {
+	background-color: #fafafa;
+}
+
+.tabBar td {
+	border-bottom: 5px solid #ddd;
+	padding: 8px;
+}
+
+.tabBar td.highlighted {
+	border-bottom: 5px solid #d55;
+}
+
+.tabBar td:hover {
+	background-color:#f2f2f2;
+}
+
+.tab {
+	display: none;
+}

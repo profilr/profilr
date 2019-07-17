@@ -7,6 +7,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import io.github.profilr.web.resources.PageAuthorize;
+import io.github.profilr.web.resources.PageCourseAdminView;
 import io.github.profilr.web.resources.PageCourses;
 import io.github.profilr.web.resources.PageCreateCourse;
 import io.github.profilr.web.resources.PageDeleteCourse;
@@ -100,6 +101,7 @@ public abstract class WebResource {
 			params.put("coursesUrl", buildUri(PageCourses.class));
 			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
 			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
+			params.put("courseAdminViewUrl", buildUri(PageCourseAdminView.class));
 			
 			cachedURLMappings = params;
 		}
