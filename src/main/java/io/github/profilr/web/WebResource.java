@@ -85,6 +85,10 @@ public abstract class WebResource {
 		return uriInfo.getBaseUriBuilder().path(resource).build().toString();
 	}
 	
+	public String buildUri(String path) {
+		return uriInfo.getBaseUriBuilder().path(path).build().toString();
+	}
+	
 	private Map<String, String> cachedURLMappings;
 	
 	public Map<String, String> createUrlMappings() {
@@ -93,7 +97,7 @@ public abstract class WebResource {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			
-			params.put("stylesheets", uriInfo.getBaseUriBuilder().path("/styles/").toString());
+			params.put("stylesheets", buildUri("/styles"));
 			params.put("splashUrl", buildUri(PageSplash.class));
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
