@@ -66,9 +66,8 @@
 						<#list course.sections as section>
 							<tr><th><p>${section.name}</p></th></tr>
 						</#list>
-						<tr id="createSectionPane" class="popup"><td><input type="text" id="sectionName" placeholder="Section Name..."/></td><td style="text-align: right;"><p>Done</p></td></tr>
+						<tr><td><input type="text" id="sectionName" placeholder="Section Name..."/></td><td style="text-align: right;"><p>Done</p></td></tr>
 					</table>
-					<div class="button blue" onclick="showCreateSectionPane()"><p>Create Section</p></div>
 				</#if>
 			</div>
 			
