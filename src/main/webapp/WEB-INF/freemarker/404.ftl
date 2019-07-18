@@ -1,10 +1,9 @@
 <HTML>
 
 	<HEAD>
-	
 		<Title>404</Title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
-	
+		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 	</HEAD>
 
 	<BODY>

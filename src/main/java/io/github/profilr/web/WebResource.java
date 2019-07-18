@@ -8,7 +8,6 @@ import javax.ws.rs.core.UriInfo;
 
 import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseAdminView;
-import io.github.profilr.web.resources.PageCourses;
 import io.github.profilr.web.resources.PageCreateCourse;
 import io.github.profilr.web.resources.PageDeleteCourse;
 import io.github.profilr.web.resources.PageHome;
@@ -62,7 +61,7 @@ public abstract class WebResource {
 		
 		addNavElement(elements, new PageHome(session, uriInfo).createNavElement());
 		addNavElement(elements, new PageProfile(session, uriInfo).createNavElement());
-		addNavElement(elements, new PageCourses(session, uriInfo).createNavElement());
+		addNavElement(elements, new PageHome(session, uriInfo).createNavElement());
 		
 		return elements;
 	}
@@ -98,14 +97,16 @@ public abstract class WebResource {
 			Map<String, String> params = new HashMap<String, String>();
 			
 			params.put("stylesheets", buildUri("/styles"));
+			params.put("images", buildUri("/images"));
+			params.put("favicon", buildUri("/favicon.ico"));
 			params.put("splashUrl", buildUri(PageSplash.class));
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
-			params.put("coursesUrl", buildUri(PageCourses.class));
 			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
 			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
 			params.put("courseAdminViewUrl", buildUri(PageCourseAdminView.class));
+			
 			
 			cachedURLMappings = params;
 		}

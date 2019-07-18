@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/animate.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/homestyle.css"/>
+		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 		
 		<meta name="google-signin-client_id" content="128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>

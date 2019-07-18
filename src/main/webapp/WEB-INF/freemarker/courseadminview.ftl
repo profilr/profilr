@@ -4,23 +4,24 @@
 		<Title>Profilr</Title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/courseAdminViewStyle.css"/>
-		<script>
-		
-		function openTab(event, tabName) {
-			var i, x, tablinks;
-			x = document.getElementsByClassName("tab");
-			for (i = 0; i < x.length; i++) { x[i].style.display = "none"; }
-			tablinks = document.getElementsByClassName("tabLink");
-			for (i = 0; i < x.length; i++) { tablinks[i].className = tablinks[i].className.replace(" highlighted", "");	}
-			document.getElementById(tabName).style.display = "block";
-			event.currentTarget.className += " highlighted";
-		}
-		
-		</script>
-		
+		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 	</HEAD>
 
 	<BODY>
+	
+		<script>
+			
+			function openTab(event, tabName) {
+				var i, x, tablinks;
+				x = document.getElementsByClassName("tab");
+				for (i = 0; i < x.length; i++) { x[i].style.display = "none"; }
+				tablinks = document.getElementsByClassName("tabLink");
+				for (i = 0; i < x.length; i++) { tablinks[i].className = tablinks[i].className.replace(" highlighted", "");	}
+				document.getElementById(tabName).style.display = "block";
+				event.currentTarget.className += " highlighted";
+			}
+			
+		</script>
 		
 		<#include "navbar.ftl">
 		
