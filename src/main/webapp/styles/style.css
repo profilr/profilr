@@ -52,11 +52,15 @@ p {
 	background-color: #111;
 }
 
+#navbar ul li.inert:hover {
+	background-color: #333;
+}
+
 #navbar ul li.active:hover {
 	background-color: #0060DF;
 }
 
-#navbar ul li p {
+#navbar ul li p, #navbar ul li img, #navbar ul li a {
 	margin: 0;
 	display: block;
 	color: white;
@@ -65,12 +69,9 @@ p {
 	text-decoration: none;
 }
 
-#navbar ul li a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 16px 16px 16px 16px;
-	text-decoration: none;
+#navbar ul li img {
+	padding: 4px;
+	height: 42px;
 }
 
 /* ======================================
@@ -90,6 +91,10 @@ p {
 	overflow: hidden;
 }
 
+.tab {
+	width: 100%;
+}
+
 /* ======================================
    ============= Buttons ================
    ====================================== */
@@ -104,6 +109,7 @@ p {
 	border-radius: 5px;
 	text-align: center;
 	box-shadow: 0 4px #EEE;
+	cursor: pointer;
 }
 
 .button.blue {
@@ -170,4 +176,18 @@ p {
 .centered {
 	text-align: center;
 	margin: auto;
+}
+
+
+/* ======================================
+   ============= Popups =================
+   ====================================== */
+
+.popup {
+	display: none;
+	position: relative;
+}
+
+.popup.show {
+	display: inline-block;
 }

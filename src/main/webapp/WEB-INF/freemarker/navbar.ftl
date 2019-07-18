@@ -1,6 +1,6 @@
 <div id="navbar">
 	<ul>
-		<li><p><img src="${urlMappings.images}/logo.png" width="2px" /></p></li>
+		<li class="inert"><img src="${urlMappings.images}/logo.png" height="50px" /></li>
 		<#list navElements as elementName, element>
 			<li class="
 				<#if element.align?? && element.align == "right">right</#if>
