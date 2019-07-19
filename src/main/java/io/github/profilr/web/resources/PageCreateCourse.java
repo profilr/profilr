@@ -22,7 +22,7 @@ import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
-@Path("createcourse")
+@Path("create-course")
 public class PageCreateCourse extends WebResource {
 
 	@Inject

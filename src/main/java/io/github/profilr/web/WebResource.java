@@ -1,5 +1,6 @@
 package io.github.profilr.web;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,11 @@ import javax.ws.rs.core.UriInfo;
 import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseAdminView;
 import io.github.profilr.web.resources.PageCreateCourse;
+import io.github.profilr.web.resources.PageCreateSection;
+import io.github.profilr.web.resources.PageCreateTopic;
 import io.github.profilr.web.resources.PageDeleteCourse;
+import io.github.profilr.web.resources.PageDeleteSection;
+import io.github.profilr.web.resources.PageDeleteTopic;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageSplash;
@@ -96,6 +101,8 @@ public abstract class WebResource {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			
+			URI courseUrl = uriInfo.getBaseUriBuilder().path("/courses").build();
+			
 			params.put("stylesheets", buildUri("/styles"));
 			params.put("images", buildUri("/images"));
 			params.put("favicon", buildUri("/favicon.ico"));
@@ -103,10 +110,17 @@ public abstract class WebResource {
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
-			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
-			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
+			
 			params.put("courseAdminViewUrl", buildUri(PageCourseAdminView.class));
 			
+			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
+			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
+			
+			params.put("createSectionUrl", buildUri(PageCreateSection.class));
+			params.put("deleteSectionUrl", buildUri(PageDeleteSection.class));
+			
+			params.put("createTopicUrl", buildUri(PageCreateTopic.class));
+			params.put("deleteTopicUrl", buildUri(PageDeleteTopic.class));
 			
 			cachedURLMappings = params;
 		}

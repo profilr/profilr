@@ -92,6 +92,7 @@ p {
 }
 
 .tab {
+	display: none;
 	width: 100%;
 }
 
@@ -176,18 +177,4 @@ p {
 .centered {
 	text-align: center;
 	margin: auto;
-}
-
-
-/* ======================================
-   ============= Popups =================
-   ====================================== */
-
-.popup {
-	display: none;
-	position: relative;
-}
-
-.popup.show {
-	display: inline-block;
 }

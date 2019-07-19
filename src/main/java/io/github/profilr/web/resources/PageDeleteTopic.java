@@ -16,35 +16,36 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import io.github.profilr.domain.Course;
+import io.github.profilr.domain.Topic;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
-@Path("delete-course")
-public class PageDeleteCourse extends WebResource {
+@Path("delete-topic")
+public class PageDeleteTopic extends WebResource {
 	
 	@Inject
 	EntityManager entityManager;
 	
-	public PageDeleteCourse(Session session, @Context UriInfo uriInfo) {
+	public PageDeleteTopic(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
 	}
 	
 	@GET
-	@Path("{courseId}")
-	@Template(name="/deletecourse")
-	public Response getDelete(@PathParam("courseId") int courseId) {
-		Course c = entityManager.find(Course.class, courseId);
-		return Response.ok(getView("courseName", c.getName(), "courseId", c.getCourseID())).build();
+	@Path("{topicId}")
+	@Template(name="/deletetopic")
+	public Response getDelete(@PathParam("topicId") int topicId) {
+		Topic t = entityManager.find(Topic.class, topicId);
+		
+		return Response.ok(getView("topicId", t.getTopicID(), "topicName", t.getName(), "courseId", t.getCourse().getCourseID())).build();
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("courseId") int courseId) {
-		Course c = entityManager.find(Course.class, courseId);
+	public Response create(@FormParam("topicId") int topic) {
+		Topic t = entityManager.find(Topic.class, topic);
 		
-		entityManager.remove(c);
+		entityManager.remove(t);
 		
 		return Response.ok().build();
 	}

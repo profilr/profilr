@@ -5,47 +5,60 @@
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/courseAdminViewStyle.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 		<script>
+			
+			function openTab(tabName) {
+				var i, x, tablinks;
+				x = document.getElementsByClassName("tab");
+				for (i = 0; i < x.length; i++) { x[i].style.display = "none"; }
+				
+				tablinks = document.getElementsByClassName("tabLink");
+				for (i = 0; i < x.length; i++) { tablinks[i].classList.remove("highlighted");	}
+				
+				document.getElementById(tabName).style.display = "block";
+				document.getElementById(tabName + "Link").classList.add("highlighted");
+			}
+			
+			function createSection() {
+				$.ajax({
+	                url: '${urlMappings.createSectionUrl}',
+	                dataType: 'text',
+	                type: 'post',
+	                contentType: 'application/x-www-form-urlencoded',
+	                data: "sectionName=" + $("#sectionName").val() + "&courseId=" + ${course.courseId},
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
 		
-		function openTab(event, tabName) {
-			var i, x, tablinks;
-			x = document.getElementsByClassName("tab");
-			for (i = 0; i < x.length; i++) { x[i].style.display = "none"; }
-			tablinks = document.getElementsByClassName("tabLink");
-			for (i = 0; i < x.length; i++) { tablinks[i].className = tablinks[i].className.replace(" highlighted", "");	}
-			document.getElementById(tabName).style.display = "block";
-			event.currentTarget.className += " highlighted";
-		}
-
-		function showCreateSectionPane() {
-			document.getElementById("createSectionPane").classList.add("show");
-		}
-
-		function hideCreateSectionPane() {
-			document.getElementById("createSectionPane").classList.remove("show");
-		}
-		
+			function createTopic() {
+				$.ajax({
+	                url: '${urlMappings.createTopicUrl}',
+	                dataType: 'text',
+	                type: 'post',
+	                contentType: 'application/x-www-form-urlencoded',
+	                data: "topicName=" + $("#topicName").val() + "&courseId=" + ${course.courseId},
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
+			
 		</script>
 		
 	</HEAD>
 
 	<BODY>
-	
-		<script>
 			
-			function openTab(event, tabName) {
-				var i, x, tablinks;
-				x = document.getElementsByClassName("tab");
-				for (i = 0; i < x.length; i++) { x[i].style.display = "none"; }
-				tablinks = document.getElementsByClassName("tabLink");
-				for (i = 0; i < x.length; i++) { tablinks[i].className = tablinks[i].className.replace(" highlighted", "");	}
-				document.getElementById(tabName).style.display = "block";
-				event.currentTarget.className += " highlighted";
-			}
-			
-		</script>
-		
 		<#include "navbar.ftl">
 		
 		<div class="bodyContainer">
@@ -53,9 +66,9 @@
 			
 			<table class="tabBar">
 				<tr>
-					<td class="tabLink highlighted" onclick="openTab(event, 'sectionsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
-					<td class="tabLink" onclick="openTab(event, 'topicsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
-					<td class="tabLink" onclick="openTab(event, 'testsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
+					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
+					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
+					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
 				</tr>
 			</table>
 			
@@ -64,9 +77,13 @@
 					<h2>Course Sections</h2>
 					<table class="list">
 						<#list course.sections as section>
-							<tr><th><p>${section.name}</p></th></tr>
+							<tr>
+								<td><p>${section.name}</p></td>
+								<td style="text-align: right;"><a href="${urlMappings.deleteSectionUrl}/${section.sectionId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+							</tr>
 						</#list>
-						<tr><td><input type="text" id="sectionName" placeholder="Section Name..."/></td><td style="text-align: right;"><p>Done</p></td></tr>
+						<tr><td><input type="text" id="sectionName" placeholder="Section Name..."/></td><td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
+						
 					</table>
 				</#if>
 			</div>
@@ -75,9 +92,13 @@
 				<#if course.topics??>
 					<h2>Course Topics</h2>
 					<table class="list">
-						<#list course.tests as test>
-							<tr><th><p>${test.name}</p></th><th><p>${test.id}</p></th></tr>
+						<#list course.topics as topic>
+							<tr>
+								<td><p>${topic.name}</p></td>
+								<td style="text-align: right;"><a href="${urlMappings.deleteTopicUrl}/${topic.topicId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+							</tr>
 						</#list>
+						<tr><td><input type="text" id="topicName" placeholder="Topic Name..."/></td><td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/></td></tr>
 					</table>
 				</#if>
 			</div>
@@ -87,11 +108,18 @@
 					<h2>Course Assignments</h2>
 					<table class="list">
 						<#list course.tests as test>
-							<tr><th><p>${test.name}</p></th><th><p>${test.id}</p></th></tr>
+							<tr><td><p>${test.name}</p></td><td><p>${test.testId}</p></td></tr>
 						</#list>
 					</table>
 				</#if>
 			</div>
+			
+			<script>
+				if (window.location.hash) {
+					console.log(window.location.hash);
+					openTab(window.location.hash.substring(1));
+				}
+			</script>
 			
 		</div>
 	

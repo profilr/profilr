@@ -20,14 +20,11 @@ import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
-import io.github.profilr.web.NavElement;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
-@Path("course")
+@Path("courses")
 public class PageCourseAdminView extends WebResource {
-	
-	public static final String navElementName = "courses";
 	
 	@Inject
 	private EntityManager entityManager;
@@ -40,8 +37,6 @@ public class PageCourseAdminView extends WebResource {
 	@Path("{course}")
 	@Template(name="/courseadminview")
 	public Response get(@PathParam("course") int courseId) {
-		super.highlightNavElement(super.getNavElement(navElementName));
-		
 		Course c = entityManager.find(Course.class, courseId);
 		
 		return Response.ok(getView("course", getCourseView(c))).build();
@@ -75,7 +70,7 @@ public class PageCourseAdminView extends WebResource {
 		
 		// TODO Eventually we'll probly add some info about the performance of each section in the course.
 		
-		section.put("id", s.getSectionID());
+		section.put("sectionId", s.getSectionID());
 		section.put("name", s.getName());
 		
 		return section;
@@ -86,7 +81,7 @@ public class PageCourseAdminView extends WebResource {
 		
 		// TODO Eventually we'll probly add some info about the overall performance on each test.
 		
-		test.put("id", t.getTestID());
+		test.put("testId", t.getTestID());
 		test.put("name", t.getName());
 		
 		return test;
@@ -97,14 +92,10 @@ public class PageCourseAdminView extends WebResource {
 		
 		// TODO Eventually we'll probly add some info about the overall performance on each topic.
 		
-		topic.put("id", t.getTopicID());
+		topic.put("topicId", t.getTopicID());
 		topic.put("name", t.getName());
 		
 		return topic;
-	}
-	
-	public NavElement createNavElement() {
-		return new NavElement(navElementName, "Courses", super.buildUri(this.getClass()).toString());
 	}
 	
 }

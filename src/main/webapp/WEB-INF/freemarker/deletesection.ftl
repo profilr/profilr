@@ -13,8 +13,8 @@
 		
 		<div class="bodyContainer">
 		
-			<h1 id="title">Delete Course?</h1>
-			<p>Are you sure you want to delete ${courseName}?</p>
+			<h1 id="title">Delete Section?</h1>
+			<p>Are you sure you want to delete ${sectionName}?</p>
 			
 			<div class="centered"><div class="row">
 				<div id="yes" class="button blue" style="float: left;"><p>I am sure.</p></div>
@@ -26,13 +26,13 @@
 		<script>
 			$("#yes").on("click", function() {
 				$.ajax({
-	                url: '${urlMappings.deleteCourseUrl}',
+	                url: '${urlMappings.deleteSectionUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseId=${courseId}",
+	                data: "sectionId=${sectionId}",
 	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.homeUrl}");
+	                	window.location.replace("${urlMappings.courseAdminViewUrl}/${courseId}");
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
 	                    console.log( errorThrown );
@@ -40,7 +40,7 @@
 	            });
 			});
 			
-			$("#no").on("click", function() { window.location.replace("${urlMappings.homeUrl}"); });
+			$("#no").on("click", function() { window.location.replace("${urlMappings.courseAdminViewUrl}/${courseId}"); });
 		</script>
 	
 	</BODY>

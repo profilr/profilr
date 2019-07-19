@@ -4,47 +4,42 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.glassfish.jersey.server.mvc.Template;
-
 import io.github.profilr.domain.Course;
+import io.github.profilr.domain.Section;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
-@Path("delete-course")
-public class PageDeleteCourse extends WebResource {
+@Path("create-section")
+public class PageCreateSection extends WebResource {
 	
 	@Inject
 	EntityManager entityManager;
 	
-	public PageDeleteCourse(Session session, @Context UriInfo uriInfo) {
+	public PageCreateSection(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
-	}
-	
-	@GET
-	@Path("{courseId}")
-	@Template(name="/deletecourse")
-	public Response getDelete(@PathParam("courseId") int courseId) {
-		Course c = entityManager.find(Course.class, courseId);
-		return Response.ok(getView("courseName", c.getName(), "courseId", c.getCourseID())).build();
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("courseId") int courseId) {
-		Course c = entityManager.find(Course.class, courseId);
+	public Response create(@FormParam("sectionName") String name, @FormParam("courseId") int course) {
+		System.out.println("Create section: " + name + " on course " + course);
 		
-		entityManager.remove(c);
+		Course c = entityManager.find(Course.class, course);
+		
+		Section s = new Section();
+		s.setCourse(c);
+		s.setName(name);
+		
+		entityManager.persist(s);
 		
 		return Response.ok().build();
 	}

@@ -3,8 +3,28 @@
 	<HEAD>
 		<Title>Profilr</Title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		
+		<script>
+			function createCourse() {
+				$.ajax({
+	                url: '${urlMappings.createCourseUrl}',
+	                dataType: 'text',
+	                type: 'post',
+	                contentType: 'application/x-www-form-urlencoded',
+	                data: "courseName=" + $("#courseName").val(),
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.replace("${urlMappings.homeUrl}");
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
+		</script>
+		
 	</HEAD>
 
 	<BODY>
@@ -17,26 +37,8 @@
 			<p>Course Name</p>
 			<input id="courseName" type="text"/>
 			
-			<div id="submit" class="button blue" style="float: right;"><p>Create</p></div>
+			<div id="submit" class="button blue" style="float: right;" onclick="createCourse()"><p>Create</p></div>
 		</div>
-	
-		<script>
-			$("#submit").on("click", function() {
-				$.ajax({
-	                url: '${urlMappings.createCourseUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseName=" + $("#courseName").val(),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.coursesUrl}");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
-			});
-		</script>
 	
 	</BODY>
 
