@@ -1,8 +1,13 @@
+body {
+	position: relative;
+}
+
 #title {
-	margin: auto;
-	width: 25%;
-	margin-top:25%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
 	text-align: center;
+	transform: translate(-50%, -50%);
 }
 
 #title h1 {
