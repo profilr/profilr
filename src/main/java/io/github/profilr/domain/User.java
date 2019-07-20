@@ -48,6 +48,13 @@ public class User {
 		return getSectionsJoined().stream().map(s -> s.getCourse()).collect(Collectors.toSet());
 	}
 	
+	public boolean isCourseAdmin(Course c) {
+		for (Course course : this.administratedCourses)
+			if (c.getCourseID() == course.getCourseID())
+				return true;
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("User: %s (%s)", getFullName(), getUserID());

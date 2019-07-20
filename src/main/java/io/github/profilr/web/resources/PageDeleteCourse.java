@@ -17,7 +17,9 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Course;
+import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
 @Path("delete-course")
@@ -33,16 +35,25 @@ public class PageDeleteCourse extends WebResource {
 	@GET
 	@Path("{courseId}")
 	@Template(name="/deletecourse")
-	public Response getDelete(@PathParam("courseId") int courseId) {
+	public Response getDelete(@PathParam("courseId") int courseId) throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, courseId);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
+		
 		return Response.ok(getView("courseName", c.getName(), "courseId", c.getCourseID())).build();
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("courseId") int courseId) {
+	public Response delete(@FormParam("courseId") int courseId) throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, courseId);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
 		
 		entityManager.remove(c);
 		

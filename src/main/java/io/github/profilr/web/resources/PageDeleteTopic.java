@@ -17,7 +17,9 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Topic;
+import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
 @Path("delete-topic")
@@ -33,8 +35,12 @@ public class PageDeleteTopic extends WebResource {
 	@GET
 	@Path("{topicId}")
 	@Template(name="/deletetopic")
-	public Response getDelete(@PathParam("topicId") int topicId) {
+	public Response getDelete(@PathParam("topicId") int topicId) throws UserNotAuthorizedException {
 		Topic t = entityManager.find(Topic.class, topicId);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(t.getCourse()))
+			throw new UserNotAuthorizedException();
 		
 		return Response.ok(getView("topicId", t.getTopicID(), "topicName", t.getName(), "courseId", t.getCourse().getCourseID())).build();
 	}
@@ -42,8 +48,12 @@ public class PageDeleteTopic extends WebResource {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("topicId") int topic) {
+	public Response delete(@FormParam("topicId") int topic) throws UserNotAuthorizedException {
 		Topic t = entityManager.find(Topic.class, topic);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(t.getCourse()))
+			throw new UserNotAuthorizedException();
 		
 		entityManager.remove(t);
 		

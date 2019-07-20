@@ -14,7 +14,9 @@ import javax.ws.rs.core.UriInfo;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Topic;
+import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
 @Path("create-topic")
@@ -30,8 +32,12 @@ public class PageCreateTopic extends WebResource {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response create(@FormParam("topicName") String name, @FormParam("courseId") int course) {
+	public Response create(@FormParam("topicName") String name, @FormParam("courseId") int course) throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, course);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
 		
 		Topic t = new Topic();
 		t.setName(name);
