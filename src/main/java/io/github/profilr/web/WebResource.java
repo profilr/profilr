@@ -61,8 +61,6 @@ public abstract class WebResource {
 	}
 	
 	public Map<String, NavElement> createNavElements() {
-		System.out.println("Creating nav elements...");
-		
 		Map<String, NavElement> elements = new HashMap<String, NavElement>();
 		
 		addNavElement(elements, new PageHome(session, uriInfo).createNavElement());
@@ -98,8 +96,6 @@ public abstract class WebResource {
 	
 	public Map<String, String> createUrlMappings() {
 		if (cachedURLMappings == null) {
-			System.out.println("Creating URL mappings...");
-			
 			Map<String, String> params = new HashMap<String, String>();
 			
 			params.put("stylesheets", buildUri("/styles"));
