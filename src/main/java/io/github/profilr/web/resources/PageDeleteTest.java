@@ -16,36 +16,36 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import io.github.profilr.domain.Section;
+import io.github.profilr.domain.Test;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
-@Path("delete-section")
-public class PageDeleteSection extends WebResource {
+@Path("delete-test")
+public class PageDeleteTest extends WebResource {
 	
 	@Inject
 	EntityManager entityManager;
 	
-	public PageDeleteSection(Session session, @Context UriInfo uriInfo) {
+	public PageDeleteTest(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
 	}
 	
 	@GET
-	@Path("{sectionId}")
-	@Template(name="/deletesection")
-	public Response getDelete(@PathParam("sectionId") int sectionId) {
-		Section s = entityManager.find(Section.class, sectionId);
+	@Path("{testId}")
+	@Template(name="/deletetest")
+	public Response getDelete(@PathParam("testId") int testId) {
+		Test t = entityManager.find(Test.class, testId);
 		
-		return Response.ok(getView("sectionId", s.getSectionID(), "sectionName", s.getName(), "courseId", s.getCourse().getCourseID())).build();
+		return Response.ok(getView("testId", t.getTestID(), "testName", t.getName(), "courseId", t.getCourse().getCourseID())).build();
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("sectionId") int section) {
-		Section s = entityManager.find(Section.class, section);
+	public Response delete(@FormParam("testId") int test) {
+		Test t = entityManager.find(Test.class, test);
 		
-		entityManager.remove(s);
+		entityManager.remove(t);
 		
 		return Response.ok().build();
 	}

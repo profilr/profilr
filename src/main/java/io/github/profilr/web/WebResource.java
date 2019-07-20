@@ -1,6 +1,5 @@
 package io.github.profilr.web;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +10,11 @@ import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseAdminView;
 import io.github.profilr.web.resources.PageCreateCourse;
 import io.github.profilr.web.resources.PageCreateSection;
+import io.github.profilr.web.resources.PageCreateTest;
 import io.github.profilr.web.resources.PageCreateTopic;
 import io.github.profilr.web.resources.PageDeleteCourse;
 import io.github.profilr.web.resources.PageDeleteSection;
+import io.github.profilr.web.resources.PageDeleteTest;
 import io.github.profilr.web.resources.PageDeleteTopic;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageProfile;
@@ -101,8 +102,6 @@ public abstract class WebResource {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			
-			URI courseUrl = uriInfo.getBaseUriBuilder().path("/courses").build();
-			
 			params.put("stylesheets", buildUri("/styles"));
 			params.put("images", buildUri("/images"));
 			params.put("favicon", buildUri("/favicon.ico"));
@@ -121,6 +120,9 @@ public abstract class WebResource {
 			
 			params.put("createTopicUrl", buildUri(PageCreateTopic.class));
 			params.put("deleteTopicUrl", buildUri(PageDeleteTopic.class));
+			
+			params.put("createTestUrl", buildUri(PageCreateTest.class));
+			params.put("deleteTestUrl", buildUri(PageDeleteTest.class));
 			
 			cachedURLMappings = params;
 		}

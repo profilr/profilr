@@ -53,6 +53,22 @@
 	            });
 			}
 			
+			function createTest() {
+				$.ajax({
+	                url: '${urlMappings.createTestUrl}',
+	                dataType: 'text',
+	                type: 'post',
+	                contentType: 'application/x-www-form-urlencoded',
+	                data: "testName=" + $("#testName").val() + "&courseId=" + ${course.courseId},
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
+			
 		</script>
 		
 	</HEAD>
@@ -108,8 +124,12 @@
 					<h2>Course Assignments</h2>
 					<table class="list">
 						<#list course.tests as test>
-							<tr><td><p>${test.name}</p></td><td><p>${test.testId}</p></td></tr>
+							<tr>
+								<td><p>${test.name}</p></td>
+								<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+							</tr>
 						</#list>
+						<tr><td><input type="text" id="testName" placeholder="Test Name..."/></td><td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/></td></tr>
 					</table>
 				</#if>
 			</div>

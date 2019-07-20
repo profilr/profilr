@@ -42,7 +42,7 @@ public class PageDeleteTopic extends WebResource {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response create(@FormParam("topicId") int topic) {
+	public Response delete(@FormParam("topicId") int topic) {
 		Topic t = entityManager.find(Topic.class, topic);
 		
 		entityManager.remove(t);
