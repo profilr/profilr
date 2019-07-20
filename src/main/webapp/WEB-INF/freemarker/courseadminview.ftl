@@ -29,6 +29,7 @@
 	                contentType: 'application/x-www-form-urlencoded',
 	                data: "sectionName=" + $("#sectionName").val() + "&courseId=" + ${course.courseId},
 	                success: function( data, textStatus, jQxhr ){
+	                	window.location.hash = "#sectionsTab";
 	                	window.location.reload();
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
@@ -141,6 +142,11 @@
 					console.log(window.location.hash);
 					openTab(window.location.hash.substring(1));
 				}
+				
+				$("#sectionName").keyup(function(e) { if (e.keyCode == 13) { createSection(); } });
+				$("#topicName").keyup(function(e) { if (e.keyCode == 13) { createTopic(); } });
+				$("#testName").keyup(function(e) { if (e.keyCode == 13) { createTest(); } });
+				
 			</script>
 			
 		</div>
