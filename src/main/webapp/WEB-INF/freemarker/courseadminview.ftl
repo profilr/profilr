@@ -45,6 +45,7 @@
 	                contentType: 'application/x-www-form-urlencoded',
 	                data: "topicName=" + $("#topicName").val() + "&courseId=" + ${course.courseId},
 	                success: function( data, textStatus, jQxhr ){
+	                	window.location.hash = "#topicsTab";
 	                	window.location.reload();
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
@@ -61,6 +62,7 @@
 	                contentType: 'application/x-www-form-urlencoded',
 	                data: "testName=" + $("#testName").val() + "&courseId=" + ${course.courseId},
 	                success: function( data, textStatus, jQxhr ){
+	                	window.location.hash = "#testsTab";
 	                	window.location.reload();
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
