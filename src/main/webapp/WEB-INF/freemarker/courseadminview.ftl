@@ -23,7 +23,7 @@
 			
 			function createSection() {
 				if ($("#sectionName").val() === "")
-					return;
+					return $("#sectionRequiredTooltip").show();
 				$.ajax({
 	                url: '${urlMappings.createSectionUrl}',
 	                dataType: 'text',
@@ -42,7 +42,7 @@
 		
 			function createTopic() {
 				if ($("#topicName").val() === "")
-					return;
+					return $("#topicRequiredTooltip").show();
 				$.ajax({
 	                url: '${urlMappings.createTopicUrl}',
 	                dataType: 'text',
@@ -61,7 +61,7 @@
 			
 			function createTest() {
 				if ($("#testName").val() === "")
-					return;
+					return $("#testRequiredTooltip").show();
 				$.ajax({
 	                url: '${urlMappings.createTestUrl}',
 	                dataType: 'text',
@@ -107,8 +107,11 @@
 								<td style="text-align: right;"><a href="${urlMappings.deleteSectionUrl}/${section.sectionId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 							</tr>
 						</#list>
-						<tr><td><input type="text" id="sectionName" placeholder="Section Name..."/></td><td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
-						
+						<tr><td>
+							<input type="text" id="sectionName" placeholder="Section Name..."/>
+							<span id="sectionRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+						</td>
+						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
 					</table>
 				</#if>
 			</div>
@@ -123,7 +126,15 @@
 								<td style="text-align: right;"><a href="${urlMappings.deleteTopicUrl}/${topic.topicId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 							</tr>
 						</#list>
-						<tr><td><input type="text" id="topicName" placeholder="Topic Name..."/></td><td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/></td></tr>
+						<tr>
+							<td>
+								<input type="text" id="topicName" placeholder="Topic Name..."/>
+								<span id="topicRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+							</td>
+							<td style="text-align: right;">
+								<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/>
+							</td>
+						</tr>
 					</table>
 				</#if>
 			</div>
@@ -138,7 +149,15 @@
 								<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 							</tr>
 						</#list>
-						<tr><td><input type="text" id="testName" placeholder="Test Name..."/></td><td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/></td></tr>
+						<tr>
+							<td>
+								<input type="text" id="testName" placeholder="Test Name..."/>
+								<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+							</td>
+							<td style="text-align: right;">
+								<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
+							</td>
+						</tr>
 					</table>
 				</#if>
 			</div>
