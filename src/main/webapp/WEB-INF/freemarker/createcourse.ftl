@@ -9,6 +9,8 @@
 		
 		<script>
 			function createCourse() {
+				if ($("#courseName").val() === "")
+					return
 				$.ajax({
 	                url: '${urlMappings.createCourseUrl}',
 	                dataType: 'text',

@@ -9,7 +9,6 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -44,7 +43,6 @@ public class PageCreateTest extends WebResource {
 	}
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response create(@FormParam("testName") String name, @FormParam("courseId") int course) throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, course);
@@ -60,15 +58,7 @@ public class PageCreateTest extends WebResource {
 		
 		entityManager.persist(t);
 		
-		return Response.ok().build();
+		return Response.noContent().build();
 	}
-	
-	/*@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String create(Test test, @PathParam("courseid") int course_id) {
-		//TODO Actually create the test
-		return test.toString();
-	}*/
 	
 }

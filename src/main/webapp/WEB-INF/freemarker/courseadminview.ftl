@@ -22,6 +22,8 @@
 			}
 			
 			function createSection() {
+				if ($("#sectionName").val() === "")
+					return;
 				$.ajax({
 	                url: '${urlMappings.createSectionUrl}',
 	                dataType: 'text',
@@ -39,6 +41,8 @@
 			}
 		
 			function createTopic() {
+				if ($("#topicName").val() === "")
+					return;
 				$.ajax({
 	                url: '${urlMappings.createTopicUrl}',
 	                dataType: 'text',
@@ -56,6 +60,8 @@
 			}
 			
 			function createTest() {
+				if ($("#testName").val() === "")
+					return;
 				$.ajax({
 	                url: '${urlMappings.createTestUrl}',
 	                dataType: 'text',
@@ -124,7 +130,7 @@
 			
 			<div id="testsTab" class="tab">
 				<#if course.tests??>
-					<h2>Course Assignments</h2>
+					<h2>Course Tests</h2>
 					<table class="list">
 						<#list course.tests as test>
 							<tr>

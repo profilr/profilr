@@ -16,7 +16,7 @@ import io.github.profilr.web.resources.PageSplash;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class AuthorizationFilter implements ContainerRequestFilter {
+public class AuthenticationFilter implements ContainerRequestFilter {
 
 	@Context
 	ResourceInfo info;

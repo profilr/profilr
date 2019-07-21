@@ -49,7 +49,7 @@ public class User {
 	}
 	
 	public boolean isCourseAdmin(Course c) {
-		for (Course course : this.administratedCourses)
+		for (Course course : this.getAdministratedCourses())
 			if (c.getCourseID() == course.getCourseID())
 				return true;
 		return false;

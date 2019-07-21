@@ -35,6 +35,9 @@ public class Question {
 	@Column(name = "text")
 	private String text;
 	
+	@Column(name = "weight")
+	private int weight;
+	
 	@ManyToOne
 	@JoinColumn(name = "topic_id")
 	private Topic topic;

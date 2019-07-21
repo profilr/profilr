@@ -1,7 +1,6 @@
 package io.github.profilr.web.jackson;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
@@ -28,26 +27,24 @@ public class TestDeserializer extends StdDeserializer<Test> {
 	
 	public TestDeserializer(EntityManager entityManager) {
 		super(Test.class);
-		Objects.requireNonNull(entityManager);
 		this.entityManager = entityManager;
 	}
 
 	@Override
-	public Test deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		Objects.requireNonNull(entityManager);
-		JsonNode testNode = parser.readValueAsTree();
+	public Test deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+		JsonNode node = p.readValueAsTree();
 		Test test = new Test();
-		test.setName(testNode.getValueChecked(parser, "name", String.class));
-		test.setCourse(entityManager.find(Course.class, (Object) testNode.getValueChecked(parser, "course_id", Integer.class)));
-		ArrayNode questions = testNode.getValueChecked(parser, "questions", ArrayNode.class);
-		for (JsonNode questionNode : questions) {
-			if (!questionNode.isObject())
-				throw new JsonParseException(parser, String.format("Element of array questions is of wrong type %s, should be Object", questionNode.getNodeType().toString()));
-			Question question = new Question();
-			question.setLabel(questionNode.getValueChecked(parser, "label", String.class));
-			question.setText(questionNode.getValueChecked(parser, "text", String.class));
-			question.setTopic(entityManager.find(Topic.class, (Object) questionNode.getValueChecked(parser, "topic_id", Integer.class)));
-			question.setTest(test);
+		test.setName(node.getValueChecked(p, "name", String.class));
+		test.setCourse(entityManager.find(Course.class, (Object) node.getValueChecked(p, "course_id", Integer.class)));
+		ArrayNode questions = node.getValueChecked(p, "questions", ArrayNode.class);
+		for (JsonNode qNode : questions) {
+			if (!qNode.isObject())
+				throw new JsonParseException(p, String.format("Element of array questions is of wrong type %s, should be Object", qNode.getNodeType().toString()));
+			Question q = new Question();
+			q.setLabel(qNode.getValueChecked(p, "label", String.class));
+			q.setText(qNode.getValueChecked(p, "text", String.class));
+			q.setTopic(entityManager.find(Topic.class, (Object) qNode.getValueChecked(p, "topic_id", Integer.class)));
+			q.setTest(test);
 		}
 		return test;
 	}
