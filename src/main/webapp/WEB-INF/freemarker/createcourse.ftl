@@ -9,6 +9,8 @@
 		
 		<script>
 			function createCourse() {
+				if ($("#courseName").val() === "")
+					return $("#requiredTooltip").show();
 				$.ajax({
 	                url: '${urlMappings.createCourseUrl}',
 	                dataType: 'text',
@@ -26,7 +28,6 @@
 		</script>
 		
 	</HEAD>
-
 	<BODY>
 		
 		<#include "navbar.ftl">
@@ -34,7 +35,7 @@
 		<div class="bodyContainer">
 		
 			<h1 id="title">Create a Course</h1>
-			<p>Course Name</p>
+			<p>Course Name <span id="requiredTooltip" class="tooltip" style="display: none"> (Required field) </span></p>
 			<input id="courseName" type="text"/>
 			
 			<div id="submit" class="button blue" style="float: right;" onclick="createCourse()"><p>Create</p></div>
