@@ -120,6 +120,8 @@ public abstract class WebResource {
 			params.put("createTestUrl", buildUri(PageCreateTest.class));
 			params.put("deleteTestUrl", buildUri(PageDeleteTest.class));
 			
+			params.put("editTestUrl", buildUri("/edit-test"));
+			
 			cachedURLMappings = params;
 		}
 		return cachedURLMappings;

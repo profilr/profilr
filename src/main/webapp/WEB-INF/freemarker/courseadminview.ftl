@@ -145,7 +145,7 @@
 					<table class="list">
 						<#list course.tests as test>
 							<tr>
-								<td><p>${test.name}</p></td>
+								<td><a href="${urlMappings.editTestUrl}/${test.testId}"><p>${test.name}</p></a></td>
 								<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 							</tr>
 						</#list>
