@@ -1,0 +1,27 @@
+.list {
+	table-layout: fixed;
+}
+
+.labelColumn {
+	width: 10%;
+}
+
+.textColumn {
+	width: 50%;
+}
+
+.topicColumn {
+	width: 25%;
+}
+
+.pointsColumn {
+	width: 5%;
+}
+
+.editColumn {
+	width: 5%;
+}
+
+.deleteColumn {
+	width: 5%;
+}

@@ -29,13 +29,13 @@ public class Course {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(mappedBy="course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="course", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Section> sections;
 	
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Test> tests;
 	
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Topic> topics;
 	
 	@ManyToMany(cascade = CascadeType.MERGE)

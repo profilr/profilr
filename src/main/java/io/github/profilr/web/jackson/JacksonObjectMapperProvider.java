@@ -20,13 +20,14 @@ public class JacksonObjectMapperProvider implements ContextResolver<ObjectMapper
 	@Override
 	public ObjectMapper getContext(Class<?> type) {
 		ObjectMapper mapper = new ObjectMapper();
-		SimpleModule deserializationModule = new SimpleModule();
+		SimpleModule serializationModule = new SimpleModule();
 		if (type.equals(Test.class)) {
-			deserializationModule.addDeserializer(Test.class, new TestDeserializer(entityManager));
+			serializationModule.addDeserializer(Test.class, new TestDeserializer(entityManager));
 		} else if (type.equals(Question.class)) {
-			deserializationModule.addDeserializer(Question.class, new QuestionDeserializer(entityManager));
+			serializationModule.addDeserializer(Question.class, new QuestionDeserializer(entityManager));
+			serializationModule.addSerializer(Question.class, new QuestionSerializer());
 		}
-		mapper.registerModule(deserializationModule);
+		mapper.registerModule(serializationModule);
 		return mapper;
 	}
 
