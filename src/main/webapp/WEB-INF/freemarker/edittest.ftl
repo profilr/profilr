@@ -25,6 +25,17 @@
 					});
 			}
 		
+			function deleteQuestion(questionID) {
+				$.ajax({url:'${urlMappings.editTestUrl}/${test.testId}/delete-question/' + questionID,
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/json',
+					data: '{}',
+					success: function(jqxhr, textStatus, data) { window.location.reload(); },
+					error: function(error, textStatus, jqxhr){console.log(error);}
+					});
+			}
+			
 		</script>
 	</HEAD>
 
@@ -56,13 +67,13 @@
 							<td><p>${question.topic.name}</p></td>
 							<td><p>${question.weight}</p></td>
 							<td style="text-align: right;"><img src="${urlMappings.images}/baseline-create-24px.svg" style="cursor: pointer;"/></td>
-							<td style="text-align: right;"><img src="${urlMappings.images}/baseline-delete-24px.svg" style="cursor: pointer;"/></td>
+							<td style="text-align: right;"><img src="${urlMappings.images}/baseline-delete-24px.svg" style="cursor: pointer;" onclick="deleteQuestion(${question.questionId})"/></td>
 						</tr>	
 					
 					</#list>
 					</#if>
 				
-					<tr>
+					<tr id="newQuestionInput">
 						<td><input id="label" type="text" placeholder="Label" size=5/></td>
 						<td><input id="question" type="text" placeholder="Question"/></td>
 						<td><select id="topic"><option value="">Pick a Topic</option><#list topics as topic><option value="${topic.topicId}">${topic.name}</option></#list></select></td>
@@ -75,6 +86,10 @@
 			</#if>
 			
 		</div>
+	
+		<script>
+			$("#newQuestionInput").keyup(function(e) { if (e.keyCode == 13) { createQuestion(); } });
+		</script>
 	
 	</BODY>
 

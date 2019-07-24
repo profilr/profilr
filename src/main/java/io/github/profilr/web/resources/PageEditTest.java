@@ -96,4 +96,12 @@ public class PageEditTest extends WebResource {
 		return Response.ok(question).build();
 	}
 	
+	@POST
+	@Path("delete-question/{question-id}")
+	public Response deleteQuestion(@PathParam("question-id") int questionID) {
+		Question q = entityManager.find(Question.class, questionID);
+		entityManager.remove(q);
+		return Response.ok().build();
+	}
+	
 }
