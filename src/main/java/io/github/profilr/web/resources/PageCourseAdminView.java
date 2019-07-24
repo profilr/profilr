@@ -72,6 +72,7 @@ public class PageCourseAdminView extends WebResource {
 		
 		section.put("sectionId", s.getSectionID());
 		section.put("name", s.getName());
+		section.put("joinCode", s.getJoinCode());
 		
 		return section;
 	}

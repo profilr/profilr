@@ -24,7 +24,9 @@ CREATE TABLE `Sections` (
 	`section_id` int(10) not null auto_increment,
 	`name` varchar(45) not null,
 	`course_id` int(10) not null,
+	`join_code` varchar(10) not null,
 	PRIMARY KEY (`section_id`),
+	UNIQUE KEY `Join_code_UNQ` (`join_code`),
 	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );

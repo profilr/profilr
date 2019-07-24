@@ -104,6 +104,7 @@
 						<#list course.sections as section>
 							<tr>
 								<td><p>${section.name}</p></td>
+								<td style="text-align: right;"><p>Join Code: ${section.joinCode}</p></td>
 								<td style="text-align: right;"><a href="${urlMappings.deleteSectionUrl}/${section.sectionId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 							</tr>
 						</#list>
@@ -111,6 +112,7 @@
 							<input type="text" id="sectionName" placeholder="Section Name..."/>
 							<span id="sectionRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
 						</td>
+						<td><!-- no join code here --></td>
 						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
 					</table>
 				</#if>

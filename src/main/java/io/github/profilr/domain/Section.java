@@ -34,6 +34,9 @@ public class Section {
 	@JoinColumn(name = "course_id")
 	private Course course;
 	
+	@Column(name = "join_code")
+	private String joinCode;
+	
 	@ManyToMany (cascade = CascadeType.MERGE)
 	@JoinTable (name = "SectionUsers",
 				joinColumns = { @JoinColumn (name = "section_id") },
