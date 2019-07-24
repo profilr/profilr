@@ -8,7 +8,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 		<script>
-			
 			function openTab(tabName) {
 				var i, x, tablinks;
 				x = document.getElementsByClassName("tab");
@@ -29,7 +28,7 @@
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "sectionName=" + $("#sectionName").val() + "&courseId=" + ${course.courseId},
+	                data: "sectionName=" + $("#sectionName").val() + "&courseId=" + ${course.courseID},
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#sectionsTab";
 	                	window.location.reload();
@@ -48,7 +47,7 @@
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "topicName=" + $("#topicName").val() + "&courseId=" + ${course.courseId},
+	                data: "topicName=" + $("#topicName").val() + "&courseId=" + ${course.courseID},
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#topicsTab";
 	                	window.location.reload();
@@ -67,7 +66,7 @@
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "testName=" + $("#testName").val() + "&courseId=" + ${course.courseId},
+	                data: "testName=" + $("#testName").val() + "&courseId=" + ${course.courseID},
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#testsTab";
 	                	window.location.reload();
@@ -77,7 +76,6 @@
 	                }
 	            });
 			}
-			
 		</script>
 		
 	</HEAD>
@@ -98,70 +96,64 @@
 			</table>
 			
 			<div id="sectionsTab" class="tab" style="display: block;">
-				<#if course.sections??>
-					<h2>Course Sections</h2>
-					<table class="list">
-						<#list course.sections as section>
-							<tr>
-								<td><p>${section.name}</p></td>
-								<td style="text-align: right;"><p>Join Code: ${section.joinCode}</p></td>
-								<td style="text-align: right;"><a href="${urlMappings.deleteSectionUrl}/${section.sectionId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
-							</tr>
-						</#list>
-						<tr><td>
-							<input type="text" id="sectionName" placeholder="Section Name..."/>
-							<span id="sectionRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
-						</td>
-						<td><!-- no join code here --></td>
-						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
-					</table>
-				</#if>
+				<h2>Course Sections</h2>
+				<table class="list">
+					<#list course.sections as section>
+						<tr>
+							<td><p>${section.name}</p></td>
+							<td style="text-align: right;"><p>Join Code: ${section.joinCode}</p></td>
+							<td style="text-align: right;"><a href="${urlMappings.deleteSectionUrl}/${section.sectionID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+						</tr>
+					</#list>
+					<tr><td>
+						<input type="text" id="sectionName" placeholder="Section Name..."/>
+						<span id="sectionRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+					</td>
+					<td><!-- no join code here --></td>
+					<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
+				</table>
 			</div>
 			
 			<div id="topicsTab" class="tab">
-				<#if course.topics??>
-					<h2>Course Topics</h2>
-					<table class="list">
-						<#list course.topics as topic>
-							<tr>
-								<td><p>${topic.name}</p></td>
-								<td style="text-align: right;"><a href="${urlMappings.deleteTopicUrl}/${topic.topicId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
-							</tr>
-						</#list>
+				<h2>Course Topics</h2>
+				<table class="list">
+					<#list course.topics as topic>
 						<tr>
-							<td>
-								<input type="text" id="topicName" placeholder="Topic Name..."/>
-								<span id="topicRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
-							</td>
-							<td style="text-align: right;">
-								<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/>
-							</td>
+							<td><p>${topic.name}</p></td>
+							<td style="text-align: right;"><a href="${urlMappings.deleteTopicUrl}/${topic.topicID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 						</tr>
-					</table>
-				</#if>
+					</#list>
+					<tr>
+						<td>
+							<input type="text" id="topicName" placeholder="Topic Name..."/>
+							<span id="topicRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+						</td>
+						<td style="text-align: right;">
+							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/>
+						</td>
+					</tr>
+				</table>
 			</div>
 			
 			<div id="testsTab" class="tab">
-				<#if course.tests??>
-					<h2>Course Tests</h2>
-					<table class="list">
-						<#list course.tests as test>
-							<tr>
-								<td><a href="${urlMappings.editTestUrl}/${test.testId}"><p>${test.name}</p></a></td>
-								<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testId}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
-							</tr>
-						</#list>
+				<h2>Course Tests</h2>
+				<table class="list">
+					<#list course.tests as test>
 						<tr>
-							<td>
-								<input type="text" id="testName" placeholder="Test Name..."/>
-								<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
-							</td>
-							<td style="text-align: right;">
-								<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
-							</td>
+							<td><a href="${urlMappings.editTestUrl}/${test.testID}"><p>${test.name}</p></a></td>
+							<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 						</tr>
-					</table>
-				</#if>
+					</#list>
+					<tr>
+						<td>
+							<input type="text" id="testName" placeholder="Test Name..."/>
+							<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+						</td>
+						<td style="text-align: right;">
+							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
+						</td>
+					</tr>
+				</table>
 			</div>
 			
 			<script>

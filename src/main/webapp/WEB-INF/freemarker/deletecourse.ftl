@@ -14,7 +14,7 @@
 		<div class="bodyContainer">
 		
 			<h1 id="title">Delete Course?</h1>
-			<p>Are you sure you want to delete ${courseName}?</p>
+			<p>Are you sure you want to delete ${course.name}?</p>
 			
 			<div class="centered"><div class="row">
 				<div id="yes" class="button blue" style="float: left;"><p>I am sure.</p></div>
@@ -30,7 +30,7 @@
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseId=${courseId}",
+	                data: "courseId=${course.courseID}",
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${urlMappings.homeUrl}");
 	                },

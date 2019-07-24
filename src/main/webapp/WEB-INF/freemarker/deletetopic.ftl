@@ -14,7 +14,7 @@
 		<div class="bodyContainer">
 		
 			<h1 id="title">Delete Topic?</h1>
-			<p>Are you sure you want to delete ${topicName}?</p>
+			<p>Are you sure you want to delete ${topic.name}?</p>
 			
 			<div class="centered"><div class="row">
 				<div id="yes" class="button blue" style="float: left;"><p>I am sure.</p></div>
@@ -30,9 +30,9 @@
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "topicId=${topicId}",
+	                data: "topicId=${topic.topicID}",
 	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.courseAdminViewUrl}/${courseId}#topicsTab");
+	                	window.location.replace("${urlMappings.courseAdminViewUrl}/${topic.course.courseID}#topicsTab");
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
 	                    console.log( errorThrown );
@@ -40,7 +40,7 @@
 	            });
 			});
 			
-			$("#no").on("click", function() { window.location.replace("${urlMappings.courseAdminViewUrl}/${courseId}#topicsTab"); });
+			$("#no").on("click", function() { window.location.replace("${urlMappings.courseAdminViewUrl}/${topic.course.courseID}#topicsTab"); });
 		</script>
 	
 	</BODY>

@@ -42,7 +42,7 @@ public class PageDeleteTest extends WebResource {
 		if (!u.isCourseAdmin(t.getCourse()))
 			throw new UserNotAuthorizedException();
 		
-		return Response.ok(getView("testId", t.getTestID(), "testName", t.getName(), "courseId", t.getCourse().getCourseID())).build();
+		return Response.ok(getView("test", t)).build();
 	}
 	
 	@POST

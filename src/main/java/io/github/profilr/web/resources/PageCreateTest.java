@@ -26,7 +26,6 @@ import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
 @Path("create-test")
-@PreAuth
 public class PageCreateTest extends WebResource {
 	
 	@Inject

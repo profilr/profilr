@@ -14,7 +14,7 @@
 		<div class="bodyContainer">
 		
 			<h1 id="title">Delete Section?</h1>
-			<p>Are you sure you want to delete ${sectionName}?</p>
+			<p>Are you sure you want to delete ${section.name}?</p>
 			
 			<div class="centered"><div class="row">
 				<div id="yes" class="button blue" style="float: left;"><p>I am sure.</p></div>
@@ -30,9 +30,9 @@
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "sectionId=${sectionId}",
+	                data: "sectionId=${section.sectionID}",
 	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.courseAdminViewUrl}/${courseId}");
+	                	window.location.replace("${urlMappings.courseAdminViewUrl}/${section.course.courseID}");
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
 	                    console.log( errorThrown );
@@ -40,7 +40,7 @@
 	            });
 			});
 			
-			$("#no").on("click", function() { window.location.replace("${urlMappings.courseAdminViewUrl}/${courseId}"); });
+			$("#no").on("click", function() { window.location.replace("${urlMappings.courseAdminViewUrl}/${section.course.courseID}"); });
 		</script>
 	
 	</BODY>

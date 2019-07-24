@@ -42,7 +42,7 @@ public class PageDeleteCourse extends WebResource {
 		if (!u.isCourseAdmin(c))
 			throw new UserNotAuthorizedException();
 		
-		return Response.ok(getView("courseName", c.getName(), "courseId", c.getCourseID())).build();
+		return Response.ok(getView("course", c)).build();
 	}
 	
 	@POST

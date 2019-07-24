@@ -42,7 +42,7 @@ public class PageDeleteTopic extends WebResource {
 		if (!u.isCourseAdmin(t.getCourse()))
 			throw new UserNotAuthorizedException();
 		
-		return Response.ok(getView("topicId", t.getTopicID(), "topicName", t.getName(), "courseId", t.getCourse().getCourseID())).build();
+		return Response.ok(getView("topic", t)).build();
 	}
 	
 	@POST
