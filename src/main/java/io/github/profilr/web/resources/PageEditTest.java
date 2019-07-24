@@ -92,8 +92,9 @@ public class PageEditTest extends WebResource {
 	@Path("edit-question/{question-id}")
 	public Response editQuestion(Question question, @PathParam("question-id") int questionID) {
 		question.setQuestionID(questionID);
+		question.setTest(entityManager.find(Test.class, testID));
 		entityManager.merge(question);
-		return Response.ok(question).build();
+		return Response.ok().build();
 	}
 	
 	@POST

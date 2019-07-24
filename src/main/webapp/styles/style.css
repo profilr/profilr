@@ -96,6 +96,18 @@ p {
 	width: 100%;
 }
 
+.popup {
+	display: none;
+}
+
+.popup.shown {
+	display: inline-block;
+}
+
+tr.popup.shown {
+	display: table-row;
+}
+
 /* ======================================
    ============= Buttons ================
    ====================================== */
