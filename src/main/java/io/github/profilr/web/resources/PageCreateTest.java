@@ -20,7 +20,6 @@ import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.User;
-import io.github.profilr.web.PreAuth;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;

@@ -16,6 +16,7 @@ import io.github.profilr.web.resources.PageDeleteCourse;
 import io.github.profilr.web.resources.PageDeleteSection;
 import io.github.profilr.web.resources.PageDeleteTest;
 import io.github.profilr.web.resources.PageDeleteTopic;
+import io.github.profilr.web.resources.PageEnroll;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageSplash;
@@ -119,6 +120,8 @@ public abstract class WebResource {
 			
 			params.put("createTestUrl", buildUri(PageCreateTest.class));
 			params.put("deleteTestUrl", buildUri(PageDeleteTest.class));
+			
+			params.put("enrollUrl", buildUri(PageEnroll.class));
 			
 			params.put("editTestUrl", buildUri("/edit-test"));
 			
