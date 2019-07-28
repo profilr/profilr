@@ -55,6 +55,13 @@ public class User {
 		return false;
 	}
 	
+	public Section getSectionFromCourse(Course c) {
+		for (Section s : sectionsJoined)
+			if (s.getCourse().getCourseID() == c.getCourseID())
+				return s;
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("User: %s (%s)", getFullName(), getUserID());

@@ -7,7 +7,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import io.github.profilr.web.resources.PageAuthorize;
-import io.github.profilr.web.resources.PageCourseAdminView;
+import io.github.profilr.web.resources.PageCourseView;
 import io.github.profilr.web.resources.PageCreateCourse;
 import io.github.profilr.web.resources.PageCreateSection;
 import io.github.profilr.web.resources.PageCreateTest;
@@ -107,7 +107,7 @@ public abstract class WebResource {
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
 			
-			params.put("courseAdminViewUrl", buildUri(PageCourseAdminView.class));
+			params.put("courseViewUrl", buildUri(PageCourseView.class));
 			
 			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
 			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
