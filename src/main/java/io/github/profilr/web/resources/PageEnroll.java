@@ -12,12 +12,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
+import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
@@ -52,11 +54,19 @@ public class PageEnroll extends WebResource {
 		List<Section> result = c.list();
 		
 		if (result.size() == 0)
-			return Response.status(400).build();
+			return Response.status(Status.NOT_FOUND).build();
 		
 		Section s = result.get(0);
 		
+		Course co = s.getCourse();
+		
 		User u = (User) this.session.get("user");
+		
+		entityManager.refresh(u);
+		
+		if (u.getAdministratedCourses().contains(co) || u.getEnrolledCourses().contains(co))
+			return Response.status(Status.CONFLICT).build();
+		
 		u.getSectionsJoined().add(s);
 		s.getUsers().add(u);
 		

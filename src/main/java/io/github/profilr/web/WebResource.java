@@ -20,6 +20,7 @@ import io.github.profilr.web.resources.PageEnroll;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageSplash;
+import io.github.profilr.web.resources.PageUnenroll;
 
 public abstract class WebResource {
 	
@@ -122,6 +123,7 @@ public abstract class WebResource {
 			params.put("deleteTestUrl", buildUri(PageDeleteTest.class));
 			
 			params.put("enrollUrl", buildUri(PageEnroll.class));
+			params.put("unenrollUrl", buildUri(PageUnenroll.class));
 			
 			params.put("editTestUrl", buildUri("/edit-test"));
 			

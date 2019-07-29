@@ -18,7 +18,10 @@
 				<table class="list">
 					<tr class="header"><th><p>Courses you're enrolled in</p></th><th></th></tr>
 					<#list enrolledCourses as course>
-						<tr><td><a href="${urlMappings.courseViewUrl}/${course.courseID}"><p>${course.name}</p></a></td><td></td></tr>
+						<tr>
+							<td><a href="${urlMappings.courseViewUrl}/${course.courseID}"><p>${course.name}</p></a></td>
+							<td style="text-align: right;"><a href="${urlMappings.unenrollUrl}/${course.courseID}"><img src="${urlMappings.images}/baseline-exit-24px.svg"/></a></td>
+						</tr>
 					<#else>
 						<tr><td><p style="color: #777;">Looks like there's nothing to show here...</p></td><td></td></tr>
 					</#list>
@@ -27,7 +30,7 @@
 			</#if>
 
 		
-			<#if canCreate?? && canCreate && administratedCourses??>
+			<#if canCreate>
 				<br/>
 				<table class="list">
 					<tr class="header"><th><p>Courses you administer</p></th><th></th></tr>
@@ -44,7 +47,6 @@
 			</#if>
 			
 			<br/><br/><br/>
-			<p>Enroll button doesn't go anywhere yet...</p>
 			<div class="centered"><div class="row">
 				<a href="${urlMappings.enrollUrl}"><div class="column button blue">Enroll in a New Course</div></a>
 				<#if canCreate?? && canCreate>

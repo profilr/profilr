@@ -56,7 +56,7 @@ public class User {
 	}
 	
 	public Section getSectionFromCourse(Course c) {
-		for (Section s : sectionsJoined)
+		for (Section s : getSectionsJoined())
 			if (s.getCourse().getCourseID() == c.getCourseID())
 				return s;
 		return null;
