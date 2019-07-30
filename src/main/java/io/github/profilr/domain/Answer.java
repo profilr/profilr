@@ -23,8 +23,12 @@ public class Answer {
 	
 	@ManyToOne
 	@JoinColumn(name = "question_id")
-	private Test question;
+	private Question question;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	@Column(name = "correct")
 	private boolean correct;
 	
@@ -33,9 +37,5 @@ public class Answer {
 
 	@Column(name = "notes")
 	private String notes; // for better identification like #1 or #3b
-	
-	@ManyToOne
-	@JoinColumn(name = "topic_id")
-	private Topic topic;
 	
 }
