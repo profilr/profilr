@@ -166,11 +166,11 @@ tr.popup.shown {
 
 .list tr { background-color: #fff; }
 
-.list tr.header { background-color: #fff; color: #000; }
+.list tr.inert { background-color: #fff; color: #000; }
 
 .list tr:hover { background-color:#f2f2f2; }
 
-.list tr.header:hover { background-color: #fff; }
+.list tr.inert:hover { background-color: #fff; }
 
 /* ======================================
    =========== Arrangement ==============

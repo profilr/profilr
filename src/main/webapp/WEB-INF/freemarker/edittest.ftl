@@ -83,18 +83,18 @@
 			<h1 id="title">${test.course.name} - ${test.name}</h1>
 			
 			<table class="list">
-			
-				<tr>
+				
+				<tr class="inert">
 					<th class="labelColumn">Number</th>
 					<th class="textColumn">Question</th>
 					<th class="topicColumn">Topic</th>
 					<th class="pointsColumn">Points</th>
 					<th class="editColumn"></th>
 					<th class="deleteColumn"></th>
-				</tr>	
+				</tr>
 
 				<#list test.questions as question>
-					
+				
 					<tr id="question${question.questionID}" class="popup shown">
 						<td><p>${question.label}</p></td>
 						<td><p>${question.text}</p></td>
