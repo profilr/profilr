@@ -9,10 +9,8 @@ import javax.ws.rs.core.UriInfo;
 import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseView;
 import io.github.profilr.web.resources.PageCreate;
+import io.github.profilr.web.resources.PageDelete;
 import io.github.profilr.web.resources.PageDeleteCourse;
-import io.github.profilr.web.resources.PageDeleteSection;
-import io.github.profilr.web.resources.PageDeleteTest;
-import io.github.profilr.web.resources.PageDeleteTopic;
 import io.github.profilr.web.resources.PageEnroll;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageProfile;
@@ -118,13 +116,13 @@ public abstract class WebResource {
 			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
 			
 			params.put("createSectionUrl", buildUri(PageCreate.class, "section"));
-			params.put("deleteSectionUrl", buildUri(PageDeleteSection.class));
+			params.put("deleteSectionUrl", buildUri(PageDelete.class, "section"));
 			
 			params.put("createTopicUrl", buildUri(PageCreate.class, "topic"));
-			params.put("deleteTopicUrl", buildUri(PageDeleteTopic.class));
+			params.put("deleteTopicUrl", buildUri(PageDelete.class, "topic"));
 			
 			params.put("createTestUrl", buildUri(PageCreate.class, "test"));
-			params.put("deleteTestUrl", buildUri(PageDeleteTest.class));
+			params.put("deleteTestUrl", buildUri(PageDelete.class, "test"));
 			
 			params.put("enrollUrl", buildUri(PageEnroll.class));
 			params.put("unenrollUrl", buildUri(PageUnenroll.class));
