@@ -1,41 +1,108 @@
 package io.github.profilr.web.resources;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.server.mvc.Template;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import io.github.profilr.domain.Course;
+import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Section;
+import io.github.profilr.domain.Test;
+import io.github.profilr.domain.Topic;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
-@Path("create-section")
-public class PageCreateSection extends WebResource {
+@Path("create")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public class PageCreate extends WebResource {
 	
 	@Inject
 	EntityManager entityManager;
 
-	public PageCreateSection(Session session, @Context UriInfo uriInfo) {
+	public PageCreate(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
+	}
+	
+	@GET
+	@Path("course")
+	@Produces(MediaType.TEXT_HTML)
+	@Template(name="/createcourse")
+	public Response get() {
+		return Response.ok(getView()).build();
+	}
+	
+	@POST
+	@Path("course")
+	public Response create(@FormParam("courseName") String name) {
+		
+		Course c = new Course();
+		c.setName(name);
+		c.setAdmins(new ArrayList<User>());
+		c.getAdmins().add((User) session.get("user"));
+		
+		entityManager.persist(c);
+		
+		return Response.noContent().build();
+	}
+	
+	@POST
+	@Path("topic")
+	public Response createTopic(@FormParam("topicName") String name, @FormParam("courseId") int course) throws UserNotAuthorizedException {
+		Course c = entityManager.find(Course.class, course);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
+		
+		Topic t = new Topic();
+		t.setName(name);
+		t.setCourse(c);
+		
+		entityManager.persist(t);
+		
+		return Response.noContent().build();
+	}
+	
+	@POST
+	@Path("test")
+	public Response createTest(@FormParam("testName") String name, @FormParam("courseId") int course) throws UserNotAuthorizedException {
+		Course c = entityManager.find(Course.class, course);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
+		
+		Test t = new Test();
+		t.setName(name);
+		t.setCourse(c);
+		t.setQuestions(new ArrayList<Question>());
+		
+		entityManager.persist(t);
+		
+		return Response.noContent().build();
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response create(@FormParam("sectionName") String name, @FormParam("courseId") int course)
+	@Path("section")
+	public Response createSection(@FormParam("sectionName") String name, @FormParam("courseId") int course)
 			throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, course);
 

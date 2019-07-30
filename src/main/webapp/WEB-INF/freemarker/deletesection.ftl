@@ -32,7 +32,7 @@
 	                contentType: 'application/x-www-form-urlencoded',
 	                data: "sectionId=${section.sectionID}",
 	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.courseAdminViewUrl}/${section.course.courseID}");
+	                	window.location.replace("${urlMappings.courseViewUrl}/${section.course.courseID}");
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
 	                    console.log( errorThrown );
@@ -40,7 +40,7 @@
 	            });
 			});
 			
-			$("#no").on("click", function() { window.location.replace("${urlMappings.courseAdminViewUrl}/${section.course.courseID}"); });
+			$("#no").on("click", function() { window.location.replace("${urlMappings.courseViewUrl}/${section.course.courseID}"); });
 		</script>
 	
 	</BODY>

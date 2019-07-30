@@ -8,10 +8,7 @@ import javax.ws.rs.core.UriInfo;
 
 import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseView;
-import io.github.profilr.web.resources.PageCreateCourse;
-import io.github.profilr.web.resources.PageCreateSection;
-import io.github.profilr.web.resources.PageCreateTest;
-import io.github.profilr.web.resources.PageCreateTopic;
+import io.github.profilr.web.resources.PageCreate;
 import io.github.profilr.web.resources.PageDeleteCourse;
 import io.github.profilr.web.resources.PageDeleteSection;
 import io.github.profilr.web.resources.PageDeleteTest;
@@ -23,6 +20,8 @@ import io.github.profilr.web.resources.PageSplash;
 import io.github.profilr.web.resources.PageUnenroll;
 
 public abstract class WebResource {
+	
+	private static final boolean DEBUG_NO_CACHE_URL_MAPPINGS = true; //TODO make false in production
 	
 	protected Session session;
 	protected UriInfo uriInfo;
@@ -49,7 +48,7 @@ public abstract class WebResource {
 		if (!session.containsKey("navElements"))
 			session.put("navElements", createNavElements());
 		
-		if (!session.containsKey("urlMappings"))
+		if (!session.containsKey("urlMappings") || DEBUG_NO_CACHE_URL_MAPPINGS)
 			session.put("urlMappings", createUrlMappings());
 		
 		View v = new View(session);
@@ -85,9 +84,13 @@ public abstract class WebResource {
 		
 		return elements.get(element);
 	}
-	
+
 	public String buildUri(Class<?> resource) {
 		return uriInfo.getBaseUriBuilder().path(resource).build().toString();
+	}
+	
+	public String buildUri(Class<?> resource, String path) {
+		return uriInfo.getBaseUriBuilder().path(resource).path(path).build().toString();
 	}
 	
 	public String buildUri(String path) {
@@ -97,7 +100,9 @@ public abstract class WebResource {
 	private Map<String, String> cachedURLMappings;
 	
 	public Map<String, String> createUrlMappings() {
-		if (cachedURLMappings == null) {
+		if (cachedURLMappings == null || DEBUG_NO_CACHE_URL_MAPPINGS) {
+			System.out.println("Creating new URL Mappings");
+			
 			Map<String, String> params = new HashMap<String, String>();
 			
 			params.put("stylesheets", buildUri("/styles"));
@@ -110,16 +115,16 @@ public abstract class WebResource {
 			
 			params.put("courseViewUrl", buildUri(PageCourseView.class));
 			
-			params.put("createCourseUrl", buildUri(PageCreateCourse.class));
+			params.put("createCourseUrl", buildUri(PageCreate.class, "course"));
 			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
 			
-			params.put("createSectionUrl", buildUri(PageCreateSection.class));
+			params.put("createSectionUrl", buildUri(PageCreate.class, "section"));
 			params.put("deleteSectionUrl", buildUri(PageDeleteSection.class));
 			
-			params.put("createTopicUrl", buildUri(PageCreateTopic.class));
+			params.put("createTopicUrl", buildUri(PageCreate.class, "topic"));
 			params.put("deleteTopicUrl", buildUri(PageDeleteTopic.class));
 			
-			params.put("createTestUrl", buildUri(PageCreateTest.class));
+			params.put("createTestUrl", buildUri(PageCreate.class, "test"));
 			params.put("deleteTestUrl", buildUri(PageDeleteTest.class));
 			
 			params.put("enrollUrl", buildUri(PageEnroll.class));

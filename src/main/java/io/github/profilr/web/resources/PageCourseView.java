@@ -8,7 +8,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-import org.glassfish.jersey.server.mvc.Template;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 import io.github.profilr.domain.Course;
@@ -30,7 +29,6 @@ public class PageCourseView extends WebResource {
 	
 	@GET
 	@Path("{course}")
-	@Template(name="/courseadminview")
 	public Viewable get(@PathParam("course") int courseId) throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, courseId);
 		

@@ -158,7 +158,6 @@
 			
 			<script>
 				if (window.location.hash) {
-					console.log(window.location.hash);
 					openTab(window.location.hash.substring(1));
 				}
 				
