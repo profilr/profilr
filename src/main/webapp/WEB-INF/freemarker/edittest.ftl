@@ -15,7 +15,7 @@
 				var points = $("#points").val();
 				if (label == "" || text == "" || topic =="" || points == "")
 					return;
-				$.ajax({url:'${urlMappings.editTestUrl}/${test.testId}/create-question',
+				$.ajax({url:'${urlMappings.editTestUrl}/${test.testID}/create-question',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
@@ -26,7 +26,7 @@
 			}
 		
 			function deleteQuestion(questionID) {
-				$.ajax({url:'${urlMappings.editTestUrl}/${test.testId}/delete-question/' + questionID,
+				$.ajax({url:'${urlMappings.editTestUrl}/${test.testID}/delete-question/' + questionID,
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
@@ -62,7 +62,7 @@
 				if (label == "" || text == "" || topic =="" || points == "")
 					return;
 				
-				$.ajax({url:'${urlMappings.editTestUrl}/${test.testId}/edit-question/' + questionID,
+				$.ajax({url:'${urlMappings.editTestUrl}/${test.testID}/edit-question/' + questionID,
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
@@ -80,54 +80,50 @@
 		<#include "navbar.ftl">
 		
 		<div class="bodyContainer">
-			<h1 id="title">${test.name}</h1>
+			<h1 id="title">${test.course.name} - ${test.name}</h1>
 			
-			<#if test??>
-				<table class="list">
-				
-					<tr>
-						<th class="labelColumn">Number</th>
-						<th class="textColumn">Question</th>
-						<th class="topicColumn">Topic</th>
-						<th class="pointsColumn">Points</th>
-						<th class="editColumn"></th>
-						<th class="deleteColumn"></th>
-					</tr>	
+			<table class="list">
+			
+				<tr>
+					<th class="labelColumn">Number</th>
+					<th class="textColumn">Question</th>
+					<th class="topicColumn">Topic</th>
+					<th class="pointsColumn">Points</th>
+					<th class="editColumn"></th>
+					<th class="deleteColumn"></th>
+				</tr>	
 
-					<#if test.questions??>
-					<#list test.questions as question>
-						
-						<tr id="question${question.questionId}" class="popup shown">
-							<td><p>${question.label}</p></td>
-							<td><p>${question.text}</p></td>
-							<td><p>${question.topic.name}</p></td>
-							<td><p>${question.weight}</p></td>
-							<td style="text-align: right;"><img src="${urlMappings.images}/baseline-create-24px.svg" style="cursor: pointer;" onclick="startEditQuestion(${question.questionId}, ${question.topic.topicId})"/></td>
-							<td style="text-align: right;"><img src="${urlMappings.images}/baseline-delete-24px.svg" style="cursor: pointer;" onclick="deleteQuestion(${question.questionId})"/></td>
-						</tr>
-						<tr id="editQuestion${question.questionId}" class="popup">			
-							<td><input name="label" type="text" placeholder="Label" size=5 value="${question.label}"/></td>
-							<td><input name="text" type="text" placeholder="Question" value="${question.text}"/></td>
-							<td><select name="topic"><option value="" selected disabled hidden>Pick a Topic</option><#list topics as topic><option value="${topic.topicId}">${topic.name}</option></#list></select></td>
-							<td><input name="points" type="number" placeholder="Points" style="width: 50px;" value="${question.weight}"/></td>
-							<td></td>
-							<td style="text-align: right;"><img src="${urlMappings.images}/baseline-done-24px.svg" style="cursor: pointer;" onclick="stopEditQuestion(${question.questionId})"/></td>
-						</tr>
+				<#list test.questions as question>
 					
-					</#list>
-					</#if>
-				
-					<tr id="newQuestionInput">
-						<td><input id="label" type="text" placeholder="Label" size=5/></td>
-						<td><input id="question" type="text" placeholder="Question"/></td>
-						<td><select id="topic"><option value="" selected disabled hidden>Pick a Topic</option><#list topics as topic><option value="${topic.topicId}">${topic.name}</option></#list></select></td>
-						<td><input id="points" type="number" placeholder="Points" size=5 style="width: 50px;"/></td>
+					<tr id="question${question.questionID}" class="popup shown">
+						<td><p>${question.label}</p></td>
+						<td><p>${question.text}</p></td>
+						<td><p>${question.topic.name}</p></td>
+						<td><p>${question.weight}</p></td>
+						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-create-24px.svg" style="cursor: pointer;" onclick="startEditQuestion(${question.questionID}, ${question.topic.topicID})"/></td>
+						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-delete-24px.svg" style="cursor: pointer;" onclick="deleteQuestion(${question.questionID})"/></td>
+					</tr>
+					<tr id="editQuestion${question.questionID}" class="popup">			
+						<td><input name="label" type="text" placeholder="Label" size=5 value="${question.label}"/></td>
+						<td><input name="text" type="text" placeholder="Question" value="${question.text}"/></td>
+						<td><select name="topic"><option value="" selected disabled hidden>Pick a Topic</option><#list topics as topic><option value="${topic.topicID}">${topic.name}</option></#list></select></td>
+						<td><input name="points" type="number" placeholder="Points" style="width: 50px;" value="${question.weight}"/></td>
 						<td></td>
-						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createQuestion()"/></td>
+						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-done-24px.svg" style="cursor: pointer;" onclick="stopEditQuestion(${question.questionID})"/></td>
 					</tr>
 				
-				</table>
-			</#if>
+				</#list>
+			
+				<tr id="newQuestionInput">
+					<td><input id="label" type="text" placeholder="Label" size=5/></td>
+					<td><input id="question" type="text" placeholder="Question"/></td>
+					<td><select id="topic"><option value="" selected disabled hidden>Pick a Topic</option><#list topics as topic><option value="${topic.topicID}">${topic.name}</option></#list></select></td>
+					<td><input id="points" type="number" placeholder="Points" size=5 style="width: 50px;"/></td>
+					<td></td>
+					<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createQuestion()"/></td>
+				</tr>
+			
+			</table>
 			
 		</div>
 	

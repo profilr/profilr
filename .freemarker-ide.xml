@@ -12,6 +12,10 @@
 		<resource path="src/main/webapp/WEB-INF/freemarker/deletetopic.ftl">
 			<value key="topic" object-class="io.github.profilr.domain.Topic"/>
 		</resource>
+		<resource path="src/main/webapp/WEB-INF/freemarker/edittest.ftl">
+			<value key="test" object-class="io.github.profilr.domain.Test"/>
+			<value key="topics" object-class="java.util.List" item-class="io.github.profilr.domain.Topic"/>
+		</resource>
 		<resource path="src/main/webapp/WEB-INF/freemarker/courseadminview.ftl">
 			<value key="course" object-class="io.github.profilr.domain.Course"/>
 		</resource>

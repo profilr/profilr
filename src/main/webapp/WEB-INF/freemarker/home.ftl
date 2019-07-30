@@ -44,6 +44,19 @@
 					</#list>
 				</table>
 				<br/>
+			<#else>
+				<br/>
+				<table class="list">
+					<tr class="header"><th><p>Courses you administer</p></th><th></th></tr>
+					<tr><td>
+						<p style="color: #777;">
+							You aren't approved to administrate courses. Please email
+							<a href="mailto:profilrteam@gmail.com?subject=Profilr%20Course%20Administrator%20Whitelist"> profilrteam@gmail.com </a>
+							from the same email address you used to sign up to be approved.
+						</p>
+					</td><td></td></tr>
+				</table>
+				<br/>
 			</#if>
 			
 			<br/><br/><br/>

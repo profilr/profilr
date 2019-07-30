@@ -1,10 +1,5 @@
 package io.github.profilr.web.resources;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
@@ -20,10 +15,8 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Test;
-import io.github.profilr.domain.Topic;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.UserNotAuthorizedException;
@@ -54,32 +47,9 @@ public class PageEditTest extends WebResource {
 		if (!u.isCourseAdmin(t.getCourse()))
 			throw new UserNotAuthorizedException();
 		
-		return Response.ok(getView(t)).build();
+		return Response.ok(getView("test", t, "topics", t.getCourse().getTopics())).build();
 	}
-	
-	public Map<String, Object> getView(Test test) {
-		Map<String, Object> v = super.getView();
-		Map<String, Object> testView = new HashMap<String, Object>();
-		
-		List<Map<String, Object>> topicList = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
-		
-		Course c = test.getCourse();
-		
-		for (Topic topic : c.getTopics())
-			topicList.add(topic.getView());
-		
-		for (Question question : test.getQuestions())
-			questionList.add(question.getView());
-		
-		testView.put("name", test.getName());
-		testView.put("testId", test.getTestID());
-		testView.put("questions", questionList);
-		v.put("test", testView);
-		v.put("topics", topicList);
-		return v;
-	}
-	
+
 	@POST
 	@Path("create-question")
 	public Response createQuestion(Question question) throws UserNotAuthorizedException {

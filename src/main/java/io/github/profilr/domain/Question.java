@@ -1,8 +1,5 @@
 package io.github.profilr.domain;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,15 +41,5 @@ public class Question {
 	@ManyToOne
 	@JoinColumn(name = "topic_id")
 	private Topic topic;
-	
-	public Map<String, Object> getView() {
-		Map<String, Object> v = new HashMap<String, Object>();
-		v.put("questionId", this.questionID);
-		v.put("label", this.label);
-		v.put("text", this.text);
-		v.put("weight", this.weight);
-		v.put("topic", this.topic.getView());
-		return v;
-	}
 	
 }

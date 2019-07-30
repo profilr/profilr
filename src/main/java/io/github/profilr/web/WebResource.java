@@ -101,7 +101,6 @@ public abstract class WebResource {
 	
 	public Map<String, String> createUrlMappings() {
 		if (cachedURLMappings == null || DEBUG_NO_CACHE_URL_MAPPINGS) {
-			System.out.println("Creating new URL Mappings");
 			
 			Map<String, String> params = new HashMap<String, String>();
 			
