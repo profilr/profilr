@@ -44,18 +44,4 @@ public class Course {
 				inverseJoinColumns = {@JoinColumn(name = "user_id")})
 	private List<User> admins;
 	
-	public Course() {}
-	
-	public int getCourseID() {
-		return this.courseID;
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public String toString() {
-		return this.name;
-	}
-	
 }

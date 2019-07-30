@@ -15,10 +15,12 @@
 		
 			<h1 id="title">Delete ${type}?</h1>
 			<p>Are you sure you want to delete "${name}"?</p>
-			<p>${message}</p>
-			<#if strongmessage??>
-				<p> <strong> ${strongmessage} </strong> </p>
-			</#if>
+			<p></p>
+			<p>
+				<#if strong?? && strong> <strong> </#if>
+					${message}
+				<#if strong?? && strong> </strong> </#if>
+			</p>
 			<div class="centered" style="margin: 10px"><div class="row">
 				<div id="yes" class="button blue" style="float: left; margin: 10px"><p>I am sure.</p></div>
 				<p style="float: left;"> </p>

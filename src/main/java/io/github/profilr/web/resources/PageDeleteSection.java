@@ -1,5 +1,7 @@
 package io.github.profilr.web.resources;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
@@ -33,22 +35,31 @@ public class PageDeleteSection extends WebResource {
 	}
 	
 	@GET
-	@Path("{sectionId}")
-	@Template(name="/deletesection")
-	public Response getDelete(@PathParam("sectionId") int sectionId) throws UserNotAuthorizedException {
-		Section s = entityManager.find(Section.class, sectionId);
+	@Path("{sectionID}")
+	@Template(name="/deletegeneric")
+	public Response getDelete(@PathParam("sectionID") int sectionID) throws UserNotAuthorizedException {
+		Section s = entityManager.find(Section.class, sectionID);
 		
 		User u = (User) session.get("user");
 		if (!u.isCourseAdmin(s.getCourse()))
 			throw new UserNotAuthorizedException();
 		
-		return Response.ok(getView("section", s)).build();
+		@SuppressWarnings("unchecked")
+		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
+		
+		return Response.ok(getView(
+				"type", "Section",
+				"name", s.getName(),
+				"message", "This will remove all "+s.getUsers().size()+" students enrolled in this section.",
+				"strong", true,
+				"deleteUrl", urlMappings.get("deleteSectionUrl")+"/"+s.getSectionID(),
+				"redirect", urlMappings.get("courseViewUrl")+"/"+s.getCourse().getCourseID()+"#sectionsTab"
+		)).build();
 	}
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("sectionId") int section) throws UserNotAuthorizedException {
+	@Path("{sectionID}")
+	public Response delete(@PathParam("sectionID") int section) throws UserNotAuthorizedException {
 		Section s = entityManager.find(Section.class, section);
 		
 		User u = (User) session.get("user");
