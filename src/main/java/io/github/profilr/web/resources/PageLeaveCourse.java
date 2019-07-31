@@ -22,19 +22,19 @@ import io.github.profilr.web.Session;
 import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
-@Path("delete-course")
-public class PageDeleteCourse extends WebResource {
+@Path("leave-course")
+public class PageLeaveCourse extends WebResource {
 	
 	@Inject
 	EntityManager entityManager;
 	
-	public PageDeleteCourse(Session session, @Context UriInfo uriInfo) {
+	public PageLeaveCourse(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
 	}
 	
 	@GET
 	@Path("{courseId}")
-	@Template(name="/deletecourse")
+	@Template(name="/leavecourse")
 	public Response getDelete(@PathParam("courseId") int courseId) throws UserNotAuthorizedException {
 		Course c = entityManager.find(Course.class, courseId);
 		
@@ -52,10 +52,13 @@ public class PageDeleteCourse extends WebResource {
 		Course c = entityManager.find(Course.class, courseId);
 		
 		User u = (User) session.get("user");
+		
 		if (!u.isCourseAdmin(c))
 			throw new UserNotAuthorizedException();
 		
-		entityManager.remove(c);
+		entityManager.refresh(u);
+		
+		c.getAdmins().remove(u);
 		
 		return Response.ok().build();
 	}

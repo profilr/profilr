@@ -10,9 +10,9 @@ import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseView;
 import io.github.profilr.web.resources.PageCreate;
 import io.github.profilr.web.resources.PageDelete;
-import io.github.profilr.web.resources.PageDeleteCourse;
 import io.github.profilr.web.resources.PageEnroll;
 import io.github.profilr.web.resources.PageHome;
+import io.github.profilr.web.resources.PageLeaveCourse;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageSplash;
 import io.github.profilr.web.resources.PageUnenroll;
@@ -113,7 +113,7 @@ public abstract class WebResource {
 			params.put("courseViewUrl", buildUri(PageCourseView.class));
 			
 			params.put("createCourseUrl", buildUri(PageCreate.class, "course"));
-			params.put("deleteCourseUrl", buildUri(PageDeleteCourse.class));
+			params.put("deleteCourseUrl", buildUri(PageLeaveCourse.class));
 			
 			params.put("createSectionUrl", buildUri(PageCreate.class, "section"));
 			params.put("deleteSectionUrl", buildUri(PageDelete.class, "section"));

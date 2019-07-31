@@ -23,7 +23,7 @@ import io.github.profilr.web.Session;
 import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
 
-@Path("leave-course")
+@Path("unenroll")
 public class PageUnenroll extends WebResource {
 	
 	@Inject

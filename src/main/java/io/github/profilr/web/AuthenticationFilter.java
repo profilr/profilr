@@ -3,6 +3,8 @@ package io.github.profilr.web;
 import java.io.IOException;
 
 import javax.annotation.Priority;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -23,7 +25,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 	
 	@Context
 	HttpServletRequest request;
-
+	
+	@Inject
+	EntityManager entityManager;
+	
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
 		if (info.getResourceClass().isAnnotationPresent(PreAuth.class) || info.getResourceMethod().isAnnotationPresent(PreAuth.class))
@@ -39,6 +44,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 						  .build()
 			);
 		}
+		
 	}
 	
 }

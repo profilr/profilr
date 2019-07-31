@@ -1,7 +1,14 @@
 <config>
 	<context-values>
+		<resource path="src/main/webapp/WEB-INF/freemarker/leavecourse.ftl">
+			<value key="course" object-class="io.github.profilr.domain.Course"/>
+		</resource>
 		<resource path="src/main/webapp/WEB-INF/freemarker/deletetest.ftl">
 			<value key="test" object-class="io.github.profilr.domain.Test"/>
+		</resource>
+		<resource path="src/main/webapp/WEB-INF/freemarker/home.ftl">
+			<value key="enrolledCourses" object-class="java.util.List" item-class="io.github.profilr.domain.Course"/>
+			<value key="administratedCourses" object-class="java.util.List" item-class="io.github.profilr.domain.Course"/>
 		</resource>
 		<resource path="src/main/webapp/WEB-INF/freemarker/deletesection.ftl">
 			<value key="section" object-class="io.github.profilr.domain.Section"/>
