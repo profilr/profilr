@@ -25,7 +25,7 @@
 							</tr>
 						</#if>
 					<#else>
-						<tr class="inert"><td><p style="color: #777;"> Looks like there's nothing to show here...</p></td><td></td></tr>
+						<tr class="inert"><td><p style="color: #777;">Looks like there's nothing to show here...</p></td><td></td></tr>
 					</#list>
 				</table>
 				<br/>
@@ -42,7 +42,7 @@
 							<td style="text-align: right;"><a href="${urlMappings.deleteCourseUrl}/${course.courseID}"><img src="${urlMappings.images}/baseline-exit-24px.svg"/></a></td>
 						</tr>
 					<#else>
-						<tr><td><p style="color: #777;">Looks like there's nothing to show here...</p></td><td></td></tr>
+						<tr class="inert"><td><p style="color: #777;">Looks like there's nothing to show here...</p></td><td></td></tr>
 					</#list>
 				</table>
 				<br/>
