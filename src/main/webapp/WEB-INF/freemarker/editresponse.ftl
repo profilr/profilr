@@ -19,11 +19,11 @@
 			function updateResponse(questionID) {
 				var response = {};
 				response.question_id = questionID;
-				response.correct = row.getElementsByName("correct")[0].checked;
-				response.reason = row.getElementsByName("reason")[0].value;
-				response.notes = row.getElementByName("notes")[0].value;
+				response.correct = document.getElementById(questionID + ".correct").checked;
+				response.reason = document.getElementById(questionID + ".reason").value;
+				response.notes = document.getElementById(questionID + ".notes").value;
 				
-				$.ajax({url:'${urlMappings.updateResponseUrl}',
+				$.ajax({url:'${urlMappings.updateResponseUrl}/${test.testID}',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
@@ -33,6 +33,12 @@
 				});
 			}
 
+			function checkClicked(questionID) {
+				correct = document.getElementById(questionID + ".correct");
+				reason = document.getElementById(questionID + ".reason");
+				reason.parentElement.classList.toggle("hidden", correct.checked);
+			}
+			
 		</script>
 	</HEAD>
 
@@ -41,38 +47,38 @@
 		<#include "navbar.ftl">
 		
 		<div class="bodyContainer">
+			
 			<h1 id="title">${test.name}</h1>
 			
-			<#if test??>
-				<table class="list">
-				
-					<#if test.questions??>
-					<#list test.questions as question>
-						<tr class="inert">
-							<table>
-								<tr class="inert question" id="response${question.question_id}" name="${question.question_id}">
-									<td>${question.label}</td>
-									<td>${question.text}</td>
-									<td>${question.weight}</td>
-									<td><input type="checkbox" name="correct" checked/></td>
-									<td class="popup"><choice name="reason">
-										<option hidden selected>Reason...</option>
-										<#if reasons??>
-										<#list reasons as reason>
-											<option value=${reason.value}>${reason.text}</option>
-										</#list>
-										</#if>
-									</choice></td>
-									<td><input type="text" name="notes"/></td>
-									
-								</tr>
-							</table>
-						</tr>
-					</#list>
-					</#if>
-					
-				</table>
+			<table class="list" style="text-align: center;">
+			<tr>
+				<th>Number</th>
+				<th>Question</th>
+				<th>Points</th>
+				<th>Correct?</th>
+				<th>Reason Missed</th>
+				<th>Notes</th>
+			</tr>
+			<#if test.questions??>
+				<#list test.questions as question>
+					<tr class="inert question" name="${question.questionID}">
+						<td>${question.label}</td>
+						<td>${question.text}</td>
+						<td>${question.weight}</td>
+						<td><input type="checkbox" id="${question.questionID}.correct" onclick="checkClicked('${question.questionID}')" checked/></td>
+						<td class="hidden"><select id="${question.questionID}.reason">
+							<option hidden selected>Reason...</option>
+							<#if reasons??>
+							<#list reasons as reason>
+								<option value=${reason.value}>${reason.text}</option>
+							</#list>
+							</#if>
+						</select></td>
+						<td><input type="text" id="${question.questionID}.notes"/></td>
+					</tr>
+				</#list>
 			</#if>
+			</table>
 			
 		</div>
 		

@@ -44,4 +44,15 @@ public class Course {
 				inverseJoinColumns = {@JoinColumn(name = "user_id")})
 	private List<User> admins;
 	
+	public boolean equals(Object other) {
+		if (!(other instanceof Course))
+			return false;
+		
+		return ((Course) other).getCourseID() == this.courseID;
+	}
+	
+	public String toString() {
+		return Integer.toString(this.courseID);
+	}
+	
 }

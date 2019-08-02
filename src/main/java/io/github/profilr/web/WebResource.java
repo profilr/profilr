@@ -128,6 +128,9 @@ public abstract class WebResource {
 			params.put("unenrollUrl", buildUri(PageUnenroll.class));
 			
 			params.put("editTestUrl", buildUri("/edit-test"));
+			params.put("editResponseUrl", buildUri("/tests"));
+			
+			params.put("updateResponseUrl", buildUri("/edit-response"));
 			
 			cachedURLMappings = params;
 		}
