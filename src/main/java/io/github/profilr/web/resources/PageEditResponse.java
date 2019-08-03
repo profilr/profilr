@@ -1,5 +1,7 @@
 package io.github.profilr.web.resources;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
@@ -54,13 +56,23 @@ public class PageEditResponse extends WebResource {
 		
 		User u = (User) session.get("user");
 		
-		//System.out.println(u.getEnrolledCourses());
-		//System.out.println(t.getCourse());
-		
-		//if (!u.getEnrolledCourses().contains(t.getCourse()))
-			//throw new UserNotAuthorizedException();
+		if (!u.enrolledInCourse(t.getCourse()))
+			throw new UserNotAuthorizedException();
 		
 		return Response.ok(getView("test", t, "reasons", reasons)).build();
+	}
+	
+	@GET
+	@Path("get-response-data")
+	public List<Answer> getResponseData() {
+		User u = (User) session.get("user");
+		Test t = entityManager.find(Test.class, testID);
+		
+		List<Answer> l = u.getResponsesForTest(t, entityManager);
+		
+		System.out.println(l);
+		
+		return l;
 	}
 	
 	@POST
@@ -70,7 +82,7 @@ public class PageEditResponse extends WebResource {
 		
 		Test test = entityManager.find(Test.class, testID);
 		
-		if (!u.getEnrolledCourses().contains(test.getCourse()))
+		if (!u.enrolledInCourse(test.getCourse()))
 			throw new UserNotAuthorizedException();
 		
 		a.setUser(u);
@@ -81,17 +93,49 @@ public class PageEditResponse extends WebResource {
 	}
 	
 	@POST
-	@Path("edit-response/{response-id}")
+	@Path("edit-response/")
 	public Response editResponse(Answer a) throws UserNotAuthorizedException {
 		User u = (User)session.get("user");
 		
 		Test test = entityManager.find(Test.class, testID);
 		
-		if (!u.getEnrolledCourses().contains(test.getCourse()))
+		if (!u.enrolledInCourse(test.getCourse()))
 			throw new UserNotAuthorizedException();
 		
 		a.setUser(u);
-		entityManager.merge(a);
+		
+		List<Answer> old = u.getResponsesForQuestion(a.getQuestion(), entityManager);
+		if (old.size() > 0) {
+			a.setAnswerID(old.get(0).getAnswerID());
+			entityManager.merge(a);
+		} else {
+			entityManager.persist(a);
+		}
+		
+		return Response.ok().build();
+	}
+	
+	@POST
+	@Path("edit-responses/")
+	public Response editResponses(List<Answer> l) throws UserNotAuthorizedException {
+		User u = (User)session.get("user");
+		
+		Test test = entityManager.find(Test.class, testID);
+		
+		if (!u.enrolledInCourse(test.getCourse()))
+			throw new UserNotAuthorizedException();
+		
+		for (Answer a : l) {
+			a.setUser(u);
+			
+			List<Answer> old = u.getResponsesForQuestion(a.getQuestion(), entityManager);
+			if (old.size() > 0) {
+				a.setAnswerID(old.get(0).getAnswerID());
+				entityManager.merge(a);
+			} else {
+				entityManager.persist(a);
+			}
+		}
 		
 		return Response.ok().build();
 	}

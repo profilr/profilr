@@ -15,6 +15,8 @@ public class JsonNodeCheckedExtensions {
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T getValueChecked(JsonNode node, JsonParser parser, String key, Class<T> clazz) throws JsonParseException {
+		if (clazz.equals(Boolean.class))
+			return (T) getValueChecked(node, parser, key, Boolean.class, JsonNode::isBoolean, JsonNode::asBoolean);
 		if (clazz.equals(String.class))
 			return (T) getValueChecked(node, parser, key, String.class, JsonNode::isTextual, JsonNode::asText);
 		if (clazz.equals(int.class) || clazz.equals(Integer.class))

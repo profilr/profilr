@@ -9,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "TestQuestions")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="questionID")
 public class Question {
 	
 	@Id
@@ -25,6 +30,7 @@ public class Question {
 	@Column(name = "question_id", nullable = false, unique = true)
 	private int questionID;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "test_id")
 	private Test test;
@@ -38,6 +44,7 @@ public class Question {
 	@Column(name = "weight")
 	private int weight;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "topic_id")
 	private Topic topic;

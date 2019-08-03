@@ -1,0 +1,34 @@
+.list {
+	table-layout: fixed;
+	
+}
+
+.list td { border: 1px solid #ddd; }
+
+.labelColumn {
+	width: 10%;
+}
+
+.textColumn {
+	width: 40%;
+}
+
+.topicColumn {
+	width: 10%;
+}
+
+.pointsColumn {
+	width: 5%;
+}
+
+.correctColumn {
+	width: 5%;
+}
+
+.reasonColumn {
+	width: 10%;
+}
+
+.notesColumn {
+	width: 20%;
+}

@@ -9,11 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "Topics")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="topicID")
 public class Topic {
 
 	@Id

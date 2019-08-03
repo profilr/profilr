@@ -8,6 +8,7 @@ import javax.ws.rs.ext.Provider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import io.github.profilr.domain.Answer;
 import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Test;
 
@@ -26,6 +27,9 @@ public class JacksonObjectMapperProvider implements ContextResolver<ObjectMapper
 		} else if (type.equals(Question.class)) {
 			serializationModule.addDeserializer(Question.class, new QuestionDeserializer(entityManager));
 			serializationModule.addSerializer(Question.class, new QuestionSerializer());
+		} else if (type.equals(Answer.class)) {
+			serializationModule.addDeserializer(Answer.class, new AnswerDeserializer(entityManager));
+			serializationModule.addSerializer(Answer.class, new AnswerSerializer());
 		}
 		mapper.registerModule(serializationModule);
 		return mapper;
