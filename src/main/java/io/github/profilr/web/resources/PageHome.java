@@ -1,6 +1,7 @@
 package io.github.profilr.web.resources;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -37,7 +38,7 @@ public class PageHome extends WebResource {
 		
 		entityManager.refresh(session.get("user"));
 		
-		Set<Course> enrolledCourses = ((User) session.get("user")).getEnrolledCourses();
+		Set<Course> enrolledCourses = ((User) session.get("user")).getEnrolledCourses().stream().filter(c -> c.getAdmins().size() > 0).collect(Collectors.toSet());
 
 		Set<Course> administratedCourses = ((User) session.get("user")).getAdministratedCourses();
 		
