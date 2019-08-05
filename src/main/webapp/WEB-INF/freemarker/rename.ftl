@@ -8,17 +8,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		
 		<script>
-			function createCourse() {
-				if ($("#courseName").val() === "")
+			function rename() {
+				if ($("#name").val() === "")
 					return $("#requiredTooltip").show();
 				$.ajax({
-	                url: '${urlMappings.createCourseUrl}',
+	                url: '${renameUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseName=" + $("#courseName").val(),
+	                data: "name=" + $("#name").val(),
 	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.homeUrl}");
+	                	window.location.replace("${redirect}");
 	                },
 	                error: function( jqXhr, textStatus, errorThrown ){
 	                    console.log( errorThrown );
@@ -34,15 +34,14 @@
 		
 		<div class="bodyContainer">
 		
-			<h1 id="title">Create a Course</h1>
-			<p>Course Name <span id="requiredTooltip" class="tooltip" style="display: none"> (Required field) </span></p>
-			<input id="courseName" type="text"/>
-			
-			<div id="submit" class="button blue" style="float: right;" onclick="createCourse()"><p>Create</p></div>
+			<h1 id="title">Rename "${name}"</h1>
+			<p>New Name <span id="requiredTooltip" class="tooltip" style="display: none"> (Required field) </span></p>
+			<input id="name" type="text" value="${name}"/>
+			<div id="submit" class="button blue" style="float: right;" onclick="rename()"><p>Rename</p></div>
 		</div>
 		
 		<script>
-			$("#courseName").keyup(function(e) { if (e.keyCode == 13) { createCourse(); } });
+			$("#name").keyup(function(e) { if (e.keyCode == 13) { rename(); } });
 		</script>
 	
 	</BODY>

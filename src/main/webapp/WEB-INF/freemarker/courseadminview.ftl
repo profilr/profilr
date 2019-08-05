@@ -1,6 +1,6 @@
-<HTML>
+<html>
 
-	<HEAD>
+	<head>
 		<Title>Profilr</Title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/courseAdminViewStyle.css"/>
@@ -78,9 +78,9 @@
 			}
 		</script>
 		
-	</HEAD>
+	</head>
 
-	<BODY>
+	<body>
 			
 		<#include "navbar.ftl">
 		
@@ -102,7 +102,10 @@
 						<tr>
 							<td><p>${section.name}</p></td>
 							<td style="text-align: right;"><p>Join Code: ${section.joinCode}</p></td>
-							<td style="text-align: right;"><a href="${urlMappings.deleteSectionUrl}/${section.sectionID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+							<td style="text-align: right;">
+								<a href="${urlMappings.renameSectionUrl}/${section.sectionID}"><img src="${urlMappings.images}/baseline-create-24px.svg"/></a>
+								<a href="${urlMappings.deleteSectionUrl}/${section.sectionID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
+							</td>
 						</tr>
 					</#list>
 					<tr><td>
@@ -120,7 +123,10 @@
 					<#list course.topics as topic>
 						<tr>
 							<td><p>${topic.name}</p></td>
-							<td style="text-align: right;"><a href="${urlMappings.deleteTopicUrl}/${topic.topicID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+							<td style="text-align: right;">
+								<a href="${urlMappings.renameTopicUrl}/${topic.topicID}"><img src="${urlMappings.images}/baseline-create-24px.svg"/></a>
+								<a href="${urlMappings.deleteTopicUrl}/${topic.topicID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
+							</td>
 						</tr>
 					</#list>
 					<tr>
@@ -141,7 +147,10 @@
 					<#list course.tests as test>
 						<tr>
 							<td><a href="${urlMappings.editTestUrl}/${test.testID}"><p>${test.name}</p></a></td>
-							<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+							<td style="text-align: right;">
+								<a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-create-24px.svg"/></a>
+								<a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
+							</td>
 						</tr>
 					</#list>
 					<tr>
@@ -169,6 +178,6 @@
 			
 		</div>
 	
-	</BODY>
+	</body>
 
-</HTML>
+</html>

@@ -14,6 +14,7 @@ import io.github.profilr.web.resources.PageEnroll;
 import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageLeaveCourse;
 import io.github.profilr.web.resources.PageProfile;
+import io.github.profilr.web.resources.PageRename;
 import io.github.profilr.web.resources.PageSplash;
 import io.github.profilr.web.resources.PageUnenroll;
 
@@ -116,12 +117,15 @@ public abstract class WebResource {
 			params.put("deleteCourseUrl", buildUri(PageLeaveCourse.class));
 			
 			params.put("createSectionUrl", buildUri(PageCreate.class, "section"));
+			params.put("renameSectionUrl", buildUri(PageRename.class, "section"));
 			params.put("deleteSectionUrl", buildUri(PageDelete.class, "section"));
 			
 			params.put("createTopicUrl", buildUri(PageCreate.class, "topic"));
+			params.put("renameTopicUrl", buildUri(PageRename.class, "topic"));
 			params.put("deleteTopicUrl", buildUri(PageDelete.class, "topic"));
 			
 			params.put("createTestUrl", buildUri(PageCreate.class, "test"));
+			params.put("renameTestUrl", buildUri(PageRename.class, "test"));
 			params.put("deleteTestUrl", buildUri(PageDelete.class, "test"));
 			
 			params.put("enrollUrl", buildUri(PageEnroll.class));
