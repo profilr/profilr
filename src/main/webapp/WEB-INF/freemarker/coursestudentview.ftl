@@ -21,7 +21,6 @@
 					<#list course.tests as test>
 						<tr>
 							<td><a href="${urlMappings.editResponseUrl}/${test.testID}"><p>${test.name}</p></a></td>
-							<td style="text-align: right;"><a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
 						</tr>
 					<#else>
 						<tr>
