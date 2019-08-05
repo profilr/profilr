@@ -12,6 +12,8 @@ import io.github.profilr.web.resources.PageCreate;
 import io.github.profilr.web.resources.PageDelete;
 import io.github.profilr.web.resources.PageEnroll;
 import io.github.profilr.web.resources.PageHome;
+import io.github.profilr.web.resources.PageInvite;
+import io.github.profilr.web.resources.PageKick;
 import io.github.profilr.web.resources.PageLeaveCourse;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageRename;
@@ -136,6 +138,9 @@ public abstract class WebResource {
 			params.put("editResponseUrl", buildUri("/tests"));
 			
 			params.put("updateResponseUrl", buildUri("/edit-response"));
+			
+			params.put("inviteAdminUrl", buildUri(PageInvite.class));
+			params.put("kickUrl", buildUri(PageKick.class));
 			
 			cachedURLMappings = params;
 		}

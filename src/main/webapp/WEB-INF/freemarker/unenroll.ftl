@@ -16,10 +16,10 @@
 			<h1 id="title">Leave Course?</h1>
 			<p>Are you sure you want to leave ${course.name}?</p>
 			
-			<div class="centered"><div class="row">
-				<div id="yes" class="button blue" style="float: left;"><p>I am sure.</p></div>
+			<div class="centered" style="margin: 10px"><div class="row">
+				<div id="yes" class="button blue" style="float: left; margin: 10px"><p>I am sure.</p></div>
 				<p style="float: left;"> </p>
-				<div id="no" class="button blue" style="float: left;"><p>Nevermind.</p></div>
+				<div id="no" class="button blue" style="float: left; margin: 10px"><p>No, go back.</p></div>
 			</div></div>
 		</div>
 	

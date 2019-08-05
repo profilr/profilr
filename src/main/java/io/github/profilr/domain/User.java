@@ -27,7 +27,7 @@ import lombok.Data;
 @Entity
 @Table( name = "Users" )
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="userID")
-public class User {
+public class User implements Comparable<User> {
 	
 	@Id
 	@Column(name = "user_id", nullable = false, unique = true)
@@ -117,6 +117,11 @@ public class User {
 	@Override
 	public String toString() {
 		return String.format("User: %s (%s)", getFullName(), getUserID());
+	}
+	
+	@Override
+	public int compareTo(User u) {
+		return getFullName().compareTo(u.getFullName());
 	}
 	
 }

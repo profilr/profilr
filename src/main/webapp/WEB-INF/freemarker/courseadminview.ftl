@@ -18,6 +18,8 @@
 				
 				document.getElementById(tabName).style.display = "block";
 				document.getElementById(tabName + "Link").classList.add("highlighted");
+				
+				window.location.hash = "#"+tabName;
 			}
 			
 			function createSection() {
@@ -76,6 +78,33 @@
 	                }
 	            });
 			}
+			
+			function inviteAdmin() {
+				if ($("#inviteEmail").val() === "")
+					return $("#inviteErrorTooltip").html("(Required Field)");
+				$.ajax({
+	                url: '${urlMappings.inviteAdminUrl}',
+	                dataType: 'text',
+	                type: 'post',
+	                contentType: 'application/x-www-form-urlencoded',
+	                data: "email=" + $("#inviteEmail").val() + "&courseID=" + ${course.courseID},
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    if (jqXhr.status === 404) {
+	                    	$("#inviteErrorTooltip").html("Error: User not found");
+	                    } else if (jqXhr.status == 400) {
+	                    	$("#inviteErrorTooltip").html("Error: User is already a student or admin"); 
+	                    } else {
+	                    	$("#inviteErrorTooltip").html("An unknown error occured. Please try again later");
+	                    	console.log(errorThrown);	
+	                    }
+	                }
+	            });
+			}
+			
+			
 		</script>
 		
 	</head>
@@ -89,9 +118,10 @@
 			
 			<table class="tabBar">
 				<tr>
-					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
-					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
-					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 33%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
+					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
+					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
+					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
+					<td class="tabLink" id="membersTabLink" onclick="openTab('membersTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Members</p></a></td>
 				</tr>
 			</table>
 			
@@ -165,6 +195,47 @@
 				</table>
 			</div>
 			
+			<div id="membersTab" class="tab">
+				<h2>Members</h2>
+				<h3>Admins</h3>
+				<table class="List">
+					<#list course.admins?sort as admin>
+						<tr class="inert">
+							<td style="width: 45%"> ${admin.fullName} </td>
+							<td style="width: 45%"> ${admin.emailAddress} </td>
+							<td style="width: 10%" align="right">
+								<a href="
+									<#if userID == admin.userID>
+										${urlMappings.deleteCourseUrl}/${course.courseID}
+									<#else>
+										${urlMappings.kickUrl}/${course.courseID}/${admin.userID}
+									</#if>
+								">
+									<img src="${urlMappings.images}/baseline-exit-24px.svg"/>
+								</a>
+							</td>
+						</tr>
+					</#list>
+					<tr class="inert">
+						<td>Enter email address to invite an administrator</td>
+						<td><input type="email" id="inviteEmail" placeholder="Email address..."/> <span id="inviteErrorTooltip" class="tooltip"></span></td>
+						<td align="right"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="inviteAdmin()"/></td>
+					</tr>
+				</table>
+				<#list course.sections as section>
+				<h3>${section.name}</h3>
+					<table class="List">
+						<#list section.users?sort as student>
+							<tr>
+								<td style="width: 45%"> ${student.fullName} </td>
+								<td style="width: 45%"> ${student.emailAddress} </td>
+								<td style="width: 10%" align="right"><a href="${urlMappings.kickUrl}/${course.courseID}/${student.userID}"><img src="${urlMappings.images}/baseline-exit-24px.svg"/></a></td>
+							</tr>
+						</#list>
+					</table>				
+				</#list>
+			</div>
+			
 			<script>
 				if (window.location.hash) {
 					openTab(window.location.hash.substring(1));
@@ -173,6 +244,7 @@
 				$("#sectionName").keyup(function(e) { if (e.keyCode == 13) { createSection(); } });
 				$("#topicName").keyup(function(e) { if (e.keyCode == 13) { createTopic(); } });
 				$("#testName").keyup(function(e) { if (e.keyCode == 13) { createTest(); } });
+				$("#inviteEmail").keyup(function(e) { if (e.keyCode == 13) { inviteAdmin(); } });
 				
 			</script>
 			

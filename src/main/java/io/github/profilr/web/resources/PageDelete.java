@@ -37,7 +37,7 @@ public class PageDelete extends WebResource {
 	
 	@GET
 	@Path("topic/{topicID}")
-	@Template(name="/deletegeneric")
+	@Template(name="/delete")
 	public Response getDeleteTopic(@PathParam("topicID") int topicID) throws UserNotAuthorizedException {
 		Topic t = entityManager.find(Topic.class, topicID);
 		
@@ -74,7 +74,7 @@ public class PageDelete extends WebResource {
 	
 	@GET
 	@Path("section/{sectionID}")
-	@Template(name="/deletegeneric")
+	@Template(name="/delete")
 	public Response getDeleteSection(@PathParam("sectionID") int sectionID) throws UserNotAuthorizedException {
 		Section s = entityManager.find(Section.class, sectionID);
 		
@@ -111,7 +111,7 @@ public class PageDelete extends WebResource {
 	
 	@GET
 	@Path("test/{testID}")
-	@Template(name="/deletegeneric")
+	@Template(name="/delete")
 	public Response getDeleteTest(@PathParam("testID") int testId) throws UserNotAuthorizedException {
 		Test t = entityManager.find(Test.class, testId);
 		

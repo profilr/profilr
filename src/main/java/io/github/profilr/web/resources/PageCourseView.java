@@ -36,7 +36,8 @@ public class PageCourseView extends WebResource {
 		
 		// If the users is an admin of this course then give them the admin view.
 		if (u.isCourseAdmin(c))
-			return new Viewable("/courseadminview", getView("course", c));
+			return new Viewable("/courseadminview", getView("course", c, "userID", u.getUserID()));
+		// userID is used to determine which user to send to the kick page and which user to send to the leave page
 		
 		// If they're not an admin we need to find what section they are in.
 		Section s = u.getSectionFromCourse(c);
