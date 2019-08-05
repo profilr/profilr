@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
+import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
@@ -134,6 +135,40 @@ public class PageRename extends WebResource {
 			throw new UserNotAuthorizedException();
 		
 		t.setName(name);
+		
+		return Response.ok().build();
+	}
+	
+	@GET
+	@Path("course/{courseID}")
+	@Template(name="/rename")
+	public Response getRenameCourse(@PathParam("courseID") int courseID) throws UserNotAuthorizedException {
+		Course c = entityManager.find(Course.class, courseID);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
+		
+		return Response.ok(getView(
+				"name", c.getName(),
+				"renameUrl", urlMappings.get("renameCourseUrl")+"/"+c.getCourseID(),
+				"redirect", urlMappings.get("homeUrl")
+		)).build();
+	}
+	
+	@POST
+	@Path("course/{courseID}")
+	public Response renameCourse(@PathParam("courseID") int courseID, @FormParam("name") String name) throws UserNotAuthorizedException {
+		Course c = entityManager.find(Course.class, courseID);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(c))
+			throw new UserNotAuthorizedException();
+		
+		c.setName(name);
 		
 		return Response.ok().build();
 	}

@@ -37,7 +37,10 @@
 					<#list administratedCourses as course>
 						<tr>
 							<td><a href="${urlMappings.courseViewUrl}/${course.courseID}"><p>${course.name}</p></a></td>
-							<td style="text-align: right;"><a href="${urlMappings.deleteCourseUrl}/${course.courseID}"><img src="${urlMappings.images}/baseline-exit-24px.svg"/></a></td>
+							<td style="text-align: right;">
+								<a href="${urlMappings.renameCourseUrl}/${course.courseID}"><img src="${urlMappings.images}/baseline-create-24px.svg"/></a>
+								<a href="${urlMappings.deleteCourseUrl}/${course.courseID}"><img src="${urlMappings.images}/baseline-exit-24px.svg"/></a>
+							</td>
 						</tr>
 					<#else>
 						<tr class="inert"><td><p style="color: #777;">Looks like there's nothing to show here...</p></td><td></td></tr>

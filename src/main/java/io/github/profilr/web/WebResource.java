@@ -114,6 +114,7 @@ public abstract class WebResource {
 			params.put("courseViewUrl", buildUri(PageCourseView.class));
 			
 			params.put("createCourseUrl", buildUri(PageCreate.class, "course"));
+			params.put("renameCourseUrl", buildUri(PageRename.class, "course"));
 			params.put("deleteCourseUrl", buildUri(PageLeaveCourse.class));
 			
 			params.put("createSectionUrl", buildUri(PageCreate.class, "section"));
