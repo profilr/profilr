@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -24,6 +25,7 @@ import lombok.Data;
 @Entity
 @Table(name = "Sections")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="sectionID")
+@NamedQuery(name = Section.SELECT_VIA_JOIN_CODE_NQ, query = "FROM Section where joinCode = :joinCode")
 public class Section {
 	
 	@Id
@@ -46,9 +48,7 @@ public class Section {
 				joinColumns = { @JoinColumn (name = "section_id") },
 				inverseJoinColumns = {@JoinColumn (name = "user_id")})
 	private List<User> users = new ArrayList<User>();
-	
-	public Course getCourse() {
-		return this.course;
-	}
+
+	public static final String SELECT_VIA_JOIN_CODE_NQ = "Section.SELECT_VIA_JOIN_CODE_NQ";
 	
 }

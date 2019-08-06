@@ -16,8 +16,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
@@ -44,14 +42,9 @@ public class PageEnroll extends WebResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response create(@FormParam("joinCode") String joinCode) {
-		org.hibernate.Session session = entityManager.unwrap(org.hibernate.Session.class);
-		
-		@SuppressWarnings("deprecation")
-		Criteria c = session.createCriteria(Section.class);
-		c.add(Restrictions.eq("joinCode", joinCode));
-		
-		@SuppressWarnings("unchecked")
-		List<Section> result = c.list();
+		List<Section> result = entityManager.createNamedQuery(Section.SELECT_VIA_JOIN_CODE_NQ, Section.class)
+											.setParameter("joinCode", joinCode)
+											.getResultList();
 		
 		if (result.size() == 0)
 			return Response.status(Status.NOT_FOUND).build();

@@ -101,6 +101,8 @@ public class User implements Comparable<User> {
 	}
 	
 	public boolean isCourseAdmin(Course c) {
+		if (c == null)
+			return false;
 		for (Course course : this.getAdministratedCourses())
 			if (c.getCourseID() == course.getCourseID())
 				return true;

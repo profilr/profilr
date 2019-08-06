@@ -17,8 +17,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Question;
@@ -164,11 +162,10 @@ public class PageCreate extends WebResource {
 	}
 
 	private boolean isValidCode(String joinCode) {
-		org.hibernate.Session session = entityManager.unwrap(org.hibernate.Session.class);
-		@SuppressWarnings("deprecation")
-		Criteria c = session.createCriteria(Section.class);
-		c.add(Restrictions.eq("joinCode", joinCode));
-		return c.list().size() == 0;
+		return entityManager.createNamedQuery(Section.SELECT_VIA_JOIN_CODE_NQ, Section.class)
+							.setParameter("joinCode", joinCode)
+							.getResultList()
+							.size() == 0;
 	}
 
 }

@@ -6,6 +6,8 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import io.github.profilr.web.Session;
+
 @Provider
 public class UserNotAuthorizedMapper implements ExceptionMapper<UserNotAuthorizedException> {
 
@@ -17,7 +19,10 @@ public class UserNotAuthorizedMapper implements ExceptionMapper<UserNotAuthorize
 	
 	@Override
 	public Response toResponse(UserNotAuthorizedException exception) {
-		return Response.status(401).entity(new UserNotAuthorizedViewable(session, uriInfo).getViewable()).build();
+		return Response.status(401)
+					   .entity(new ExceptionMapperViewable(session, uriInfo)
+								.getViewable("/notauthorized"))
+					   .build();
 	}
 
 }
