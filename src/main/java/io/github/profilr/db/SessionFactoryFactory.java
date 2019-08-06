@@ -12,6 +12,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import io.github.profilr.domain.Answer;
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Question;
+import io.github.profilr.domain.Reason;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
@@ -32,6 +33,7 @@ public class SessionFactoryFactory implements Supplier<SessionFactory> {
 				.addAnnotatedClass(Test.class)
 				.addAnnotatedClass(Topic.class)
 				.addAnnotatedClass(Question.class)
+				.addAnnotatedClass(Reason.class)
 				.addAnnotatedClass(Answer.class)
 				.getMetadataBuilder()
 				.applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)

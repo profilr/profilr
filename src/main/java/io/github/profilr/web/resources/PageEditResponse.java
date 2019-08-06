@@ -18,13 +18,12 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Answer;
+import io.github.profilr.domain.Reason;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
-
-import static io.github.profilr.domain.Reason.REASONS;
 
 @Path("tests/{test-id}")
 @Produces(MediaType.APPLICATION_JSON)
@@ -52,7 +51,9 @@ public class PageEditResponse extends WebResource {
 		if (!u.enrolledInCourse(t.getCourse()))
 			throw new UserNotAuthorizedException();
 		
-		return Response.ok(getView("test", t, "reasons", REASONS)).build();
+		List<Reason> reasons = entityManager.createNamedQuery(Reason.SELECT_ALL_NQ, Reason.class).getResultList();
+		
+		return Response.ok(getView("test", t, "reasons", reasons)).build();
 	}
 	
 	@GET
@@ -84,7 +85,7 @@ public class PageEditResponse extends WebResource {
 	}
 	
 	@POST
-	@Path("edit-response/")
+	@Path("edit-response")
 	public Response editResponse(Answer a) throws UserNotAuthorizedException {
 		User u = (User)session.get("user");
 		

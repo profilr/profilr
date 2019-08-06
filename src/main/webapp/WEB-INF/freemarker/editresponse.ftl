@@ -9,34 +9,6 @@
 
 		<script>
 		
-			/*function updateResponses() {
-				var responses = [];
-				elements = document.getElementsByClassName("question");
-				var i;
-				for (i = 0; i < elements.length; i++) {
-					questionID = elements[i].getAttribute("name");
-					
-					var response = {};
-					response.question_id = parseInt(questionID);
-					response.correct = document.getElementById(questionID + ".correct").checked;
-					response.reason = document.getElementById(questionID + ".reason").value;
-					response.notes = document.getElementById(questionID + ".notes").value;
-					
-					if (reason == '-1')
-						continue;
-					
-					responses.push(response);
-				}
-				
-				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/edit-responses',
-					dataType: 'text',
-					type: 'post',
-					contentType: 'application/json',
-					data: JSON.stringify(responses),
-					success: function(jqxhr, textStatus, data) {},
-					error: function(error, textStatus, jqxhr){ console.log(error); }
-				});
-			}*/
 		
 			function updateResponses() {
 				elements = document.getElementsByClassName("question");
@@ -48,22 +20,23 @@
 			}
 			
 			function updateResponse(questionID) {
-				var response = {};
-				response.question_id = parseInt(questionID);
-				response.correct = document.getElementById(questionID + ".correct").checked;
-				response.reason = document.getElementById(questionID + ".reason").value;
-				response.notes = document.getElementById(questionID + ".notes").value;
+				var response = {
+					"question_id": parseInt(questionID),
+					"correct": document.getElementById(questionID + ".correct").checked,
+					"reason_id": parseInt(document.getElementById(questionID + ".reason").value) === -1 
+								? null : parseInt(document.getElementById(questionID + ".reason").value),
+					"notes": document.getElementById(questionID + ".notes").value
+				};
 				
-				if (reason == "-1")
-					return;
+				console.log(response);
 				
 				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/edit-response',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
 					data: JSON.stringify(response),
-					success: function(jqxhr, textStatus, data) {},
-					error: function(error, textStatus, jqxhr){ console.log(error); }
+					success: function(jqxhr, textStatus, data) {alert(questionID)},
+					error: function(error, textStatus, s){ console.log(error); }
 				});
 			}
 
@@ -94,7 +67,7 @@
 					dataType: 'text',
 					type: 'get',
 					success: function(jqxhr, textStatus, data) { refreshResponses(JSON.parse(data.responseText)); },
-					error: function(error, textStatus, jqxhr){ console.log(error); }
+					error: function(jqxhr, textStatus, error ){ console.log(error); }
 				});
 			}
 			
@@ -129,11 +102,9 @@
 						<td><input type="checkbox" id="${question.questionID}.correct" onclick="checkClicked('${question.questionID}')" checked/></td>
 						<td><select id="${question.questionID}.reason" class="hidden">
 							<option hidden selected value="-1">Reason...</option>
-							<#if reasons??>
 							<#list reasons as reason>
-								<option value=${reason.value}>${reason.text}</option>
+								<option value=${reason.reasonID}>${reason.text}</option>
 							</#list>
-							</#if>
 						</select></td>
 						<td><input type="text" id="${question.questionID}.notes"/></td>
 					</tr>

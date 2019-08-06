@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import io.github.profilr.domain.Answer;
 import io.github.profilr.domain.Question;
+import io.github.profilr.domain.Reason;
 import lombok.experimental.ExtensionMethod;
 
 @ExtensionMethod(JsonNodeCheckedExtensions.class)
@@ -30,10 +31,13 @@ public class AnswerDeserializer extends StdDeserializer<Answer> {
 	public Answer deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		JsonNode node = p.readValueAsTree();
 		
+		System.out.println(node.toString());
+		
 		Answer a = new Answer();
 		a.setCorrect(node.getValueChecked(p, "correct", Boolean.class));
 		a.setNotes(node.getValueChecked(p, "notes", String.class));
-		a.setReason(node.getValueChecked(p, "reason", String.class));
+		a.setReason(node.hasNonNull("reason_id") ?
+				entityManager.find(Reason.class, (Object) node.getValueChecked(p, "reason_id", Integer.class)) : null);
 		a.setQuestion(entityManager.find(Question.class, (Object) node.getValueChecked(p, "question_id", Integer.class)));
 		
 		return a;

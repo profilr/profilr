@@ -43,28 +43,14 @@ public class Answer {
 	
 	@Column(name = "correct")
 	private boolean correct;
-	
-	@Column(name = "reason")
-	private String reason;
 
+	@ManyToOne
+	@JoinColumn(name = "reason_id", nullable = true)
+	private Reason reason;
+	
 	@Column(name = "notes")
-	private String notes; // for better identification like #1 or #3b
+	private String notes;
 	
-	public String toString() {
-		return "[ AnswerID: " + this.answerID + ", QuestionID: " + this.question.getQuestionID() + ", UserID: " + this.getUser().getUserID() + ", Correct: " + this.correct + ", Reason: " + this.reason + ", Notes: " + this.notes + "]";
-	}
-	
-	public boolean equals(Object other) {
-		if (!(other instanceof Answer))
-			return false;
-		
-		return ((Answer) other).getAnswerID() == this.answerID;
-	}
-	
-	public int hashCode() {
-		return super.hashCode();
-	}
-
 	public static final String GET_BY_USER_AND_TEST_NQ = "ANSWER.GET_BY_USER_AND_TEST";
 	public static final String GET_BY_USER_AND_QUESTION_NQ = "ANSWER.GET_BY_USER_AND_QUESTION";
 	

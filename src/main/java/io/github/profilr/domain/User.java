@@ -17,7 +17,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Entity
@@ -39,8 +41,9 @@ public class User implements Comparable<User> {
 	@Column(name = "family_name", nullable = false)
 	private String familyName;
 	
-	@Column(name = "course_admin_approved", nullable = false)
-	private boolean courseAdminApproved;
+	@Column(name = "can_create_course", nullable = false)
+	@Getter(AccessLevel.PRIVATE)
+	private boolean canCreateCourse;
 	
 	@ManyToMany(mappedBy = "admins", fetch = FetchType.EAGER)
 	private Set<Course> administratedCourses = new HashSet<Course>();
@@ -92,6 +95,10 @@ public class User implements Comparable<User> {
 			if (s.getCourse().getCourseID() == c.getCourseID())
 				return s;
 		return null;
+	}
+	
+	public boolean canCreateCourse() {
+		return isCanCreateCourse();
 	}
 	
 	@Override

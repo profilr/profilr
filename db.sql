@@ -9,7 +9,7 @@ CREATE TABLE `Users` (
 	`email_address` varchar(30) not null,
 	`given_name` varchar(30) not null,
 	`family_name` varchar(30) not null,
-	`course_admin_approved` boolean default false,
+	`can_create_course` boolean default false,
 	PRIMARY KEY (`user_id`),
 	UNIQUE KEY `Email_UNQ` (`email_address`)
 );
@@ -83,16 +83,36 @@ CREATE TABLE `TestQuestions` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE `Reasons` (
+	`reason_id` int(10) not null auto_increment,
+	`text` varchar(50) not null,
+	PRIMARY KEY (`reason_id`),
+	UNIQUE KEY `reason_unq` (`text`)
+);
+
 CREATE TABLE `TestQuestionAnswers` (
 	`answer_id` int(10) not null auto_increment,
 	`question_id` int(10) not null,
 	`user_id` varchar(30) not null,
 	`correct` boolean not null,
-	`reason` varchar(50) not null,
+	`reason_id` int(10), /*explicitly nullable*/
 	`notes` varchar(500) not null,
 	PRIMARY KEY (`answer_id`),
 	FOREIGN KEY (`question_id`) REFERENCES `TestQuestions` (`question_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`reason_id`) REFERENCES `Reasons` (`reason_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO `Reasons` (`text`) values 	('Calculation error'),
+					('Significant digits or rounding'),
+					('Silly mistake'),
+					('Misunderstood question'),
+					('Didn\'t understand topic'),
+					('Didn\'t understand vocabulary'),
+					('Forgot +C (oof)'),
+					('Formatted answer incorrectly'),
+					('Bubbling error'),
+					('Other');

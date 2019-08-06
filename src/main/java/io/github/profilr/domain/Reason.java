@@ -1,33 +1,30 @@
 package io.github.profilr.domain;
 
-import lombok.AllArgsConstructor;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 import lombok.Data;
 
-import static lombok.AccessLevel.PRIVATE;;
 
 @Data
-@AllArgsConstructor(access = PRIVATE)
+@Entity
+@Table(name = "Reasons")
+@NamedQuery(name=Reason.SELECT_ALL_NQ, query="FROM Reason")
 public class Reason {
-	
-	private static int counter = 1;
-	private Reason(String reason) {
-		this(counter++, reason);
-	}
 
-	private int value;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "reason_id", nullable = false, unique = true)
+	private int reasonID;
+	
+	@Column(name = "text", nullable = false, unique = true)
 	private String text;
 	
-	public static final Reason[] REASONS = {
-			new Reason("Calculation error"),
-			new Reason("Significant digits or rounding"),
-			new Reason("Silly mistake"),
-			new Reason("Misunderstood question"),
-			new Reason("Didn't understand topic"),
-			new Reason("Didn't understand vocabulary"),
-			new Reason("Forgot +C (oof)"),
-			new Reason("Formatted answer incorrectly"),
-			new Reason("Bubbling error"),
-			new Reason("Other"),
-	};
-	
+	public static final String SELECT_ALL_NQ = "REASON.SELECT_ALL";
+
 }

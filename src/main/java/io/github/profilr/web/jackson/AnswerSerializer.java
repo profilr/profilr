@@ -23,7 +23,10 @@ public class AnswerSerializer extends StdSerializer<Answer> {
 		gen.writeNumberField("question_id", value.getQuestion().getQuestionID());
 		gen.writeStringField("user_id", value.getUser().getUserID());
 		gen.writeStringField("notes", value.getNotes());
-		gen.writeStringField("reason", value.getReason());
+		if (value.getReason() == null)
+			gen.writeNullField("reason_id");
+		else
+			gen.writeNumberField("reason_id", value.getReason().getReasonID());
 		gen.writeBooleanField("correct", value.isCorrect());
 		gen.writeEndObject();
 	}
