@@ -25,7 +25,7 @@ import lombok.Data;
 @Entity
 @Table(name = "Sections")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="sectionID")
-@NamedQuery(name = Section.SELECT_VIA_JOIN_CODE_NQ, query = "FROM Section where joinCode = :joinCode")
+@NamedQuery(name = Section.SELECT_VIA_JOIN_CODE_NQ, query = "FROM Section WHERE joinCode = :joinCode")
 public class Section {
 	
 	@Id

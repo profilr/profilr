@@ -1,7 +1,5 @@
 package io.github.profilr.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,10 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -27,6 +23,7 @@ import lombok.Data;
 @Entity
 @Table( name = "Users" )
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="userID")
+@NamedQuery(name = User.SELECT_BY_EMAIL_ADDRESS_NQ, query = "FROM User WHERE emailAddress = :emailAddress")
 public class User implements Comparable<User> {
 	
 	@Id
@@ -55,37 +52,18 @@ public class User implements Comparable<User> {
 		return getFamilyName() + ", " + getGivenName();
 	}
 	
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Answer> getResponsesForTest(Test t, EntityManager em) {
-		org.hibernate.Session s = em.unwrap(org.hibernate.Session.class);
-		
-		Criteria c = s.createCriteria(Answer.class);
-		c.add(Restrictions.eq("user", this));
-		
-		// I throw them into a set because the criteria query was giving me duplicates....
-		Set<Answer> responses = new HashSet<Answer>();
-		responses.addAll(c.list());
-		
-		for (Answer a : responses)
-			if (a.getQuestion().getTest().getTestID() != t.getTestID())
-				responses.remove(a);
-		
-		return responses.stream().collect(Collectors.toList());
+		return em.createNamedQuery(Answer.GET_BY_USER_AND_TEST_NQ, Answer.class)
+				 .setParameter("user", this)
+				 .setParameter("test", t)
+				 .getResultList();
 	}
 	
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Answer> getResponsesForQuestion(Question q, EntityManager em) {
-		List<Answer> responses = new ArrayList<Answer>();
-		
-		org.hibernate.Session s = em.unwrap(org.hibernate.Session.class);
-		
-		Criteria c = s.createCriteria(Answer.class);
-		
-		c.add(Restrictions.eq("user", this));
-		c.add(Restrictions.eq("question", q));
-		responses.addAll((Collection<? extends Answer>)c.list());
-		
-		return responses;
+		return em.createNamedQuery(Answer.GET_BY_USER_AND_QUESTION_NQ, Answer.class)
+				 .setParameter("user", this)
+				 .setParameter("question", q)
+				 .getResultList();
 	}
 	
 	public boolean enrolledInCourse(Course c) {
@@ -125,5 +103,7 @@ public class User implements Comparable<User> {
 	public int compareTo(User u) {
 		return getFullName().compareTo(u.getFullName());
 	}
+	
+	public static final String SELECT_BY_EMAIL_ADDRESS_NQ = "USER.SELECT_BY_EMAIL_ADDRESS";
 	
 }

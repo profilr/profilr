@@ -1,9 +1,8 @@
 package io.github.profilr.web.resources;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -11,11 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+import javax.ws.rs.core.UriInfo;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.User;
@@ -40,21 +36,16 @@ public class PageInvite extends WebResource {
 		
 		if (!((User) session.get("user")).isCourseAdmin(c))
 			throw new UserNotAuthorizedException();
-		
-		org.hibernate.Session session = entityManager.unwrap(org.hibernate.Session.class);
-		
-		@SuppressWarnings("deprecation")
-		Criteria crit = session.createCriteria(User.class);
-		crit.add(Restrictions.eq("emailAddress", email));
-		
-		@SuppressWarnings("unchecked")
-		List<User> result = crit.list();
-		
-		if (result.size() == 0)
+
+		User u;
+		try {
+			u = entityManager.createNamedQuery(User.SELECT_BY_EMAIL_ADDRESS_NQ, User.class)
+							 .setParameter("emailAddress", email)
+							 .getSingleResult();
+		} catch (NoResultException e) {
 			return Response.status(Status.NOT_FOUND).build();
-		
-		User u = result.get(0);
-		
+		}
+
 		if (u.getAdministratedCourses().contains(c) || u.getEnrolledCourses().contains(c))
 			return Response.status(Status.BAD_REQUEST).build();
 		

@@ -42,7 +42,7 @@ public class PageEditResponse extends WebResource {
 	}
 
 	@GET
-	@Template(name="/editresponse") // TODO
+	@Template(name="/editresponse")
 	@Produces(MediaType.TEXT_HTML)
 	public Response get() throws UserNotAuthorizedException {
 		Test t = entityManager.find(Test.class, testID);
@@ -62,8 +62,6 @@ public class PageEditResponse extends WebResource {
 		Test t = entityManager.find(Test.class, testID);
 		
 		List<Answer> l = u.getResponsesForTest(t, entityManager);
-		
-		System.out.println(l);
 		
 		return l;
 	}

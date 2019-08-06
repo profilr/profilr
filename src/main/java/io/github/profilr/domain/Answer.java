@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -18,6 +20,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TestQuestionAnswers")
+@NamedQueries({
+	@NamedQuery(name = Answer.GET_BY_USER_AND_TEST_NQ, query = "FROM Answer WHERE user = :user AND question.test = :test"),
+	@NamedQuery(name = Answer.GET_BY_USER_AND_QUESTION_NQ, query = "FROM Answer WHERE user = :user AND question= :question")
+})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="answerID")
 public class Answer {
 	
@@ -58,5 +64,8 @@ public class Answer {
 	public int hashCode() {
 		return super.hashCode();
 	}
+
+	public static final String GET_BY_USER_AND_TEST_NQ = "ANSWER.GET_BY_USER_AND_TEST";
+	public static final String GET_BY_USER_AND_QUESTION_NQ = "ANSWER.GET_BY_USER_AND_QUESTION";
 	
 }
