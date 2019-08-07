@@ -205,11 +205,16 @@
 				<table class="list">
 					<#list course.tests as test>
 						<tr>
-							<td><a href="${urlMappings.editTestUrl}/${test.testID}"><p>${test.name}</p></a></td>
+							<td><a href="${urlMappings.editTestUrl}/${test.testID}">${test.name}</a></td>
+							<td style="text-align: right; line-height: 24px">
+								<#if !test.published>
+									<img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/> Unpublished
+								<#else>
+									<img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> Published
+								</#if>
+							</td>
 							<td style="text-align: right;">
 								<a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a>
-								<#if !test.published><img src="${urlMappings.images}/baseline-publish-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/>
-								<#else><img src="${urlMappings.images}/baseline-get_app-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/></#if>
 								<a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
 							</td>
 						</tr>
@@ -219,6 +224,7 @@
 							<input type="text" id="testName" placeholder="Test Name..."/>
 							<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
 						</td>
+						<td></td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
 						</td>
