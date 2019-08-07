@@ -19,9 +19,11 @@
 				<h2>Course Tests</h2>
 				<table class="list">
 					<#list course.tests as test>
-						<tr>
-							<td><a href="${urlMappings.editResponseUrl}/${test.testID}"><p>${test.name}</p></a></td>
-						</tr>
+						<#if test.published>
+							<tr>
+								<td><a href="${urlMappings.editResponseUrl}/${test.testID}"><p>${test.name}</p></a></td>
+							</tr>
+						</#if>
 					<#else>
 						<tr>
 							<tr><td><p style="color: #777;">Looks like there's nothing to show here...</p></td><td></td></tr>

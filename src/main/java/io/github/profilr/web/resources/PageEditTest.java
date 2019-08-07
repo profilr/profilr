@@ -96,4 +96,34 @@ public class PageEditTest extends WebResource {
 		return Response.ok().build();
 	}
 	
+	@POST
+	@Path("publish")
+	public Response publish() throws UserNotAuthorizedException {
+		Test t = entityManager.find(Test.class, testID);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(t.getCourse()))
+			throw new UserNotAuthorizedException();
+		
+		t.setPublished(true);
+		entityManager.merge(t);
+		
+		return Response.ok().build();
+	}
+	
+	@POST
+	@Path("unpublish")
+	public Response unpublish() throws UserNotAuthorizedException {
+		Test t = entityManager.find(Test.class, testID);
+		
+		User u = (User) session.get("user");
+		if (!u.isCourseAdmin(t.getCourse()))
+			throw new UserNotAuthorizedException();
+		
+		t.setPublished(false);
+		entityManager.merge(t);
+		
+		return Response.ok().build();
+	}
+	
 }

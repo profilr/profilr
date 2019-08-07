@@ -55,6 +55,7 @@ CREATE TABLE `Tests` (
 	`test_id` int(10) not null auto_increment,
 	`name` varchar(30) not null,
 	`course_id` int(10) not null,
+	`published` boolean default false,
 	PRIMARY KEY (`test_id`),
 	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE

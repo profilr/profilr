@@ -39,4 +39,7 @@ public class Test {
 	@OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Question> questions;
 	
+	@Column(name="published")
+	private boolean published;
+	
 }

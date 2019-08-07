@@ -82,6 +82,11 @@
 		<div class="bodyContainer">
 			<h1 id="title">${test.course.name} - ${test.name}</h1>
 			
+			<#if !test.published>
+				<p>This test is currently not published. Tests are not visible to enrolled students unless published.</p>
+				<p>You can publish this test from the course page by clicking the publish button to the right of the test name.</p><br/><br/>
+			</#if>
+			
 			<table class="list">
 				
 				<tr class="inert">

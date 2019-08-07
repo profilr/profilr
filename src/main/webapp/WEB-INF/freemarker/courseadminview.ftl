@@ -104,6 +104,35 @@
 	            });
 			}
 			
+			function publishTest(testID) {
+				$.ajax({
+	                url: '${urlMappings.editTestUrl}/' + testID + '/publish',
+	                dataType: 'text',
+	                type: 'post',
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.hash = "#testsTab";
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
+			
+			function unpublishTest(testID) {
+				$.ajax({
+	                url: '${urlMappings.editTestUrl}/' + testID + '/unpublish',
+	                dataType: 'text',
+	                type: 'post',
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.hash = "#testsTab";
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
 			
 		</script>
 		
@@ -179,6 +208,8 @@
 							<td><a href="${urlMappings.editTestUrl}/${test.testID}"><p>${test.name}</p></a></td>
 							<td style="text-align: right;">
 								<a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a>
+								<#if !test.published><img src="${urlMappings.images}/baseline-publish-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/>
+								<#else><img src="${urlMappings.images}/baseline-get_app-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/></#if>
 								<a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
 							</td>
 						</tr>
