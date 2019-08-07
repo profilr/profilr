@@ -3,8 +3,8 @@
 	<head>
 		<title>Profilr</title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
-		<link rel="stylesheet" href="${urlMappings.stylesheets}/animate.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/homestyle.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 		
 		<!-- This one is for the .org -->
@@ -21,9 +21,9 @@
 				var id_token = user.getAuthResponse().id_token;
 				setTimeout(function() {
 					document.body.classList.add('slideOutUp');
-					setTimeout(function() {
+					document.body.addEventListener('animationend', function() { 
 						window.location.replace('${urlMappings.authUrl}' + '?token=' + id_token);
-					}, 1000);
+					})
 				}, 1000);
 			}
 		</script>
