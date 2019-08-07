@@ -21,7 +21,7 @@
 				
 				window.location.hash = "#"+tabName;
 			}
-			
+		
 			function createSection() {
 				if ($("#sectionName").val() === "")
 					return $("#sectionRequiredTooltip").show();
@@ -205,15 +205,13 @@
 				<table class="list">
 					<#list course.tests as test>
 						<tr>
-							<td><a href="${urlMappings.editTestUrl}/${test.testID}">${test.name}</a></td>
-							<td style="text-align: right; line-height: 24px">
-								<#if !test.published>
-									<img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/> Unpublished
-								<#else>
-									<img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> Published
-								</#if>
-							</td>
-							<td style="text-align: right;">
+							<td class="testNameColumn"><a href="${urlMappings.editTestUrl}/${test.testID}">${test.name}</a></td>
+							<#if !test.published>
+								<td class="testPublishButtonColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/></td> <td class="testPublishTextColumn" style="text-align: left;"><p>Unpublished</p></td>
+							<#else>
+								<!--<td class="testPublishColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td>-->
+							</#if>
+							<td class="testButtonColumn" style="text-align: right;">
 								<a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a>
 								<a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
 							</td>
@@ -224,7 +222,7 @@
 							<input type="text" id="testName" placeholder="Test Name..."/>
 							<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
 						</td>
-						<td></td>
+						<td></td><td></td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
 						</td>

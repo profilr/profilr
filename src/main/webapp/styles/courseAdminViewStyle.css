@@ -36,3 +36,23 @@
 .tab {
 	display: none;
 }
+
+.list {
+	table-layout: fixed;
+}
+
+.testNameColumn {
+	width: 80%;
+}
+
+.testPublishButtonColumn {
+	width: 24px;
+}
+
+.testPublishTextColumn {
+	width: 100px;
+}
+
+.testButtonColumn {
+	width: 60px;
+}
