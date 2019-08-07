@@ -42,7 +42,7 @@ public class Answer {
 	private User user;
 	
 	@Column(name = "correct")
-	private boolean correct;
+	private int correct;
 
 	@ManyToOne
 	@JoinColumn(name = "reason_id", nullable = true)

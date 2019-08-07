@@ -27,7 +27,7 @@ public class AnswerSerializer extends StdSerializer<Answer> {
 			gen.writeNullField("reason_id");
 		else
 			gen.writeNumberField("reason_id", value.getReason().getReasonID());
-		gen.writeBooleanField("correct", value.isCorrect());
+		gen.writeNumberField("correct", value.getCorrect());
 		gen.writeEndObject();
 	}
 

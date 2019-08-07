@@ -94,7 +94,7 @@ CREATE TABLE `TestQuestionAnswers` (
 	`answer_id` int(10) not null auto_increment,
 	`question_id` int(10) not null,
 	`user_id` varchar(30) not null,
-	`correct` boolean not null,
+	`correct` int(16) not null,
 	`reason_id` int(10), /*explicitly nullable*/
 	`notes` varchar(500) not null,
 	PRIMARY KEY (`answer_id`),

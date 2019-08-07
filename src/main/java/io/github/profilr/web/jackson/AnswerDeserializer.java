@@ -32,7 +32,7 @@ public class AnswerDeserializer extends StdDeserializer<Answer> {
 		JsonNode node = p.readValueAsTree();
 		
 		Answer a = new Answer();
-		a.setCorrect(node.getValueChecked(p, "correct", Boolean.class));
+		a.setCorrect(node.getValueChecked(p, "correct", Integer.class));
 		a.setNotes(node.getValueChecked(p, "notes", String.class));
 		a.setReason(node.hasNonNull("reason_id") ?
 				entityManager.find(Reason.class, (Object) node.getValueChecked(p, "reason_id", Integer.class)) : null);

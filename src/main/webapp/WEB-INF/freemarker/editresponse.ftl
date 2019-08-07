@@ -20,9 +20,10 @@
 			}
 			
 			function updateResponse(questionID) {
+				document.getElementById("saveStatus").innerHTML = "Saving..."
 				var response = {
 					"question_id": parseInt(questionID),
-					"correct": document.getElementById(questionID + ".correct").checked,
+					"correct": parseInt(document.getElementById(questionID + ".correct").value),
 					"reason_id": parseInt(document.getElementById(questionID + ".reason").value) === -1 
 								? null : parseInt(document.getElementById(questionID + ".reason").value),
 					"notes": document.getElementById(questionID + ".notes").value
@@ -33,15 +34,25 @@
 					type: 'post',
 					contentType: 'application/json',
 					data: JSON.stringify(response),
-					success: function(jqxhr, textStatus, data) {alert(questionID)},
+					success: function(jqxhr, textStatus, data) { document.getElementById("saveStatus").innerHTML = "Saved!" },
 					error: function(error, textStatus, s){ console.log(error); }
 				});
 			}
 
-			function checkClicked(questionID) {
-				correct = document.getElementById(questionID + ".correct");
+			function updateReasonVisibility(questionID) {
+				correct = document.getElementById(questionID + ".correct")
+				pointsCorrect = parseInt(correct.value);
+				maxPoints = parseFloat(document.getElementById(questionID + ".maxPoints").innerHTML);
+				
+				if (pointsCorrect > maxPoints)
+					correct.value = pointsCorrect = maxPoints;
+				
+				if (pointsCorrect < 0)
+					correct.value = pointsCorrect = 0;
+				
 				reason = document.getElementById(questionID + ".reason");
-				reason.classList.toggle("hidden", correct.checked);
+				
+				reason.classList.toggle("hidden", parseInt(correct.value) == maxPoints);
 			}
 			
 			function refreshResponseView(rsp) {
@@ -49,10 +60,10 @@
 				var reason = document.getElementById(rsp.question.questionID + ".reason");
 				var notes = document.getElementById(rsp.question.questionID + ".notes");
 				
-				correct.checked = rsp.correct;
-				reason.classList.toggle("hidden", rsp.correct);
-				reason.value = rsp.reason;
+				correct.value = rsp.correct;
+				reason.value = rsp.reason.reasonID;
 				notes.value = rsp.notes;
+				updateReasonVisibility(rsp.question.questionID);
 			}
 			
 			function refreshResponses(data) {
@@ -86,7 +97,7 @@
 				<th class="textColumn">Question</th>
 				<th class="topicColumn">Topic</th>
 				<th class="pointsColumn">Points</th>
-				<th class="correctColumn">Correct?</th>
+				<th class="correctColumn">Correct</th>
 				<th class="reasonColumn">Reason Missed</th>
 				<th class="notesColumn">Notes</th>
 			</tr>
@@ -96,8 +107,8 @@
 						<td>${question.label}</td>
 						<td>${question.text}</td>
 						<td>${question.topic.name}</td>
-						<td>${question.weight}</td>
-						<td><input type="checkbox" id="${question.questionID}.correct" onclick="checkClicked('${question.questionID}')" checked/></td>
+						<td id="${question.questionID}.maxPoints">${question.weight}</td>
+						<td><input type="number" id="${question.questionID}.correct" value="${question.weight}" onchange="updateReasonVisibility(${question.questionID})" style="width: 40px" min="0" max="${question.weight}"/></td>
 						<td><select id="${question.questionID}.reason" class="hidden">
 							<option hidden selected value="-1">Reason...</option>
 							<#list reasons as reason>
@@ -110,11 +121,16 @@
 			</#if>
 			</table>
 			
-			<div id="submit" class="button blue" style="float: right;" onclick="updateResponses()"><p>Save</p></div>
-			<p id="saveStatus"></p>
+			<table style="float: right; color: #000;">
+                <tr>
+					<td><p id="saveStatus"></p></td>
+                	<td><div id="submit" class="button blue" style="float: right;" onclick="updateResponses()"><p>Save</p></div></td>
+                </tr>
+            </table>
 			
 		</div>
 		
 	</BODY>
 	
 </HTML>
+
