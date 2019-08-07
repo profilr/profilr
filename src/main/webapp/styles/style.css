@@ -3,6 +3,8 @@
    ====================================== */
 
 body {
+	height: 100%;
+	width: 100%; /* firefox amazes me with its stupidity */
 	margin:0;
 	padding: 0;
 	font-family: "Arial", Arial, sans serif;
