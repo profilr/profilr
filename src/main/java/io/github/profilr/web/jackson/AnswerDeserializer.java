@@ -31,8 +31,6 @@ public class AnswerDeserializer extends StdDeserializer<Answer> {
 	public Answer deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		JsonNode node = p.readValueAsTree();
 		
-		System.out.println(node.toString());
-		
 		Answer a = new Answer();
 		a.setCorrect(node.getValueChecked(p, "correct", Boolean.class));
 		a.setNotes(node.getValueChecked(p, "notes", String.class));

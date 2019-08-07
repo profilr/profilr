@@ -28,8 +28,6 @@
 					"notes": document.getElementById(questionID + ".notes").value
 				};
 				
-				console.log(response);
-				
 				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/edit-response',
 					dataType: 'text',
 					type: 'post',
