@@ -19,10 +19,9 @@ import org.glassfish.jersey.server.mvc.Template;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
-import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("delete")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -38,12 +37,10 @@ public class PageDelete extends WebResource {
 	@GET
 	@Path("topic/{topicID}")
 	@Template(name="/delete")
-	public Response getDeleteTopic(@PathParam("topicID") int topicID) throws UserNotAuthorizedException {
+	public Response getDeleteTopic(@PathParam("topicID") int topicID) {
 		Topic t = entityManager.find(Topic.class, topicID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(t, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -60,12 +57,10 @@ public class PageDelete extends WebResource {
 	
 	@POST
 	@Path("topic/{topicID}")
-	public Response deleteTopic(@PathParam("topicID") int topicID) throws UserNotAuthorizedException {
+	public Response deleteTopic(@PathParam("topicID") int topicID) {
 		Topic t = entityManager.find(Topic.class, topicID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(t, session);
 		
 		entityManager.remove(t);
 		
@@ -75,12 +70,10 @@ public class PageDelete extends WebResource {
 	@GET
 	@Path("section/{sectionID}")
 	@Template(name="/delete")
-	public Response getDeleteSection(@PathParam("sectionID") int sectionID) throws UserNotAuthorizedException {
+	public Response getDeleteSection(@PathParam("sectionID") int sectionID) {
 		Section s = entityManager.find(Section.class, sectionID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(s.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(s, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -97,12 +90,10 @@ public class PageDelete extends WebResource {
 	
 	@POST
 	@Path("section/{sectionID}")
-	public Response deleteSection(@PathParam("sectionID") int section) throws UserNotAuthorizedException {
+	public Response deleteSection(@PathParam("sectionID") int section) {
 		Section s = entityManager.find(Section.class, section);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(s.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(s, session);
 		
 		entityManager.remove(s);
 		
@@ -112,12 +103,10 @@ public class PageDelete extends WebResource {
 	@GET
 	@Path("test/{testID}")
 	@Template(name="/delete")
-	public Response getDeleteTest(@PathParam("testID") int testId) throws UserNotAuthorizedException {
+	public Response getDeleteTest(@PathParam("testID") int testId) {
 		Test t = entityManager.find(Test.class, testId);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -133,12 +122,10 @@ public class PageDelete extends WebResource {
 	
 	@POST
 	@Path("test/{testID}")
-	public Response deleteTest(@PathParam("testID") int test) throws UserNotAuthorizedException {
+	public Response deleteTest(@PathParam("testID") int test) {
 		Test t = entityManager.find(Test.class, test);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		entityManager.remove(t);
 		

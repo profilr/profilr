@@ -17,10 +17,9 @@ import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Test;
-import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("edit-test/{test-id}")
 @Produces(MediaType.APPLICATION_JSON)
@@ -40,24 +39,20 @@ public class PageEditTest extends WebResource {
 	@GET
 	@Template(name="/edittest")
 	@Produces(MediaType.TEXT_HTML)
-	public Response get() throws UserNotAuthorizedException {
+	public Response get() {
 		Test t = entityManager.find(Test.class, testID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		return Response.ok(getView("test", t, "topics", t.getCourse().getTopics())).build();
 	}
 
 	@POST
 	@Path("create-question")
-	public Response createQuestion(Question question) throws UserNotAuthorizedException {
+	public Response createQuestion(Question question) {
 		Test t = entityManager.find(Test.class, testID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		question.setTest(t);
 		entityManager.persist(question);
@@ -70,12 +65,10 @@ public class PageEditTest extends WebResource {
 	
 	@POST
 	@Path("edit-question/{question-id}")
-	public Response editQuestion(Question question, @PathParam("question-id") int questionID) throws UserNotAuthorizedException {
+	public Response editQuestion(Question question, @PathParam("question-id") int questionID) {
 		Test t = entityManager.find(Test.class, testID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		question.setQuestionID(questionID);
 		question.setTest(t);
@@ -85,12 +78,10 @@ public class PageEditTest extends WebResource {
 	
 	@POST
 	@Path("delete-question/{question-id}")
-	public Response deleteQuestion(@PathParam("question-id") int questionID) throws UserNotAuthorizedException {
+	public Response deleteQuestion(@PathParam("question-id") int questionID) {
 		Question q = entityManager.find(Question.class, questionID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(q.getTest().getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(q, session);
 		
 		entityManager.remove(q);
 		return Response.ok().build();
@@ -98,12 +89,10 @@ public class PageEditTest extends WebResource {
 	
 	@POST
 	@Path("publish")
-	public Response publish() throws UserNotAuthorizedException {
+	public Response publish() {
 		Test t = entityManager.find(Test.class, testID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		t.setPublished(true);
 		entityManager.merge(t);
@@ -113,12 +102,10 @@ public class PageEditTest extends WebResource {
 	
 	@POST
 	@Path("unpublish")
-	public Response unpublish() throws UserNotAuthorizedException {
+	public Response unpublish() {
 		Test t = entityManager.find(Test.class, testID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		t.setPublished(false);
 		entityManager.merge(t);

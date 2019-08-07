@@ -14,7 +14,6 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Course;
-import io.github.profilr.domain.User;
 import io.github.profilr.web.NavElement;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
@@ -36,13 +35,19 @@ public class PageHome extends WebResource {
 	public Response get() {
 		super.highlightNavElement(super.getNavElement(navElementName));
 		
-		entityManager.refresh(session.get("user"));
+		entityManager.refresh(session.getUser());
 		
-		Set<Course> enrolledCourses = ((User) session.get("user")).getEnrolledCourses().stream().filter(c -> c.getAdmins().size() > 0).collect(Collectors.toSet());
+		Set<Course> enrolledCourses = session.getUser()
+											 .getEnrolledCourses()
+											 .stream()
+											 .filter(c -> c.getAdmins().size() > 0)
+											 .collect(Collectors.toSet());
 
-		Set<Course> administratedCourses = ((User) session.get("user")).getAdministratedCourses();
+		Set<Course> administratedCourses = session.getUser().getAdministratedCourses();
 		
-		return Response.ok(getView("enrolledCourses", enrolledCourses, "administratedCourses", administratedCourses, "canCreate", ((User)session.get("user")).canCreateCourse())).build();
+		return Response.ok(getView("enrolledCourses", enrolledCourses,
+								   "administratedCourses", administratedCourses,
+								   "canCreate", session.getUser().canCreateCourse())).build();
 	}
 	
 	public NavElement createNavElement() {

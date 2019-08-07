@@ -19,8 +19,8 @@ import org.glassfish.jersey.server.mvc.Template;
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("leave-course")
 public class PageLeaveCourse extends WebResource {
@@ -35,12 +35,10 @@ public class PageLeaveCourse extends WebResource {
 	@GET
 	@Path("{courseId}")
 	@Template(name="/leavecourse")
-	public Response getDelete(@PathParam("courseId") int courseId) throws UserNotAuthorizedException {
+	public Response getDelete(@PathParam("courseId") int courseId) {
 		Course c = entityManager.find(Course.class, courseId);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		return Response.ok(getView("course", c)).build();
 	}
@@ -48,13 +46,12 @@ public class PageLeaveCourse extends WebResource {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("courseId") int courseId) throws UserNotAuthorizedException {
+	public Response delete(@FormParam("courseId") int courseId) {
 		Course c = entityManager.find(Course.class, courseId);
 		
 		User u = (User) session.get("user");
 		
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, u);
 		
 		entityManager.refresh(u);
 		

@@ -21,10 +21,9 @@ import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
-import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("rename")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -40,12 +39,10 @@ public class PageRename extends WebResource {
 	@GET
 	@Path("topic/{topicID}")
 	@Template(name="/rename")
-	public Response getRenameTopic(@PathParam("topicID") int topicID) throws UserNotAuthorizedException {
+	public Response getRenameTopic(@PathParam("topicID") int topicID) {
 		Topic t = entityManager.find(Topic.class, topicID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(t, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -59,12 +56,10 @@ public class PageRename extends WebResource {
 	
 	@POST
 	@Path("topic/{topicID}")
-	public Response renameTopic(@PathParam("topicID") int topicID, @FormParam("name") String name) throws UserNotAuthorizedException {
+	public Response renameTopic(@PathParam("topicID") int topicID, @FormParam("name") String name) {
 		Topic t = entityManager.find(Topic.class, topicID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(t, session);
 		
 		t.setName(name);
 		
@@ -74,12 +69,10 @@ public class PageRename extends WebResource {
 	@GET
 	@Path("section/{sectionID}")
 	@Template(name="/rename")
-	public Response getRenameSection(@PathParam("sectionID") int sectionID) throws UserNotAuthorizedException {
+	public Response getRenameSection(@PathParam("sectionID") int sectionID) {
 		Section s = entityManager.find(Section.class, sectionID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(s.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(s, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -93,12 +86,10 @@ public class PageRename extends WebResource {
 	
 	@POST
 	@Path("section/{sectionID}")
-	public Response renameSection(@PathParam("sectionID") int section, @FormParam("name") String name) throws UserNotAuthorizedException {
+	public Response renameSection(@PathParam("sectionID") int section, @FormParam("name") String name) {
 		Section s = entityManager.find(Section.class, section);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(s.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(s, session);
 
 		s.setName(name);
 		
@@ -108,12 +99,10 @@ public class PageRename extends WebResource {
 	@GET
 	@Path("test/{testID}")
 	@Template(name="/rename")
-	public Response getRenameTest(@PathParam("testID") int testId) throws UserNotAuthorizedException {
+	public Response getRenameTest(@PathParam("testID") int testId) {
 		Test t = entityManager.find(Test.class, testId);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -127,12 +116,10 @@ public class PageRename extends WebResource {
 	
 	@POST
 	@Path("test/{testID}")
-	public Response renameTest(@PathParam("testID") int test, @FormParam("name") String name) throws UserNotAuthorizedException {
+	public Response renameTest(@PathParam("testID") int test, @FormParam("name") String name) {
 		Test t = entityManager.find(Test.class, test);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToEdit(t, session);
 		
 		t.setName(name);
 		
@@ -142,12 +129,10 @@ public class PageRename extends WebResource {
 	@GET
 	@Path("course/{courseID}")
 	@Template(name="/rename")
-	public Response getRenameCourse(@PathParam("courseID") int courseID) throws UserNotAuthorizedException {
+	public Response getRenameCourse(@PathParam("courseID") int courseID) {
 		Course c = entityManager.find(Course.class, courseID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
@@ -161,12 +146,10 @@ public class PageRename extends WebResource {
 	
 	@POST
 	@Path("course/{courseID}")
-	public Response renameCourse(@PathParam("courseID") int courseID, @FormParam("name") String name) throws UserNotAuthorizedException {
+	public Response renameCourse(@PathParam("courseID") int courseID, @FormParam("name") String name) {
 		Course c = entityManager.find(Course.class, courseID);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		c.setName(name);
 		

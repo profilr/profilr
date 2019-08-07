@@ -25,8 +25,9 @@ import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
+import io.github.profilr.web.exceptions.UserNotAuthorizedException;
 
 @Path("create")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -51,6 +52,9 @@ public class PageCreate extends WebResource {
 	@Path("course")
 	public Response create(@FormParam("courseName") String name) {
 		
+		if (!session.getUser().canCreateCourse())
+			throw new UserNotAuthorizedException();
+		
 		Course c = new Course();
 		c.setName(name);
 		c.setAdmins(new ArrayList<User>());
@@ -63,12 +67,10 @@ public class PageCreate extends WebResource {
 	
 	@POST
 	@Path("topic")
-	public Response createTopic(@FormParam("topicName") String name, @FormParam("courseId") int course) throws UserNotAuthorizedException {
+	public Response createTopic(@FormParam("topicName") String name, @FormParam("courseId") int course) {
 		Course c = entityManager.find(Course.class, course);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		Topic t = new Topic();
 		t.setName(name);
@@ -81,12 +83,10 @@ public class PageCreate extends WebResource {
 	
 	@POST
 	@Path("test")
-	public Response createTest(@FormParam("testName") String name, @FormParam("courseId") int course) throws UserNotAuthorizedException {
+	public Response createTest(@FormParam("testName") String name, @FormParam("courseId") int course) {
 		Course c = entityManager.find(Course.class, course);
 		
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		Test t = new Test();
 		t.setName(name);
@@ -100,13 +100,10 @@ public class PageCreate extends WebResource {
 
 	@POST
 	@Path("section")
-	public Response createSection(@FormParam("sectionName") String name, @FormParam("courseId") int course)
-			throws UserNotAuthorizedException {
+	public Response createSection(@FormParam("sectionName") String name, @FormParam("courseId") int course) {
 		Course c = entityManager.find(Course.class, course);
 
-		User u = (User) session.get("user");
-		if (!u.isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 
 		Section s = new Section();
 		s.setCourse(c);

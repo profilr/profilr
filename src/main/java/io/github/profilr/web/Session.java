@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import io.github.profilr.domain.User;
+
 public class Session implements Map<String, Object> {
 
 	private HttpSession session;
@@ -111,6 +113,9 @@ public class Session implements Map<String, Object> {
 		return Collections.unmodifiableSet(s);
 	}
 	
-	
+	/** same as <code>((User) get("user)) convenience method because we kept doing this */
+	public User getUser() {
+		return (User) get("user");
+	}
 
 }

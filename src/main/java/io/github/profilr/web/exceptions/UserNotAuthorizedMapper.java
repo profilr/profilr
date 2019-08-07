@@ -1,7 +1,8 @@
-package io.github.profilr.web;
+package io.github.profilr.web.exceptions;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -19,9 +20,9 @@ public class UserNotAuthorizedMapper implements ExceptionMapper<UserNotAuthorize
 	
 	@Override
 	public Response toResponse(UserNotAuthorizedException exception) {
-		return Response.status(401)
+		return Response.status(Status.FORBIDDEN)
 					   .entity(new ExceptionMapperViewable(session, uriInfo)
-								.getViewable("/notauthorized"))
+								.getViewable("/403"))
 					   .build();
 	}
 

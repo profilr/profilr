@@ -16,8 +16,8 @@ import javax.ws.rs.core.UriInfo;
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("invite")
 public class PageInvite extends WebResource {
@@ -31,11 +31,10 @@ public class PageInvite extends WebResource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response invite(@FormParam("email") String email, @FormParam("courseID") int courseID) throws UserNotAuthorizedException {
+	public Response invite(@FormParam("email") String email, @FormParam("courseID") int courseID) {
 		Course c = entityManager.find(Course.class, courseID);
 		
-		if (!((User) session.get("user")).isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 
 		User u;
 		try {

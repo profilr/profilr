@@ -19,8 +19,8 @@ import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("kick")
 public class PageKick extends WebResource {
@@ -35,11 +35,10 @@ public class PageKick extends WebResource {
 	@GET
 	@Path("{course-id}/{user-id}")
 	@Template(name="/kick")
-	public Response getKick(@PathParam("course-id") int courseID, @PathParam("user-id") String userID) throws UserNotAuthorizedException {
+	public Response getKick(@PathParam("course-id") int courseID, @PathParam("user-id") String userID) {
 		Course c = entityManager.find(Course.class, courseID);
 		
-		if (!((User) session.get("user")).isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		User u = entityManager.find(User.class, userID);
 		
@@ -53,15 +52,14 @@ public class PageKick extends WebResource {
 	@Path("{course-id}/{user-id}")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response kick(@PathParam("course-id") int courseID, @PathParam("user-id") String userID) throws UserNotAuthorizedException {
+	public Response kick(@PathParam("course-id") int courseID, @PathParam("user-id") String userID) {
 		Course c = entityManager.find(Course.class, courseID);
 		
-		if (!((User) session.get("user")).isCourseAdmin(c))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.check(c, session);
 		
 		User u = entityManager.find(User.class, userID);
 		
-		if (((User) session.get("user")).getUserID().equals(u.getUserID()))
+		if (session.getUser().getUserID().equals(u.getUserID()))
 			return Response.status(400).build();
 
 		if (u.isCourseAdmin(c))

@@ -1,4 +1,4 @@
-package io.github.profilr.web;
+package io.github.profilr.web.exceptions;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;

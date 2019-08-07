@@ -14,8 +14,9 @@ import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
+import io.github.profilr.web.exceptions.UserNotAuthorizedException;
 
 @Path("courses")
 public class PageCourseView extends WebResource {
@@ -29,10 +30,14 @@ public class PageCourseView extends WebResource {
 	
 	@GET
 	@Path("{course}")
-	public Viewable get(@PathParam("course") int courseId) throws UserNotAuthorizedException {
+	public Viewable get(@PathParam("course") int courseId) {
 		Course c = entityManager.find(Course.class, courseId);
 		
-		User u = (User)session.get("user");
+		// Ensure that course exists
+		ExceptionUtils.checkNull(c);
+		
+		// Get current user to determine type of view
+		User u = session.getUser();
 		
 		// If the users is an admin of this course then give them the admin view.
 		if (u.isCourseAdmin(c))

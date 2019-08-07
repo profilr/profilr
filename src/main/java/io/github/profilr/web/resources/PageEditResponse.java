@@ -22,8 +22,8 @@ import io.github.profilr.domain.Reason;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("tests/{test-id}")
 @Produces(MediaType.APPLICATION_JSON)
@@ -43,13 +43,10 @@ public class PageEditResponse extends WebResource {
 	@GET
 	@Template(name="/editresponse")
 	@Produces(MediaType.TEXT_HTML)
-	public Response get() throws UserNotAuthorizedException {
+	public Response get() {
 		Test t = entityManager.find(Test.class, testID);
 		
-		User u = (User) session.get("user");
-		
-		if (!u.enrolledInCourse(t.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToRespond(t, session);
 		
 		List<Reason> reasons = entityManager.createNamedQuery(Reason.SELECT_ALL_NQ, Reason.class).getResultList();
 		
@@ -59,8 +56,10 @@ public class PageEditResponse extends WebResource {
 	@GET
 	@Path("get-response-data")
 	public List<Answer> getResponseData() {
-		User u = (User) session.get("user");
+		User u = session.getUser();
 		Test t = entityManager.find(Test.class, testID);
+		
+		ExceptionUtils.checkToRespond(t, u);
 		
 		List<Answer> l = u.getResponsesForTest(t, entityManager);
 		
@@ -69,13 +68,12 @@ public class PageEditResponse extends WebResource {
 	
 	@POST
 	@Path("create-response")
-	public Response createResponse(Answer a) throws UserNotAuthorizedException {
-		User u = (User)session.get("user");
+	public Response createResponse(Answer a) {
+		User u = session.getUser();
 		
 		Test test = entityManager.find(Test.class, testID);
-		
-		if (!u.enrolledInCourse(test.getCourse()))
-			throw new UserNotAuthorizedException();
+
+		ExceptionUtils.checkToRespond(test, u);
 		
 		a.setUser(u);
 		
@@ -86,13 +84,12 @@ public class PageEditResponse extends WebResource {
 	
 	@POST
 	@Path("edit-response")
-	public Response editResponse(Answer a) throws UserNotAuthorizedException {
-		User u = (User)session.get("user");
+	public Response editResponse(Answer a) {
+		User u = session.getUser();
 		
 		Test test = entityManager.find(Test.class, testID);
-		
-		if (!u.enrolledInCourse(test.getCourse()))
-			throw new UserNotAuthorizedException();
+
+		ExceptionUtils.checkToRespond(test, u);
 		
 		a.setUser(u);
 		
@@ -109,13 +106,12 @@ public class PageEditResponse extends WebResource {
 	
 	@POST
 	@Path("edit-responses/")
-	public Response editResponses(List<Answer> l) throws UserNotAuthorizedException {
-		User u = (User)session.get("user");
+	public Response editResponses(List<Answer> l) {
+		User u = session.getUser();
 		
 		Test test = entityManager.find(Test.class, testID);
-		
-		if (!u.enrolledInCourse(test.getCourse()))
-			throw new UserNotAuthorizedException();
+
+		ExceptionUtils.checkToRespond(test, u);
 		
 		for (Answer a : l) {
 			a.setUser(u);
@@ -134,13 +130,10 @@ public class PageEditResponse extends WebResource {
 	
 	@POST
 	@Path("delete-response/{response-id}")
-	public Response deleteResponse(@PathParam("response-id") int responseID) throws UserNotAuthorizedException {
-		User u = (User)session.get("user");
-		
+	public Response deleteResponse(@PathParam("response-id") int responseID) {
 		Test test = entityManager.find(Test.class, testID);
 		
-		if (!u.getEnrolledCourses().contains(test.getCourse()))
-			throw new UserNotAuthorizedException();
+		ExceptionUtils.checkToRespond(test, session);
 		
 		Answer a = entityManager.find(Answer.class, responseID);
 		

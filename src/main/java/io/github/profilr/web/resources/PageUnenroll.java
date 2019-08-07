@@ -20,8 +20,8 @@ import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
-import io.github.profilr.web.UserNotAuthorizedException;
 import io.github.profilr.web.WebResource;
+import io.github.profilr.web.exceptions.ExceptionUtils;
 
 @Path("unenroll")
 public class PageUnenroll extends WebResource {
@@ -36,8 +36,10 @@ public class PageUnenroll extends WebResource {
 	@GET
 	@Path("{course-id}")
 	@Template(name="/unenroll")
-	public Response getDelete(@PathParam("course-id") int courseID) throws UserNotAuthorizedException {
+	public Response getDelete(@PathParam("course-id") int courseID) {
 		Course c = entityManager.find(Course.class, courseID);
+		
+		ExceptionUtils.checkNull(c);
 		
 		return Response.ok(getView("course", c)).build();
 	}
@@ -45,10 +47,12 @@ public class PageUnenroll extends WebResource {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response delete(@FormParam("courseId") int courseID) throws UserNotAuthorizedException {
+	public Response delete(@FormParam("courseId") int courseID) {
 		Course c = entityManager.find(Course.class, courseID);
 
-		User u = (User) session.get("user");
+		ExceptionUtils.checkNull(c);
+		
+		User u = session.getUser();
 		
 		entityManager.refresh(u);
 		
