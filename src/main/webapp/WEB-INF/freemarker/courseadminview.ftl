@@ -209,7 +209,7 @@
 							<#if !test.published>
 								<td class="testPublishButtonColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/></td> <td class="testPublishTextColumn" style="text-align: left;"><p>Unpublished</p></td>
 							<#else>
-								<!--<td class="testPublishColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td>-->
+								<td class="testPublishColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td>
 							</#if>
 							<td class="testButtonColumn" style="text-align: right;">
 								<a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a>
