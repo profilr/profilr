@@ -15,6 +15,7 @@ import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageInvite;
 import io.github.profilr.web.resources.PageKick;
 import io.github.profilr.web.resources.PageLeaveCourse;
+import io.github.profilr.web.resources.PagePerformance;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageRename;
 import io.github.profilr.web.resources.PageSplash;
@@ -141,6 +142,8 @@ public abstract class WebResource {
 			
 			params.put("inviteAdminUrl", buildUri(PageInvite.class));
 			params.put("kickUrl", buildUri(PageKick.class));
+			
+			params.put("performanceUrl", buildUri(PagePerformance.class));
 			
 			cachedURLMappings = params;
 		}

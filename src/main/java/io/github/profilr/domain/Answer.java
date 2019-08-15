@@ -19,7 +19,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "TestQuestionAnswers")
+@Table(name = "Answers")
 @NamedQueries({
 	@NamedQuery(name = Answer.GET_BY_USER_AND_TEST_NQ, query = "FROM Answer WHERE user = :user AND question.test = :test"),
 	@NamedQuery(name = Answer.GET_BY_USER_AND_QUESTION_NQ, query = "FROM Answer WHERE user = :user AND question= :question")

@@ -70,7 +70,7 @@ CREATE TABLE `Topics` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `TestQuestions` (
+CREATE TABLE `Questions` (
 	`question_id` int(10) not null auto_increment,
 	`test_id` int(10) not null,
 	`topic_id` int(10) not null,
@@ -91,7 +91,7 @@ CREATE TABLE `Reasons` (
 	UNIQUE KEY `reason_unq` (`text`)
 );
 
-CREATE TABLE `TestQuestionAnswers` (
+CREATE TABLE `Answers` (
 	`answer_id` int(10) not null auto_increment,
 	`question_id` int(10) not null,
 	`user_id` varchar(30) not null,
@@ -99,7 +99,7 @@ CREATE TABLE `TestQuestionAnswers` (
 	`reason_id` int(10), /*explicitly nullable*/
 	`notes` varchar(500) not null,
 	PRIMARY KEY (`answer_id`),
-	FOREIGN KEY (`question_id`) REFERENCES `TestQuestions` (`question_id`)
+	FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,

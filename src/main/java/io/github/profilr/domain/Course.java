@@ -1,6 +1,7 @@
 package io.github.profilr.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,6 +48,13 @@ public class Course {
 				joinColumns = {@JoinColumn(name = "course_id")},
 				inverseJoinColumns = {@JoinColumn(name = "user_id")})
 	private List<User> admins;
+	
+	public List<User> getEnrolledStudents() {
+		return getSections().stream()
+							.flatMap(s -> s.getUsers()
+										   .stream())
+							.collect(Collectors.toList());
+	}
 	
 	public String toString() {
 		return Integer.toString(this.courseID);

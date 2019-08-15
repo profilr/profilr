@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TestQuestions")
+@Table(name = "Questions")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="questionID")
 public class Question {
 	

@@ -13,6 +13,9 @@
 		<resource path="src/main/webapp/WEB-INF/freemarker/deletesection.ftl">
 			<value key="section" object-class="io.github.profilr.domain.Section"/>
 		</resource>
+		<resource path="src/main/webapp/WEB-INF/freemarker/performance.ftl">
+			<value key="course" object-class="io.github.profilr.domain.Course"/>
+		</resource>
 		<resource path="src/main/webapp/WEB-INF/freemarker/deletecourse.ftl">
 			<value key="course" object-class="io.github.profilr.domain.Course"/>
 		</resource>
