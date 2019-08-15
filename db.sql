@@ -107,13 +107,14 @@ CREATE TABLE `Answers` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `Reasons` (`text`) values 	('Calculation error'),
-					('Significant digits or rounding'),
-					('Silly mistake'),
-					('Misunderstood question'),
-					('Didn\'t understand topic'),
-					('Didn\'t understand vocabulary'),
-					('Forgot +C (oof)'),
-					('Formatted answer incorrectly'),
-					('Bubbling error'),
-					('Other');
+INSERT INTO `Reasons` (`reason_id`, `text`) values 	(1, 'Arithmetic error'),
+							(2, 'Significant digits or rounding'),
+							(3, 'Silly mistake'),
+							(4, 'Misunderstood question'),
+							(5, 'Didn\'t understand topic'),
+							(6, 'Didn\'t understand vocabulary'),
+							(7, 'Forgot +C'),
+							(8, 'Formatted answer incorrectly'),
+							(9, 'Bubbling error'),
+							(10, 'Other'),
+							(11, 'Calculator mistake');
