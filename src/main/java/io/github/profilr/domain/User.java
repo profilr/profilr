@@ -55,18 +55,25 @@ public class User implements Comparable<User> {
 		return getFamilyName() + ", " + getGivenName();
 	}
 	
-	public List<Answer> getResponsesForTest(Test t, EntityManager em) {
+	public List<Answer> getAnswersForTest(Test t, EntityManager em) {
 		return em.createNamedQuery(Answer.GET_BY_USER_AND_TEST_NQ, Answer.class)
 				 .setParameter("user", this)
 				 .setParameter("test", t)
 				 .getResultList();
 	}
 	
-	public List<Answer> getResponsesForQuestion(Question q, EntityManager em) {
+	public List<Answer> getAnswersForQuestion(Question q, EntityManager em) {
 		return em.createNamedQuery(Answer.GET_BY_USER_AND_QUESTION_NQ, Answer.class)
 				 .setParameter("user", this)
 				 .setParameter("question", q)
 				 .getResultList();
+	}
+	
+	public List<TestResponse> getResponsesForTest(Test t, EntityManager em) {
+		return em.createNamedQuery(TestResponse.GET_BY_USER_AND_TEST_NQ, TestResponse.class)
+				.setParameter("user", this)
+				.setParameter("test", t)
+				.getResultList();
 	}
 	
 	public boolean enrolledInCourse(Course c) {

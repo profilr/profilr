@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-agroal</artifactId>
-			<version>5.4.3.Final</version>
+			<version>${hibernate.version}</version>
 			<type>pom</type>
 		</dependency>
 
@@ -97,9 +97,17 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.16</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
 	</dependencies>
 	<properties>
 		<jersey.version>2.29</jersey.version>
+		<hibernate.version>5.4.3.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 </project>

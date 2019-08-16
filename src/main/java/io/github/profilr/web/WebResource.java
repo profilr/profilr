@@ -138,8 +138,6 @@ public abstract class WebResource {
 			params.put("editTestUrl", buildUri("/edit-test"));
 			params.put("editResponseUrl", buildUri("/tests"));
 			
-			params.put("updateResponseUrl", buildUri("/edit-response"));
-			
 			params.put("inviteAdminUrl", buildUri(PageInvite.class));
 			params.put("kickUrl", buildUri(PageKick.class));
 			

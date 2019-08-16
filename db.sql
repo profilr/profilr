@@ -107,6 +107,22 @@ CREATE TABLE `Answers` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE Responses (
+
+	`response_id` int(10) not null auto_increment,
+	`user_id` varchar(30) not null,
+	`test_id` int(10) not null,
+	`text` varchar(255),
+	`ts_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`ts_updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`response_id`),
+	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`test_id`) REFERENCES `Tests` (`test_id`)
+		ON DELETE CASCADE ON UPDATE CASCADE
+
+);
+
 INSERT INTO `Reasons` (`reason_id`, `text`) values 	(1, 'Arithmetic error'),
 							(2, 'Significant digits or rounding'),
 							(3, 'Silly mistake'),

@@ -1,5 +1,9 @@
 package io.github.profilr.web.resources;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
@@ -12,6 +16,8 @@ import org.glassfish.jersey.server.mvc.Viewable;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Section;
+import io.github.profilr.domain.Test;
+import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
@@ -47,11 +53,23 @@ public class PageCourseView extends WebResource {
 		// If they're not an admin we need to find what section they are in.
 		Section s = u.getSectionFromCourse(c);
 		
+		// Also I want a list of the submission times.
+		Map<String, String> submissionTimes = new HashMap<String, String>();
+		
+		for (Test t : c.getTests()) {
+			List<TestResponse> r = u.getResponsesForTest(t, entityManager);
+			
+			if (r.size() < 1)
+				continue;
+			
+			submissionTimes.put(String.valueOf(t.getTestID()), r.get(0).getTsCreated().toString());
+		}
+		
 		// If the user doesn't have a section with a matching course, the user is not a part of the course.
 		if (s == null)
 			throw new UserNotAuthorizedException();
 		
-		return new Viewable("/coursestudentview", getView("course", c, "section", s));
+		return new Viewable("/coursestudentview", getView("course", c, "section", s, "submissionTimes", submissionTimes));
 	}
 	
 }

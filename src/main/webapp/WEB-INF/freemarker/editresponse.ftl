@@ -10,16 +10,66 @@
 		<script>
 		
 		
-			function updateResponses() {
+			function pushResponse() {
+				pushAnswers();
+				pushPlanOfAction();
+			}
+			
+			function pushPlanOfAction() {
+				text = document.getElementById("planOfAction");
+				
+				var response = {
+						"text" : text.value
+					};
+				
+				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/update-response',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/json',
+					data: JSON.stringify(response),
+					success: function(jqxhr, textStatus, data) { document.getElementById("saveStatus").innerHTML = "Saved!" },
+					error: function(error, textStatus, s){ console.log(error); }
+				});
+			}
+			
+			function pushAnswers() {
 				elements = document.getElementsByClassName("question");
 				var i;
 				for (i = 0; i < elements.length; i++) {
 					questionID = elements[i].getAttribute("name");
-					updateResponse(questionID);
+					pushAnswer(questionID);
 				}
 			}
 			
-			function updateResponse(questionID) {
+			function pushAnswers2() {
+				arr = [];
+				elements = document.getElementsByClassName("question");
+				var i;
+				for (i = 0; i < elements.length; i++) {
+					questionID = elements[i].getAttribute("name");
+					
+					var response = {
+						"question_id": parseInt(questionID),
+						"correct": parseInt(document.getElementById(questionID + ".correct").value),
+						"reason_id": parseInt(document.getElementById(questionID + ".reason").value) === -1 
+									? null : parseInt(document.getElementById(questionID + ".reason").value),
+						"notes": document.getElementById(questionID + ".notes").value
+					};
+					
+					arr.push(response);
+				}
+				
+				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/update-answers',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/json',
+					data: JSON.stringify(arr),
+					success: function(jqxhr, textStatus, data) { document.getElementById("saveStatus").innerHTML = "Saved!" },
+					error: function(error, textStatus, s){ console.log(error); }
+				});
+			}
+			
+			function pushAnswer(questionID) {
 				document.getElementById("saveStatus").innerHTML = "Saving..."
 				var response = {
 					"question_id": parseInt(questionID),
@@ -29,7 +79,7 @@
 					"notes": document.getElementById(questionID + ".notes").value
 				};
 				
-				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/edit-response',
+				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/update-answer',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
@@ -55,7 +105,7 @@
 				reason.classList.toggle("hidden", parseInt(correct.value) == maxPoints);
 			}
 			
-			function refreshResponseView(rsp) {
+			function pullAnswerView(rsp) {
 				var correct = document.getElementById(rsp.question.questionID + ".correct");
 				var reason = document.getElementById(rsp.question.questionID + ".reason");
 				var notes = document.getElementById(rsp.question.questionID + ".notes");
@@ -66,24 +116,42 @@
 				updateReasonVisibility(rsp.question.questionID);
 			}
 			
-			function refreshResponses(data) {
+			function pullAnswers(data) {
 				for (var i = 0; i < data.length; i++)
-					refreshResponseView(data[i]);
+					pullAnswerView(data[i]);
 			}
 			
-			function requestResponses() {
+			function requestAnswers() {
+				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/get-answer-data',
+					dataType: 'text',
+					type: 'get',
+					success: function(jqxhr, textStatus, data) { pullAnswers(JSON.parse(data.responseText)); },
+					error: function(jqxhr, textStatus, error ){ console.log(error); }
+				});
+			}
+			
+			function pullResponse(data) {
+				document.getElementById("planOfAction").value = data.text;
+			}
+			
+			function requestResponse() {
 				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/get-response-data',
 					dataType: 'text',
 					type: 'get',
-					success: function(jqxhr, textStatus, data) { refreshResponses(JSON.parse(data.responseText)); },
+					success: function(jqxhr, textStatus, data) { pullResponse(JSON.parse(data.responseText)); },
 					error: function(jqxhr, textStatus, error ){ console.log(error); }
 				});
+			}
+			
+			function request() {
+				requestAnswers();
+				requestResponse();
 			}
 			
 		</script>
 	</HEAD>
 
-	<BODY onload="requestResponses()">
+	<BODY onload="request()">
 		
 		<#include "navbar.ftl">
 		
@@ -121,10 +189,15 @@
 			</#if>
 			</table>
 			
+			<br><br>
+			
+			<p>Give a plan of action for topics not mastered:</p>
+			<textarea id="planOfAction" rows="4" cols="50"></textarea>
+			
 			<table style="float: right; color: #000;">
                 <tr>
 					<td><p id="saveStatus"></p></td>
-                	<td><div id="submit" class="button blue" style="float: right;" onclick="updateResponses()"><p>Save</p></div></td>
+                	<td><div id="submit" class="button blue" style="float: right;" onclick="pushResponse()"><p>Save</p></div></td>
                 </tr>
             </table>
 			

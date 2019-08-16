@@ -20,6 +20,7 @@ import org.glassfish.jersey.server.mvc.Template;
 import io.github.profilr.domain.Answer;
 import io.github.profilr.domain.Reason;
 import io.github.profilr.domain.Test;
+import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
@@ -54,36 +55,36 @@ public class PageEditResponse extends WebResource {
 	}
 	
 	@GET
-	@Path("get-response-data")
-	public List<Answer> getResponseData() {
+	@Path("get-answer-data")
+	public List<Answer> getAnswerData() {
 		User u = session.getUser();
 		Test t = entityManager.find(Test.class, testID);
 		
 		ExceptionUtils.checkToRespond(t, u);
 		
-		List<Answer> l = u.getResponsesForTest(t, entityManager);
+		List<Answer> l = u.getAnswersForTest(t, entityManager);
 		
 		return l;
 	}
 	
-	@POST
-	@Path("create-response")
-	public Response createResponse(Answer a) {
+	@GET
+	@Path("get-response-data")
+	public TestResponse getResponseData() {
 		User u = session.getUser();
+		Test t = entityManager.find(Test.class, testID);
 		
-		Test test = entityManager.find(Test.class, testID);
-
-		ExceptionUtils.checkToRespond(test, u);
+		ExceptionUtils.checkToRespond(t, u);
 		
-		a.setUser(u);
+		List<TestResponse> r = u.getResponsesForTest(t, entityManager);
 		
-		entityManager.persist(a);
-		
-		return Response.ok().build();
+		if (r.size() < 1)
+			return null;
+		else
+			return r.get(0);
 	}
 	
 	@POST
-	@Path("edit-response")
+	@Path("update-answer")
 	public Response editResponse(Answer a) {
 		User u = session.getUser();
 		
@@ -93,7 +94,7 @@ public class PageEditResponse extends WebResource {
 		
 		a.setUser(u);
 		
-		List<Answer> old = u.getResponsesForQuestion(a.getQuestion(), entityManager);
+		List<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
 		if (old.size() > 0) {
 			a.setAnswerID(old.get(0).getAnswerID());
 			entityManager.merge(a);
@@ -105,7 +106,7 @@ public class PageEditResponse extends WebResource {
 	}
 	
 	@POST
-	@Path("edit-responses/")
+	@Path("update-answers/")
 	public Response editResponses(List<Answer> l) {
 		User u = session.getUser();
 		
@@ -116,7 +117,7 @@ public class PageEditResponse extends WebResource {
 		for (Answer a : l) {
 			a.setUser(u);
 			
-			List<Answer> old = u.getResponsesForQuestion(a.getQuestion(), entityManager);
+			List<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
 			if (old.size() > 0) {
 				a.setAnswerID(old.get(0).getAnswerID());
 				entityManager.merge(a);
@@ -129,13 +130,37 @@ public class PageEditResponse extends WebResource {
 	}
 	
 	@POST
-	@Path("delete-response/{response-id}")
-	public Response deleteResponse(@PathParam("response-id") int responseID) {
+	@Path("update-response/")
+	public Response updateResponse(TestResponse r) {
+		User u = session.getUser();
+		Test t = entityManager.find(Test.class, testID);
+		
+		ExceptionUtils.checkToRespond(t, u);
+
+		r.setUser(u);
+		r.setTest(t);
+		
+		List<TestResponse> old = u.getResponsesForTest(t, entityManager);
+		
+		if (old.size() > 0) {
+			r.setResponseID(old.get(0).getResponseID());
+			r.setTsCreated(old.get(0).getTsCreated());
+			entityManager.merge(r);
+		} else {
+			entityManager.persist(r);
+		}
+		
+		return null;
+	}
+	
+	@POST
+	@Path("delete-answer/{answer-id}")
+	public Response deleteResponse(@PathParam("answer-id") int answerID) {
 		Test test = entityManager.find(Test.class, testID);
 		
 		ExceptionUtils.checkToRespond(test, session);
 		
-		Answer a = entityManager.find(Answer.class, responseID);
+		Answer a = entityManager.find(Answer.class, answerID);
 		
 		entityManager.remove(a);
 		

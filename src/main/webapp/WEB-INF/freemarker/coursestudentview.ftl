@@ -22,6 +22,7 @@
 						<#if test.published>
 							<tr>
 								<td><a href="${urlMappings.editResponseUrl}/${test.testID}"><p>${test.name}</p></a></td>
+								<td><p><#if submissionTimes[test.testID?string]??>Submitted at: ${submissionTimes[test.testID?string]}<#else>Not Submitted Yet</#if></p></td>
 							</tr>
 						</#if>
 					<#else>

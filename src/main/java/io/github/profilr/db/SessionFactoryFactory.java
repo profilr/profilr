@@ -15,6 +15,7 @@ import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Reason;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
+import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.Topic;
 import io.github.profilr.domain.User;
 
@@ -35,6 +36,7 @@ public class SessionFactoryFactory implements Supplier<SessionFactory> {
 				.addAnnotatedClass(Question.class)
 				.addAnnotatedClass(Reason.class)
 				.addAnnotatedClass(Answer.class)
+				.addAnnotatedClass(TestResponse.class)
 				.getMetadataBuilder()
 				.applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
 				.build();
