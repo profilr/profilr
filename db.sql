@@ -16,13 +16,13 @@ CREATE TABLE `Users` (
 
 CREATE TABLE `Courses` (
 	`course_id` int(10) not null auto_increment,
-	`name` varchar(45) not null,
+	`name` varchar(50) not null,
 	PRIMARY KEY (`course_id`)
 );
 
 CREATE TABLE `Sections` (
 	`section_id` int(10) not null auto_increment,
-	`name` varchar(45) not null,
+	`name` varchar(50) not null,
 	`course_id` int(10) not null,
 	`join_code` varchar(10) not null,
 	PRIMARY KEY (`section_id`),
@@ -53,7 +53,7 @@ CREATE TABLE `SectionUsers` (
 
 CREATE TABLE `Tests` (
 	`test_id` int(10) not null auto_increment,
-	`name` varchar(30) not null,
+	`name` varchar(50) not null,
 	`course_id` int(10) not null,
 	`published` boolean default false,
 	PRIMARY KEY (`test_id`),
@@ -63,7 +63,7 @@ CREATE TABLE `Tests` (
 
 CREATE TABLE `Topics` (
 	`topic_id` int(10) not null auto_increment,
-	`name` varchar(30) not null,
+	`name` varchar(50) not null,
 	`course_id` int(30) not null,
 	PRIMARY KEY (`topic_id`),
 	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
@@ -107,12 +107,11 @@ CREATE TABLE `Answers` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Responses (
-
+CREATE TABLE `Responses` (
 	`response_id` int(10) not null auto_increment,
 	`user_id` varchar(30) not null,
 	`test_id` int(10) not null,
-	`text` varchar(255),
+	`text` varchar(500),
 	`ts_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`ts_updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`response_id`),
@@ -120,7 +119,6 @@ CREATE TABLE Responses (
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`test_id`) REFERENCES `Tests` (`test_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
-
 );
 
 INSERT INTO `Reasons` (`reason_id`, `text`) values 	(1, 'Arithmetic error'),
