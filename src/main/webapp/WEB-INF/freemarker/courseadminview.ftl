@@ -243,13 +243,13 @@
 											<td style="width: 24px;"><a href="${urlMappings.viewResponsesUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-ballot-24px.svg"/></a></td>
 											<td><a href="${urlMappings.viewResponsesUrl}/${test.testID}"><p class="actionText">View Responses</p></a></td>
 										</tr>
-										<tr style="vertical-align: middle;">
+										
 											<#if !test.published>
-												<td class="testPublishButtonColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/></td> <td class="testPublishTextColumn" style="text-align: left;"><p>Unpublished</p></td>
+												<tr style="vertical-align: middle; cursor: pointer;" onclick="publishTest(${test.testID})"><td class="testPublishButtonColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility_off-24px.svg"/></td> <td class="testPublishTextColumn" style="text-align: left;"><p>Unpublished</p></td></tr>
 											<#else>
-												<td class="testPublishColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td>
+												<tr style="vertical-align: middle; cursor: pointer;" onclick="unpublishTest(${test.testID})"><td class="testPublishColumn" style="text-align: right;" ><img src="${urlMappings.images}/baseline-visibility-24px.svg"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td></tr>
 											</#if>
-										</tr>
+										
 									</table>
 								</div>
 							</div></td>
