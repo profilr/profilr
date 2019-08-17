@@ -4,6 +4,7 @@
 		<title>Profilr</title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/performance.css"/>
+		<link rel="stylesheet" href="${urlMappings.stylesheets}/loading.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -37,7 +38,10 @@
 						<option value="${student.userID}">${student.fullName}</option>
 					</#list>
 				</select>
-				<div id="bytopic_graph"></div>
+				<button type="button" id="bytopic_button">Go</button>
+				<div id="bytopic_graph">
+				</div>
+				<div class="lds-ring" id="bytopic_loading"><div></div><div></div><div></div><div></div></div>
 			</div>
 			<div class="quadrant" style="background: #AAA"> </div>
 			<div class="quadrant" style="background: #777"> </div>
@@ -46,6 +50,7 @@
 		
 		<script>
 		function bytopic(testID, sectionID, userID) {
+			$("#bytopic_loading").show();
 			$.ajax({
 				url:'${urlMappings.performanceUrl}/bytopic',
 				dataType: 'text',
@@ -58,17 +63,26 @@
 				},
 				contentType: 'application/json',
 				success: function(jqxhr, textStatus, data) {
+					$("#bytopic_loading").hide();
 					json = JSON.parse(data.responseText);
 					Plotly.plot("bytopic_graph",[{
 						x: Object.keys(json),
 						y: Object.values(json),
 						type: "bar"
-					}], {title: "Performance by Topics"}, {responsive: true})
-					
+					}], {title: "Performance by Topics"}, {responsive: true});
 				},
 				error: function(jqxhr, textStatus, error){ console.log(error); }
 			});
 		}
+		
+		$("#bytopic_button").on("click", function (e) {
+			bytopic($("#bytopic_test_filter").val(),
+					$("#bytopic_section_filter").val(),
+					$("#bytopic_student_filter").val());
+		})
+		
+		$("#bytopic_section_filter").on("change", function (e) {$("#bytopic_student_filter").val("-1");})
+		$("#bytopic_student_filter").on("change", function (e) {$("#bytopic_section_filter").val("-1");})
 		
 		bytopic(-1, -1, -1)
 		</script>

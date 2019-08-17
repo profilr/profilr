@@ -2,4 +2,12 @@
 	width: 50%;
 	height: 50%;
 	float: left;
+	position: relative;
+}
+
+.lds-ring {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
 }
