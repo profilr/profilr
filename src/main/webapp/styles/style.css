@@ -231,9 +231,8 @@ tr.popup.shown {
 	color: #333;
 	border-radius: 5px;
 	padding: 0px;
-	box-shadow: 0 4px #EEE;
+	box-shadow: 0px 0px 20px grey;
 	overflow: hidden;
-	
 }
 
 .dropdown-content.shown {
