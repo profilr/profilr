@@ -38,7 +38,7 @@
 						<option value="${student.userID}">${student.fullName}</option>
 					</#list>
 				</select>
-				<button type="button" id="bytopic_button">Go</button>
+				<button type="button" id="bytopic_button">Add</button>
 				<div id="bytopic_graph">
 				</div>
 				<div class="lds-ring" id="bytopic_loading"><div></div><div></div><div></div><div></div></div>
@@ -68,6 +68,18 @@
 					Plotly.plot("bytopic_graph",[{
 						x: Object.keys(json),
 						y: Object.values(json),
+						name: (function(){
+							// Specifically using double equals instead of triple equals
+							var testName = testID == -1 ?
+											"All Tests" :
+											$("#bytopic_test_filter option:selected").text();
+							var studentSectionName = sectionID == -1 ?
+														(userID == -1 ?
+															"All Students" :
+															$("#bytopic_student_filter option:selected").text()) :
+														$("#bytopic_section_filter option:selected").text();
+							return testName + " - " + studentSectionName;
+						})(),
 						type: "bar"
 					}], {title: "Performance by Topics"}, {responsive: true});
 				},
