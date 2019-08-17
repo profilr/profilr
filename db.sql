@@ -132,5 +132,5 @@ INSERT INTO `Reasons` (`reason_id`, `text`) values 	(1, 'Arithmetic error'),
 							(7, 'Forgot +C'),
 							(8, 'Formatted answer incorrectly'),
 							(9, 'Bubbling error'),
-							(10, 'Other'),
-							(11, 'Calculator mistake');
+							(10, 'Calculator mistake'),
+							(11, 'Other');
