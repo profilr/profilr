@@ -14,8 +14,17 @@ public class FreemarkerConfigurationFactory extends FreemarkerDefaultConfigurati
 	public FreemarkerConfigurationFactory(ServletContext servletContext) {
 		super(servletContext);
 		configuration.setOutputFormat(HTMLOutputFormat.INSTANCE);
-		configuration.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER); // TODO: should be RETHROW_HANDLER in production
-		configuration.setTemplateUpdateDelayMilliseconds(5000); // TODO: should be 3600000 - one hour
+		if (WebResource.DEBUG_MODE_ENABLED) {
+			// Show freemarker errors in HTML, and only cache templates for 5 minutes
+			// It is very important that this is not used in production
+			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
+			configuration.setTemplateUpdateDelayMilliseconds(5000); // 5 minutes
+		} else {
+			// Rethrow all freemarker errors, and cache templates for at least one hour
+			// This is safe for production use
+			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+			configuration.setTemplateUpdateDelayMilliseconds(3600000); // one hour
+		}
 	}
 
 }

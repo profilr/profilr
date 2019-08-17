@@ -23,7 +23,7 @@ import io.github.profilr.web.resources.PageUnenroll;
 
 public abstract class WebResource {
 	
-	private static final boolean DEBUG_NO_CACHE_URL_MAPPINGS = true; //TODO make false in production
+	public static final boolean DEBUG_MODE_ENABLED = true; //TODO make false in production
 	
 	protected Session session;
 	protected UriInfo uriInfo;
@@ -50,7 +50,9 @@ public abstract class WebResource {
 		if (!session.containsKey("navElements"))
 			session.put("navElements", createNavElements());
 		
-		if (!session.containsKey("urlMappings") || DEBUG_NO_CACHE_URL_MAPPINGS)
+		// We regenerate urlMappings on the fly in debug mode
+		// so that when using JRebel, we can add routes dynamically
+		if (!session.containsKey("urlMappings") || DEBUG_MODE_ENABLED)
 			session.put("urlMappings", createUrlMappings());
 		
 		View v = new View(session);
@@ -102,7 +104,7 @@ public abstract class WebResource {
 	private Map<String, String> cachedURLMappings;
 	
 	public Map<String, String> createUrlMappings() {
-		if (cachedURLMappings == null || DEBUG_NO_CACHE_URL_MAPPINGS) {
+		if (cachedURLMappings == null || DEBUG_MODE_ENABLED) {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			
