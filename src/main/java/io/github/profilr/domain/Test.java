@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,4 +43,10 @@ public class Test {
 	@Column(name="published")
 	private boolean published;
 	
+	public List<TestResponse> getResponsesForUser(User u, EntityManager em) {	
+		return em.createNamedQuery(TestResponse.GET_BY_USER_AND_TEST_NQ, TestResponse.class)
+					.setParameter("user", u)
+					.setParameter("test", this)
+					.getResultList();
+	}
 }

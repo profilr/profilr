@@ -145,6 +145,8 @@ public abstract class WebResource {
 			
 			params.put("performanceUrl", buildUri(PagePerformance.class));
 			
+			params.put("viewResponsesUrl", buildUri("/view-responses"));
+			
 			cachedURLMappings = params;
 		}
 		return cachedURLMappings;

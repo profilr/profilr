@@ -197,10 +197,45 @@ tr.popup.shown {
 	margin: auto;
 }
 
+.actionIcon {
+	display: inline-block;
+}
+
+.actionText {
+	display: inline-block;
+}
+
 /* ======================================
    =========== Form Fields ==============
    ====================================== */
    
 .tooltip {
 	color: red;
+}
+
+/* ======================================
+   ============= Dropdown ===============
+   ====================================== */
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	min-width: 160px;
+	padding: 12px 16px;
+	z-index: 1;
+	background-color: #FFF;
+	color: #333;
+	border-radius: 5px;
+	padding: 0px;
+	box-shadow: 0 4px #EEE;
+	overflow: hidden;
+	
+}
+
+.dropdown-content.shown {
+	display: block;
 }

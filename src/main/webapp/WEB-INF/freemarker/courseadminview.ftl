@@ -134,6 +134,21 @@
 	            });
 			}
 			
+			function showDropdown(dropdownID) {
+				document.getElementById(dropdownID).classList.add("shown");
+			}
+			
+			function hideDropdowns() {
+				elements = document.getElementsByClassName("shown");
+				for (i = 0; i < elements.length; i++)
+					elements[i].classList.remove("shown");
+			}
+			
+			window.onclick = function(event) {
+				if (!event.target.classList.contains("dropdownButton"))
+					hideDropdowns();
+			}
+			
 		</script>
 		
 	</head>
@@ -142,7 +157,7 @@
 			
 		<#include "navbar.ftl">
 		
-		<div class="bodyContainer">
+		<div class="bodyContainer" style="overflow: visible;">
 			<h1 id="title">${course.name}</h1>
 			
 			<table class="tabBar">
@@ -206,15 +221,32 @@
 					<#list course.tests as test>
 						<tr>
 							<td class="testNameColumn"><a href="${urlMappings.editTestUrl}/${test.testID}">${test.name}</a></td>
-							<#if !test.published>
-								<td class="testPublishButtonColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/></td> <td class="testPublishTextColumn" style="text-align: left;"><p>Unpublished</p></td>
-							<#else>
-								<td class="testPublishColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td>
-							</#if>
-							<td class="testButtonColumn" style="text-align: right;">
-								<a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a>
-								<a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
-							</td>
+							<td style="text-align: right;"><div class="dropdown">
+								<img src="${urlMappings.images}/baseline-more_vert-24px.svg" class="dropdownButton" onclick="showDropdown('${test.testID}.dropdown')"/>
+								<div id="${test.testID}.dropdown" class="dropdown-content">
+									<table class="list" style="margin: 0px; width: 100%;">
+										<tr style="vertical-align: middle;">
+											<td style="width: 24px;"><a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a></td>
+											<td><a href="${urlMappings.renameTestUrl}/${test.testID}"><p class="actionText">Rename</p></a></td>
+										</tr>
+										<tr style="vertical-align: middle;">
+											<td style="width: 24px;"><a href="${urlMappings.deleteTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a></td>
+											<td><a href="${urlMappings.deleteTestUrl}/${test.testID}"><p class="actionText">Delete</p></a></td>
+										</tr>
+										<tr style="vertical-align: middle;">
+											<td style="width: 24px;"></td>
+											<td><a href="${urlMappings.viewResponsesUrl}/${test.testID}"><p class="actionText">View Responses</p></a></td>
+										</tr>
+										<tr style="vertical-align: middle;">
+											<#if !test.published>
+												<td class="testPublishButtonColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility_off-24px.svg" style="cursor: pointer;" onclick="publishTest(${test.testID})"/></td> <td class="testPublishTextColumn" style="text-align: left;"><p>Unpublished</p></td>
+											<#else>
+												<td class="testPublishColumn" style="text-align: right;"><img src="${urlMappings.images}/baseline-visibility-24px.svg" style="cursor: pointer;" onclick="unpublishTest(${test.testID})"/> <td class="testPublishTextColumn" style="text-align: left;"><p>Published</p></td>
+											</#if>
+										</tr>
+									</table>
+								</div>
+							</div></td>
 						</tr>
 					</#list>
 					<tr>
@@ -222,7 +254,6 @@
 							<input type="text" id="testName" placeholder="Test Name..."/>
 							<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
 						</td>
-						<td></td><td></td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
 						</td>
