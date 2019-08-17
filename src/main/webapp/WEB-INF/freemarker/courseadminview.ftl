@@ -134,12 +134,18 @@
 	            });
 			}
 			
-			function showDropdown(dropdownID) {
-				document.getElementById(dropdownID).classList.add("shown");
+			function toggleDropdown(dropdownID) {
+				elements = document.getElementsByClassName("dropdown-content");
+				for (i = 0; i < elements.length; i++) {
+					if (elements[i].id == dropdownID)
+						elements[i].classList.toggle("shown");
+					else
+						elements[i].classList.remove("shown");
+				}
 			}
 			
 			function hideDropdowns() {
-				elements = document.getElementsByClassName("shown");
+				elements = document.getElementsByClassName("dropdown-content");
 				for (i = 0; i < elements.length; i++)
 					elements[i].classList.remove("shown");
 			}
@@ -222,7 +228,7 @@
 						<tr>
 							<td class="testNameColumn"><a href="${urlMappings.editTestUrl}/${test.testID}">${test.name}</a></td>
 							<td style="text-align: right;"><div class="dropdown">
-								<img src="${urlMappings.images}/baseline-more_vert-24px.svg" class="dropdownButton" onclick="showDropdown('${test.testID}.dropdown')"/>
+								<img src="${urlMappings.images}/baseline-more_vert-24px.svg" class="dropdownButton" onclick="toggleDropdown('${test.testID}.dropdown')"/>
 								<div id="${test.testID}.dropdown" class="dropdown-content">
 									<table class="list" style="margin: 0px; width: 100%;">
 										<tr style="vertical-align: middle;">
@@ -234,7 +240,7 @@
 											<td><a href="${urlMappings.deleteTestUrl}/${test.testID}"><p class="actionText">Delete</p></a></td>
 										</tr>
 										<tr style="vertical-align: middle;">
-											<td style="width: 24px;"></td>
+											<td style="width: 24px;"><a href="${urlMappings.viewResponsesUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-ballot-24px.svg"/></a></td>
 											<td><a href="${urlMappings.viewResponsesUrl}/${test.testID}"><p class="actionText">View Responses</p></a></td>
 										</tr>
 										<tr style="vertical-align: middle;">
