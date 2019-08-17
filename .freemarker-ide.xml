@@ -10,6 +10,10 @@
 			<value key="enrolledCourses" object-class="java.util.List" item-class="io.github.profilr.domain.Course"/>
 			<value key="administratedCourses" object-class="java.util.List" item-class="io.github.profilr.domain.Course"/>
 		</resource>
+		<resource path="src/main/webapp/WEB-INF/freemarker/500.ftl">
+			<value key="e" object-class="java.lang.Exception"/>
+			<value key="date" object-class="java.lang.String"/>
+		</resource>
 		<resource path="src/main/webapp/WEB-INF/freemarker/deletesection.ftl">
 			<value key="section" object-class="io.github.profilr.domain.Section"/>
 		</resource>
