@@ -4,9 +4,9 @@
 	<appender name="STDERR"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<target>System.err</target>
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>%-5level %d{MM/dd/yyyy HH:mm:ss} %-36.36logger{36} %msg%n</Pattern>
-		</layout>
+		<encoder>
+			<pattern>%-5level %d{MM/dd/yyyy HH:mm:ss} %-36.36logger{36} %msg%n</pattern>
+		</encoder>
 	</appender>
 
 	<root level="INFO">
