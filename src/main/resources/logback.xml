@@ -5,11 +5,15 @@
 		class="ch.qos.logback.core.ConsoleAppender">
 		<target>System.err</target>
 		<encoder>
-			<pattern>%-5level %d{MM/dd/yyyy HH:mm:ss} %-36.36logger{36} %msg%n</pattern>
+			<pattern>%-5level %d{MM/dd/yyyy HH:mm:ss} %-36.36logger{36} %msg%n
+			</pattern>
 		</encoder>
 	</appender>
 
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="STDERR" />
 	</root>
+
+	<logger name="org.hibernate" level="INFO" />
+	<logger name="com.zaxxer.hikari" level="INFO" />
 </configuration>

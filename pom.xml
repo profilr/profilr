@@ -81,9 +81,8 @@
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-agroal</artifactId>
+			<artifactId>hibernate-hikaricp</artifactId>
 			<version>${hibernate.version}</version>
-			<type>pom</type>
 		</dependency>
 
 		<dependency>
@@ -95,7 +94,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.16</version>
+			<version>8.0.17</version>
 		</dependency>
 
 		<dependency>
