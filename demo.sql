@@ -135,18 +135,18 @@ insert into `Topics` (`topic_id`, `course_id`, `name`) values
 (4, 1, 'Chain Rule');
 
 insert into `Questions` (`test_id`, `topic_id`, `label`, `text`, `weight`) values
-(1, 1, 'Q1', 'Write the formal definition of a derivative', 10),
-(1, 1, 'Q2', 'Using the definition of a derivative, calculate d/dx x^2', 6),
-(1, 1, 'Q3', 'Using the definition of a derivative, calculate d/dx (x+5)^4', 6),
-(1, 2, 'Q4', 'd/dx x^6', 2),
-(1, 2, 'Q5', 'f\'(3) if f(x)=5x^2+7x+9', 4),
-(1, 2, 'Q6', 'd/dx (2x^3+6)^9 | x=4', 3),
-(1, 3, 'Q7', 'What is the Product Rule?', 2),
-(1, 3, 'Q8', 'd/dx (x^2+2x+1)(x^2-5x+10)', 4),
-(1, 3, 'Q9', 'If f(x)=4, f\'(x)=5, g(x)=6, g\'(x)=7, what is d/dx f(x)g(x)', 3),
-(1, 4, 'Q10', 'What is the Chain Rule?', 1),
-(1, 4, 'Q11', 'd/dx (2x+3)^4', 3),
-(1, 4, 'Q12', 'If f(x)=x^2+4, g(x)=x^2+6, what is d/dx f(g(x))', 7);
+(1, 1, 'Q1', 10),
+(1, 1, 'Q2', 6),
+(1, 1, 'Q3', 6),
+(1, 2, 'Q4', 2),
+(1, 2, 'Q5', 4),
+(1, 2, 'Q6', 3),
+(1, 3, 'Q7', 2),
+(1, 3, 'Q8', 4),
+(1, 3, 'Q9', 3),
+(1, 4, 'Q10', 1),
+(1, 4, 'Q11', 3),
+(1, 4, 'Q12', 7);
 
 insert into `Responses` (`user_id`, `test_id`, `text`) values
 ('1', 1, 'Student 1\'s Plan of Action'),

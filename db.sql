@@ -6,7 +6,7 @@ USE `profilr`;
 
 CREATE TABLE `Users` (
 	`user_id` varchar(30) not null,
-	`email_address` varchar(30) not null,
+	`email_address` varchar(50) not null,
 	`given_name` varchar(30) not null,
 	`family_name` varchar(30) not null,
 	`can_create_course` boolean default false,
@@ -75,7 +75,6 @@ CREATE TABLE `Questions` (
 	`test_id` int(10) not null,
 	`topic_id` int(10) not null,
 	`label` varchar(30) not null,
-	`text` varchar(50) not null,
 	`weight` int(10) not null,
 	PRIMARY KEY (`question_id`),
 	FOREIGN KEY (`test_id`) REFERENCES `Tests` (`test_id`)

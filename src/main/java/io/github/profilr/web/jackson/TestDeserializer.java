@@ -42,7 +42,6 @@ public class TestDeserializer extends StdDeserializer<Test> {
 				throw new JsonParseException(p, String.format("Element of array questions is of wrong type %s, should be Object", qNode.getNodeType().toString()));
 			Question q = new Question();
 			q.setLabel(qNode.getValueChecked(p, "label", String.class));
-			q.setText(qNode.getValueChecked(p, "text", String.class));
 			q.setTopic(entityManager.find(Topic.class, (Object) qNode.getValueChecked(p, "topic_id", Integer.class)));
 			q.setTest(test);
 		}

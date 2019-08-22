@@ -34,7 +34,6 @@ public class QuestionDeserializer extends StdDeserializer<Question> {
 			q.setQuestionID(node.getValueChecked(p, "question_id", Integer.class));
 		}
 		q.setLabel(node.getValueChecked(p, "label", String.class));
-		q.setText(node.getValueChecked(p, "text", String.class));
 		q.setWeight(node.getValueChecked(p, "weight", Integer.class));
 		q.setTopic(entityManager.find(Topic.class, (Object) node.getValueChecked(p, "topic_id", Integer.class)));
 		return q;

@@ -37,9 +37,6 @@ public class Question {
 
 	@Column(name = "label")
 	private String label; // for better identification like #1 or #3b
-
-	@Column(name = "text")
-	private String text;
 	
 	@Column(name = "weight")
 	private int weight;
