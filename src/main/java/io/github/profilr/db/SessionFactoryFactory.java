@@ -24,8 +24,8 @@ public class SessionFactoryFactory implements Supplier<SessionFactory> {
 	@Override
 	public SessionFactory get() {
 		StandardServiceRegistry ssr = new StandardServiceRegistryBuilder()
-				.configure("hibernate.cfg.xml")
 				.build();
+				//using default hibernate.properties file in classpath
 		
 		Metadata metadata = new MetadataSources(ssr)
 				.addAnnotatedClass(User.class)
