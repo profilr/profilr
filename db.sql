@@ -61,6 +61,15 @@ CREATE TABLE `Tests` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE `QuestionTypes` (
+	`question_type_id` int(10) not null auto_increment,
+	`name` varchar(50) not null,
+	`course_id` int(30) not null,
+	PRIMARY KEY (`question_type_id`),
+	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
+		ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE `Topics` (
 	`topic_id` int(10) not null auto_increment,
 	`name` varchar(50) not null,
@@ -73,11 +82,14 @@ CREATE TABLE `Topics` (
 CREATE TABLE `Questions` (
 	`question_id` int(10) not null auto_increment,
 	`test_id` int(10) not null,
+	`question_type_id` int(10) not null,
 	`topic_id` int(10) not null,
 	`label` varchar(30) not null,
 	`weight` int(10) not null,
 	PRIMARY KEY (`question_id`),
 	FOREIGN KEY (`test_id`) REFERENCES `Tests` (`test_id`)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`question_type_id`) REFERENCES `QuestionTypes` (`question_type_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`topic_id`) REFERENCES `Topics` (`topic_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
@@ -110,7 +122,7 @@ CREATE TABLE `Responses` (
 	`response_id` int(10) not null auto_increment,
 	`user_id` varchar(30) not null,
 	`test_id` int(10) not null,
-	`text` varchar(500),
+	`text` varchar(255),
 	`ts_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`ts_updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`response_id`),

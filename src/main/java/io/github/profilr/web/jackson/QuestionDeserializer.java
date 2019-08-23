@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import io.github.profilr.domain.Question;
+import io.github.profilr.domain.QuestionType;
 import io.github.profilr.domain.Topic;
 import lombok.experimental.ExtensionMethod;
 
@@ -35,6 +36,7 @@ public class QuestionDeserializer extends StdDeserializer<Question> {
 		}
 		q.setLabel(node.getValueChecked(p, "label", String.class));
 		q.setWeight(node.getValueChecked(p, "weight", Integer.class));
+		q.setQuestionType(entityManager.find(QuestionType.class, (Object) node.getValueChecked(p, "question_type_id", Integer.class)));
 		q.setTopic(entityManager.find(Topic.class, (Object) node.getValueChecked(p, "topic_id", Integer.class)));
 		return q;
 	}

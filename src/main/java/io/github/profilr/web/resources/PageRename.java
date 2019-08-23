@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Course;
+import io.github.profilr.domain.QuestionType;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
@@ -34,6 +35,36 @@ public class PageRename extends WebResource {
 	
 	public PageRename(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
+	}
+	
+	@GET
+	@Path("question-type/{questionTypeID}")
+	@Template(name="/rename")
+	public Response getRenameQuestionType(@PathParam("questionTypeID") int questionTypeID) {
+		QuestionType qt = entityManager.find(QuestionType.class, questionTypeID);
+		
+		ExceptionUtils.check(qt, session);
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
+		
+		return Response.ok(getView(
+				"name", qt.getName(),
+				"renameUrl", urlMappings.get("renameQuestionTypeUrl")+"/"+qt.getQuestionTypeID(),
+				"redirect", urlMappings.get("courseViewUrl")+"/"+qt.getCourse().getCourseID()+"#questionTypesTab"
+		)).build();
+	}
+	
+	@POST
+	@Path("question-type/{questionTypeID}")
+	public Response renameQuestionType(@PathParam("questionTypeID") int questionTypeID, @FormParam("name") String name) {
+		QuestionType qt = entityManager.find(QuestionType.class, questionTypeID);
+		
+		ExceptionUtils.check(qt, session);
+		
+		qt.setName(name);
+		
+		return Response.ok().build();
 	}
 	
 	@GET

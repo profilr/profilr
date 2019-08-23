@@ -23,6 +23,7 @@ public class QuestionSerializer extends StdSerializer<Question> {
 		gen.writeNumberField("test_id", value.getTest().getTestID());
 		gen.writeStringField("label", value.getLabel());
 		gen.writeNumberField("topic_id", value.getTopic().getTopicID());
+		gen.writeNumberField("question_type_id", value.getQuestionType().getQuestionTypeID());
 		gen.writeNumberField("weight", value.getWeight());
 		gen.writeEndObject();
 	}

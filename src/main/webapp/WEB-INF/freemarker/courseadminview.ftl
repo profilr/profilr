@@ -60,6 +60,25 @@
 	            });
 			}
 			
+			function createQuestionType() {
+				if ($("#questionTypeName").val() === "")
+					return $("#questionTypeRequiredTooltip").show();
+				$.ajax({
+	                url: '${urlMappings.createQuestionTypeUrl}',
+	                dataType: 'text',
+	                type: 'post',
+	                contentType: 'application/x-www-form-urlencoded',
+	                data: "questionTypeName=" + $("#questionTypeName").val() + "&courseId=" + ${course.courseID},
+	                success: function( data, textStatus, jQxhr ){
+	                	window.location.hash = "#questionTypesTab";
+	                	window.location.reload();
+	                },
+	                error: function( jqXhr, textStatus, errorThrown ){
+	                    console.log( errorThrown );
+	                }
+	            });
+			}
+			
 			function createTest() {
 				if ($("#testName").val() === "")
 					return $("#testRequiredTooltip").show();
@@ -168,10 +187,11 @@
 			
 			<table class="tabBar">
 				<tr>
-					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
-					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
-					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
-					<td class="tabLink" id="membersTabLink" onclick="openTab('membersTab')" style="width: 25%;"><a href="javascript:void(0)"><p>Members</p></a></td>
+					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
+					<td class="tabLink" id="questionTypesTabLink" onclick="openTab('questionTypesTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Question Types</p></a></td>
+					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
+					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
+					<td class="tabLink" id="membersTabLink" onclick="openTab('membersTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Members</p></a></td>
 				</tr>
 			</table>
 			
@@ -216,6 +236,30 @@
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="questionTypesTab" class="tab">
+				<h2>Course Question Types</h2>
+				<table class="list">
+					<#list course.questionTypes as type>
+						<tr>
+							<td><p>${type.name}</p></td>
+							<td style="text-align: right;">
+								<a href="${urlMappings.renameQuestionTypeUrl}/${type.questionTypeID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a>
+								<a href="${urlMappings.deleteQuestionTypeUrl}/${type.questionTypeID}"><img src="${urlMappings.images}/baseline-delete-24px.svg"/></a>
+							</td>
+						</tr>
+					</#list>
+					<tr>
+						<td>
+							<input type="text" id="questionTypeName" placeholder="Question Type..."/>
+							<span id="questionTypeRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+						</td>
+						<td style="text-align: right;">
+							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createQuestionType()"/>
 						</td>
 					</tr>
 				</table>

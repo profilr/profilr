@@ -10,15 +10,25 @@
 		<script>		
 			function createQuestion() {
 				var label = $("#label").val();
+				var type = $("#type").val();
 				var topic = $("#topic").val();
 				var points = $("#points").val();
-				if (label == "" || text == "" || topic =="" || points == "")
+				
+				if (label == "" || type == "" || topic =="" || points == "")
 					return;
+				
+				var q = {
+					"label": label,
+					"question_type_id": parseInt(type),
+					"topic_id": parseInt(topic),
+					"weight": parseInt(points)
+				}
+				
 				$.ajax({url:'${urlMappings.editTestUrl}/${test.testID}/create-question',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
-					data: '{"label": "' + label + '", "text": "' + text + '", "topic_id": ' + topic + ', "weight": ' + points + '}',
+					data: JSON.stringify(q),
 					success: function(jqxhr, textStatus, data) { window.location.reload(); },
 					error: function(error, textStatus, jqxhr){console.log(error);}
 					});
@@ -35,12 +45,15 @@
 					});
 			}
 			
-			function startEditQuestion(questionID, topicID) {
+			function startEditQuestion(questionID, topicID, typeID) {
 				questionRow = document.getElementById("question" + questionID);
 				editRow = document.getElementById("editQuestion" + questionID);
 				
 				questionRow.classList.remove("shown");
 				editRow.classList.add("shown");
+				
+				typeDropdown = editRow.querySelector('select[name="type"]');
+				typeDropdown.value = typeID;
 				
 				topicDropdown = editRow.querySelector('select[name="topic"]');
 				topicDropdown.value=topicID;
@@ -54,17 +67,25 @@
 				editRow.classList.remove("shown");
 				
 				var label = editRow.querySelector('input[name="label"]').value;
+				var type = editRow.querySelector('select[name="type"]').value;
 				var topic = editRow.querySelector('select[name="topic"]').value;
 				var points = editRow.querySelector('input[name="points"]').value;
 
-				if (label == "" || text == "" || topic =="" || points == "")
+				if (label == "" || type == "" || topic =="" || points == "")
 					return;
+				
+				var q = {
+					"label": label,
+					"question_type_id": parseInt(type),
+					"topic_id": parseInt(topic),
+					"weight": parseInt(points)
+				}
 				
 				$.ajax({url:'${urlMappings.editTestUrl}/${test.testID}/edit-question/' + questionID,
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
-					data: '{"label": "' + label + '", "text": "' + text + '", "topic_id": ' + topic + ', "weight": ' + points + '}',
+					data: JSON.stringify(q),
 					success: function(jqxhr, textStatus, data) { window.location.reload(); },
 					error: function(error, textStatus, jqxhr){console.log(error);}
 					});
@@ -89,6 +110,7 @@
 				
 				<tr class="inert">
 					<th class="labelColumn">Number</th>
+					<th class="typeColumn">Type</th>
 					<th class="topicColumn">Topic</th>
 					<th class="pointsColumn">Points</th>
 					<th class="editColumn"></th>
@@ -99,13 +121,15 @@
 				
 					<tr id="question${question.questionID}" class="popup shown">
 						<td><p>${question.label}</p></td>
+						<td><p>${question.questionType.name}</p></td>
 						<td><p>${question.topic.name}</p></td>
 						<td><p>${question.weight}</p></td>
-						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-create-24px.svg" style="cursor: pointer;" onclick="startEditQuestion(${question.questionID}, ${question.topic.topicID})"/></td>
+						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-create-24px.svg" style="cursor: pointer;" onclick="startEditQuestion(${question.questionID}, ${question.topic.topicID}, ${question.questionType.questionTypeID})"/></td>
 						<td style="text-align: right;"><img src="${urlMappings.images}/baseline-delete-24px.svg" style="cursor: pointer;" onclick="deleteQuestion(${question.questionID})"/></td>
 					</tr>
 					<tr id="editQuestion${question.questionID}" class="popup">			
 						<td><input name="label" type="text" placeholder="Number" size=5 value="${question.label}"/></td>
+						<td><select name="type"><option value="" selected disabled hidden>Pick a Type</option><#list types as type><option value="${type.questionTypeID}">${type.name}</option></#list></select></td>
 						<td><select name="topic"><option value="" selected disabled hidden>Pick a Topic</option><#list topics as topic><option value="${topic.topicID}">${topic.name}</option></#list></select></td>
 						<td><input name="points" type="number" placeholder="Points" style="width: 64px;" value="${question.weight}"/></td>
 						<td></td>
@@ -116,6 +140,7 @@
 			
 				<tr id="newQuestionInput">
 					<td><input id="label" type="text" placeholder="Label" size=5/></td>
+					<td><select id="type"><option value="" selected disabled hidden>Pick a Type</option><#list types as type><option value="${type.questionTypeID}">${type.name}</option></#list></select></td>
 					<td><select id="topic"><option value="" selected disabled hidden>Pick a Topic</option><#list topics as topic><option value="${topic.topicID}">${topic.name}</option></#list></select></td>
 					<td><input id="points" type="number" placeholder="Points" size=5 style="width: 50px;"/></td>
 					<td></td>

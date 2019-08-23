@@ -162,6 +162,7 @@
 			<table class="list" style="text-align: center;">
 			<tr>
 				<th class="labelColumn">Number</th>
+				<th class="typeColumn">Type</th>
 				<th class="topicColumn">Topic</th>
 				<th class="pointsColumn">Points</th>
 				<th class="correctColumn">Correct</th>
@@ -172,6 +173,7 @@
 				<#list test.questions as question>
 					<tr class="inert question" name="${question.questionID}">
 						<td>${question.label}</td>
+						<td>${question.questionType.name}</td>
 						<td>${question.topic.name}</td>
 						<td id="${question.questionID}.maxPoints">${question.weight}</td>
 						<td><input type="number" id="${question.questionID}.correct" value="${question.weight}" onchange="updateReasonVisibility(${question.questionID})" style="width: 40px" min="0" max="${question.weight}"/></td>

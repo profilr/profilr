@@ -43,6 +43,9 @@ public class Course {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Topic> topics;
 	
+	@OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<QuestionType> questionTypes;
+	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable (name = "CourseAdministrators",
 				joinColumns = {@JoinColumn(name = "course_id")},

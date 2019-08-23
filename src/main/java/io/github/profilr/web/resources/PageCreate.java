@@ -20,6 +20,7 @@ import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Question;
+import io.github.profilr.domain.QuestionType;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
@@ -61,6 +62,21 @@ public class PageCreate extends WebResource {
 		c.getAdmins().add((User) session.get("user"));
 		
 		entityManager.persist(c);
+		
+		return Response.noContent().build();
+	}
+	
+	@POST
+	@Path("question-type")
+	public Response createQuestionType(@FormParam("questionTypeName") String name, @FormParam("courseId") int course) {
+		Course c = entityManager.find(Course.class, course);
+		
+		ExceptionUtils.check(c, session);
+		
+		QuestionType qt = new QuestionType();
+		qt.setName(name);
+		qt.setCourse(c);
+		entityManager.persist(qt);
 		
 		return Response.noContent().build();
 	}

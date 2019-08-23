@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
+import io.github.profilr.domain.QuestionType;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
@@ -32,6 +33,39 @@ public class PageDelete extends WebResource {
 	
 	public PageDelete(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
+	}
+	
+	@GET
+	@Path("question-type/{questionTypeID}")
+	@Template(name="/delete")
+	public Response getDeleteQuestionType(@PathParam("questionTypeID") int questionTypeID) {
+		QuestionType t = entityManager.find(QuestionType.class, questionTypeID);
+		
+		ExceptionUtils.check(t, session);
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
+		
+		return Response.ok(getView(
+				"type", "Question Type",
+				"name", t.getName(),
+				"message", "This will delete ALL questions under this question type. You likely don't want to do this.",
+				"strong", true,
+				"deleteUrl", urlMappings.get("deleteQuestionTypeUrl")+"/"+t.getQuestionTypeID(),
+				"redirect", urlMappings.get("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#questionTypesTab"
+		)).build();
+	}
+	
+	@POST
+	@Path("question-type/{questionTypeID}")
+	public Response deleteQuestionType(@PathParam("questionTypeID") int questionTypeID) {
+		QuestionType t = entityManager.find(QuestionType.class, questionTypeID);
+		
+		ExceptionUtils.check(t, session);
+		
+		entityManager.remove(t);
+		
+		return Response.ok().build();
 	}
 	
 	@GET

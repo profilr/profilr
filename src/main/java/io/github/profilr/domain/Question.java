@@ -46,4 +46,9 @@ public class Question {
 	@JoinColumn(name = "topic_id")
 	private Topic topic;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "question_type_id")
+	private QuestionType questionType;
+	
 }

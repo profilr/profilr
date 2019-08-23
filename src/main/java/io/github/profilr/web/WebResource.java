@@ -130,6 +130,10 @@ public abstract class WebResource {
 			params.put("renameTopicUrl", buildUri(PageRename.class, "topic"));
 			params.put("deleteTopicUrl", buildUri(PageDelete.class, "topic"));
 			
+			params.put("createQuestionTypeUrl", buildUri(PageCreate.class, "question-type"));
+			params.put("renameQuestionTypeUrl", buildUri(PageRename.class, "question-type"));
+			params.put("deleteQuestionTypeUrl", buildUri(PageDelete.class, "question-type"));
+			
 			params.put("createTestUrl", buildUri(PageCreate.class, "test"));
 			params.put("renameTestUrl", buildUri(PageRename.class, "test"));
 			params.put("deleteTestUrl", buildUri(PageDelete.class, "test"));

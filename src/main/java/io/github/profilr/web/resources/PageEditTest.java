@@ -44,7 +44,7 @@ public class PageEditTest extends WebResource {
 		
 		ExceptionUtils.checkToEdit(t, session);
 		
-		return Response.ok(getView("test", t, "topics", t.getCourse().getTopics())).build();
+		return Response.ok(getView("test", t, "topics", t.getCourse().getTopics(), "types", t.getCourse().getQuestionTypes())).build();
 	}
 
 	@POST

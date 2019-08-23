@@ -134,19 +134,23 @@ insert into `Topics` (`topic_id`, `course_id`, `name`) values
 (3, 1, 'Product Rule'),
 (4, 1, 'Chain Rule');
 
-insert into `Questions` (`test_id`, `topic_id`, `label`, `text`, `weight`) values
-(1, 1, 'Q1', 10),
-(1, 1, 'Q2', 6),
-(1, 1, 'Q3', 6),
-(1, 2, 'Q4', 2),
-(1, 2, 'Q5', 4),
-(1, 2, 'Q6', 3),
-(1, 3, 'Q7', 2),
-(1, 3, 'Q8', 4),
-(1, 3, 'Q9', 3),
-(1, 4, 'Q10', 1),
-(1, 4, 'Q11', 3),
-(1, 4, 'Q12', 7);
+insert into `QuestionTypes` (`question_type_id`, `course_id`, `name`) values
+(1, 1, 'MC'),
+(2, 1, 'FR');
+
+insert into `Questions` (`test_id`, `question_type_id`, `topic_id`, `label`, `weight`) values
+(1, 1, 1, 'Q1', 10),
+(1, 1, 1, 'Q2', 6),
+(1, 1, 1, 'Q3', 6),
+(1, 1, 2, 'Q4', 2),
+(1, 1, 2, 'Q5', 4),
+(1, 1, 2, 'Q6', 3),
+(1, 1, 3, 'Q7', 2),
+(1, 1, 3, 'Q8', 4),
+(1, 1, 3, 'Q9', 3),
+(1, 1, 4, 'Q10', 1),
+(1, 1, 4, 'Q11', 3),
+(1, 1, 4, 'Q12', 7);
 
 insert into `Responses` (`user_id`, `test_id`, `text`) values
 ('1', 1, 'Student 1\'s Plan of Action'),
