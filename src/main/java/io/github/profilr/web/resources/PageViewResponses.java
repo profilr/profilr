@@ -1,5 +1,6 @@
 package io.github.profilr.web.resources;
 
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +20,16 @@ import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Test;
-import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.User;
+import io.github.profilr.web.DateFormatterExtensions;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
+import lombok.experimental.ExtensionMethod;
 
 @Path("view-responses/{test-id}")
 @Produces(MediaType.TEXT_HTML)
+@ExtensionMethod(DateFormatterExtensions.class)
 public class PageViewResponses extends WebResource {
 
 	@Inject
@@ -52,14 +55,10 @@ public class PageViewResponses extends WebResource {
 		
 		List<User> enrolled = c.getEnrolledStudents();
 		
-		for (User u : enrolled) {
-			List<TestResponse> r = t.getResponsesForUser(u, entityManager);
-			
-			if (r.size() < 1)
-				continue;
-			
-			submissionTimes.put(String.valueOf(u.getUserID()), r.get(0).getTsCreated().toString());
-		}
+		for (User u : enrolled)
+			t.getResponsesForUser(u, entityManager)
+			 .ifPresent(ts -> submissionTimes.put(String.valueOf(u.getUserID()),
+					 							  ts.getTsCreated().formatHuman()));
 		
 		return Response.ok(getView("course", c, "test", t, "submissionTimes", submissionTimes)).build();
 	}

@@ -1,6 +1,7 @@
 package io.github.profilr.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,10 +44,11 @@ public class Test {
 	@Column(name="published")
 	private boolean published;
 	
-	public List<TestResponse> getResponsesForUser(User u, EntityManager em) {	
+	public Optional<TestResponse> getResponsesForUser(User u, EntityManager em) {	
 		return em.createNamedQuery(TestResponse.GET_BY_USER_AND_TEST_NQ, TestResponse.class)
 					.setParameter("user", u)
 					.setParameter("test", this)
-					.getResultList();
+					.getResultStream()
+					.findFirst();
 	}
 }

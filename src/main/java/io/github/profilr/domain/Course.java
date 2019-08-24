@@ -24,7 +24,7 @@ import lombok.Data;
 @Entity
 @Table(name = "Courses")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="courseID")
-public class Course {
+public class Course implements Comparable<Course> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +57,11 @@ public class Course {
 							.flatMap(s -> s.getUsers()
 										   .stream())
 							.collect(Collectors.toList());
+	}
+	
+	@Override
+	public int compareTo(Course c) {
+		return this.getName().compareTo(c.getName());
 	}
 	
 	public String toString() {

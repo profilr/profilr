@@ -26,7 +26,7 @@ import lombok.Data;
 @Table(name = "Sections")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="sectionID")
 @NamedQuery(name = Section.SELECT_VIA_JOIN_CODE_NQ, query = "FROM Section WHERE joinCode = :joinCode")
-public class Section {
+public class Section implements Comparable<Section> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,13 @@ public class Section {
 				joinColumns = { @JoinColumn (name = "section_id") },
 				inverseJoinColumns = {@JoinColumn (name = "user_id")})
 	private List<User> users = new ArrayList<User>();
-
+	
+	@Override
+	public int compareTo(Section s) {
+		int r = this.getCourse().compareTo(s.getCourse());
+		return r != 0 ? r : this.getSectionID() - s.getSectionID();
+	}
+	
 	public static final String SELECT_VIA_JOIN_CODE_NQ = "Section.SELECT_VIA_JOIN_CODE_NQ";
 	
 }

@@ -21,7 +21,13 @@
 			<ol>
 				<#assign ex = e>
 				<#list 1..20 as _>
-					<li>${ex.class.name}: ${ex.message}</li>
+					<li>${ex.class.name}:
+						<#if ex.message??>
+							${ex.message}
+						<#else>
+							(no message provided)
+						</#if>
+					</li>
 					<#if !ex.cause??>
 						<#break>
 					</#if>

@@ -1,6 +1,7 @@
 package io.github.profilr.web.resources;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -58,10 +59,18 @@ public class PageCreate extends WebResource {
 		
 		Course c = new Course();
 		c.setName(name);
-		c.setAdmins(new ArrayList<User>());
-		c.getAdmins().add((User) session.get("user"));
+		c.setAdmins(Arrays.asList(session.getUser()));
 		
 		entityManager.persist(c);
+
+		QuestionType mc = new QuestionType(),
+					 fr = new QuestionType();
+		mc.setName("Multiple Choice");
+		mc.setCourse(c);
+		entityManager.persist(mc);
+		fr.setName("Free Response");
+		fr.setCourse(c);
+		entityManager.persist(fr);
 		
 		return Response.noContent().build();
 	}

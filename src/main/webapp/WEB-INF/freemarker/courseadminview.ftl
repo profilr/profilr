@@ -188,8 +188,8 @@
 			<table class="tabBar">
 				<tr>
 					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
-					<td class="tabLink" id="questionTypesTabLink" onclick="openTab('questionTypesTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Question Types</p></a></td>
 					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
+					<td class="tabLink" id="questionTypesTabLink" onclick="openTab('questionTypesTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Question Types</p></a></td>
 					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
 					<td class="tabLink" id="membersTabLink" onclick="openTab('membersTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Members</p></a></td>
 				</tr>
@@ -275,6 +275,10 @@
 								<img src="${urlMappings.images}/baseline-more_vert-24px.svg" class="dropdownButton" onclick="toggleDropdown('${test.testID}.dropdown')"/>
 								<div id="${test.testID}.dropdown" class="dropdown-content">
 									<table class="list" style="margin: 0px; width: 100%;">
+										<tr style="vertical-align: middle;">
+											<td style="width: 24px;"><a href="${urlMappings.editTestUrl}/${test.testID}"><img src="${urlMappings.images}/baseline-create-24px.svg"/></a></td>
+											<td><a href="${urlMappings.editTestUrl}/${test.testID}"><p class="actionText">Edit</p></a></td>
+										</tr>
 										<tr style="vertical-align: middle;">
 											<td style="width: 24px;"><a href="${urlMappings.renameTestUrl}/${test.testID}"><img src="${urlMappings.images}/icons8-rename-24.png"/></a></td>
 											<td><a href="${urlMappings.renameTestUrl}/${test.testID}"><p class="actionText">Rename</p></a></td>

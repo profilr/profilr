@@ -1,8 +1,9 @@
 package io.github.profilr.domain;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -46,10 +48,12 @@ public class User implements Comparable<User> {
 	private boolean canCreateCourse;
 	
 	@ManyToMany(mappedBy = "admins", fetch = FetchType.EAGER)
-	private Set<Course> administratedCourses = new HashSet<Course>();
+	@OrderBy
+	private SortedSet<Course> administratedCourses = new TreeSet<Course>();
 
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	private Set<Section> sectionsJoined = new HashSet<Section>();
+	@OrderBy
+	private SortedSet<Section> sectionsJoined = new TreeSet<Section>();
 	
 	public String getFullName() {
 		return getFamilyName() + ", " + getGivenName();

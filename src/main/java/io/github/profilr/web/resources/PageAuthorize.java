@@ -25,8 +25,9 @@ import io.github.profilr.web.PreAuth;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
-@Path("/authorize")
 @PreAuth
+@Path("/authorize")
+@Produces(MediaType.TEXT_HTML)
 public class PageAuthorize extends WebResource {
 	
 	@Inject
@@ -37,43 +38,37 @@ public class PageAuthorize extends WebResource {
 	}
 	
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response get(@QueryParam("token") String tokenString) {
+	public Response get(@QueryParam("token") String tokenString) throws GeneralSecurityException, IOException {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport.Builder().build(), new JacksonFactory()).build();
 		
-		try {
-			GoogleIdToken token = verifier.verify(tokenString);
-			String name = (String)token.getPayload().get("given_name");
-			String userID = (String)token.getPayload().getSubject();
+		GoogleIdToken token = verifier.verify(tokenString);
+		String name = (String)token.getPayload().get("given_name");
+		String userID = (String)token.getPayload().getSubject();
+		
+		session.put("token", token);
+		session.put("username", name);
+		
+		// This bit is used to set the navbar entry for the profile page to display as the user's name.
+		// The navbar should have been created by this point.... unless somebody is super weird and navigates straight to the authorize endpoint when they first access the app.
+		NavElement e = super.getNavElement(PageProfile.navElementName);
+		if (e != null)
+			e.setDisplayName(name);
+		
+		User u = entityManager.find(User.class, userID);
+		
+		if (u == null) {
+			u = new User();
+			u.setUserID(userID);
+			u.setEmailAddress(token.getPayload().getEmail());
+			u.setGivenName(name);
+			u.setFamilyName((String)token.getPayload().get("family_name"));
 			
-			session.put("token", token);
-			session.put("username", name);
-			
-			// This bit is used to set the navbar entry for the profile page to display as the user's name.
-			// The navbar should have been created by this point.... unless somebody is super weird and navigates straight to the authorize endpoint when they first access the app.
-			NavElement e = super.getNavElement(PageProfile.navElementName);
-			if (e != null)
-				e.setDisplayName(name);
-			
-			User u = entityManager.find(User.class, userID);
-			
-			if (u == null) {
-				u = new User();
-				u.setUserID(userID);
-				u.setEmailAddress(token.getPayload().getEmail());
-				u.setGivenName(name);
-				u.setFamilyName((String)token.getPayload().get("family_name"));
-				
-				entityManager.persist(u);
-			}
-			
-			session.put("user", u);
-			
-			return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageHome.class).build()).build();
-		} catch (GeneralSecurityException | IOException e) {
-			e.printStackTrace();
-			return Response.status(504).build();
+			entityManager.persist(u);
 		}
+		
+		session.put("user", u);
+		
+		return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageHome.class).build()).build();
 	}
 
 }
