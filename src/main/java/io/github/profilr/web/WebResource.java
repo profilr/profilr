@@ -23,7 +23,7 @@ import io.github.profilr.web.resources.PageUnenroll;
 
 public abstract class WebResource {
 	
-	public static final boolean DEBUG_MODE_ENABLED = true; //TODO make false in production
+	public static final boolean DEBUG_MODE_ENABLED = false; //TODO make false in production
 	
 	protected Session session;
 	protected UriInfo uriInfo;
