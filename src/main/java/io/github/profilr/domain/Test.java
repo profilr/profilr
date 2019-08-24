@@ -1,7 +1,8 @@
 package io.github.profilr.domain;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -38,8 +40,9 @@ public class Test {
 	@JoinColumn(name = "course_id")
 	private Course course;
 	
-	@OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Question> questions;
+	@OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+	@OrderBy
+	private SortedSet<Question> questions = new TreeSet<Question>();
 	
 	@Column(name="published")
 	private boolean published;

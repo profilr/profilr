@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Questions")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="questionID")
-public class Question {
+public class Question implements Comparable<Question> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,7 @@ public class Question {
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "test_id")
+	@EqualsAndHashCode.Exclude
 	private Test test;
 
 	@Column(name = "label")
@@ -50,5 +52,20 @@ public class Question {
 	@ManyToOne
 	@JoinColumn(name = "question_type_id")
 	private QuestionType questionType;
+
+	public int compareTo(Question o) {
+		String myStringPart = this.label.replaceAll("\\d", "");
+		String otherStringPart = o.label.replaceAll("\\d", "");
+		
+		if (myStringPart.equalsIgnoreCase(otherStringPart))
+			return extractInt(this.label) - extractInt(o.label);
+		else
+			return myStringPart.compareTo(otherStringPart);
+	}
+	
+	private static int extractInt(String s) {
+		String num = s.replaceAll("\\D", "");
+		return num.isEmpty() ? 0 : Integer.parseInt(num);
+	}
 	
 }

@@ -1,8 +1,8 @@
 package io.github.profilr.web.resources;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -25,7 +25,6 @@ import io.github.profilr.domain.QuestionType;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
-import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
@@ -116,7 +115,7 @@ public class PageCreate extends WebResource {
 		Test t = new Test();
 		t.setName(name);
 		t.setCourse(c);
-		t.setQuestions(new ArrayList<Question>());
+		t.setQuestions(new TreeSet<Question>());
 		
 		entityManager.persist(t);
 		
