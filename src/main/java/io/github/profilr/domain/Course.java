@@ -61,11 +61,8 @@ public class Course implements Comparable<Course> {
 	
 	@Override
 	public int compareTo(Course c) {
-		return this.getName().compareTo(c.getName());
-	}
-	
-	public String toString() {
-		return Integer.toString(this.courseID);
+		int r = this.getName().compareTo(c.getName());
+		return r != 0 ? r : this.getCourseID() - c.getCourseID();
 	}
 	
 }
