@@ -63,6 +63,7 @@ public class PagePerformance extends WebResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response byTopic(@QueryParam("courseID") int courseID,
 							@QueryParam("testID") @DefaultValue("-1") int testID,
+							@QueryParam("questionTypeID") @DefaultValue("-1") int questionTypeID,
 							@QueryParam("sectionID") @DefaultValue("-1") int sectionID,
 							@QueryParam("userID") @DefaultValue("-1") String userID) {
 		
@@ -84,7 +85,7 @@ public class PagePerformance extends WebResource {
 						.join(table("Topics"))
 							.on(field("Topics.topic_id", int.class)
 								.eq(field("Questions.topic_id", int.class)));
-
+			
 			SelectConditionStep<Record2<String, BigDecimal>> where;
 			
 			if (sectionID != -1)
@@ -101,6 +102,9 @@ public class PagePerformance extends WebResource {
 				where = where.and(field("Tests.test_id", int.class).eq(testID));
 			else
 				where = where.and(field("Tests.course_id", int.class).eq(courseID));
+			
+			if (questionTypeID != -1)
+				where = where.and(field("Questions.question_type_id").eq(questionTypeID));
 			
 			SelectSeekStep2<Record2<String, BigDecimal>, BigDecimal, String> q = where.groupBy(Arrays.asList(field("Questions.topic_id", int.class)))
 																   .orderBy(field("Performance", BigDecimal.class).desc(),

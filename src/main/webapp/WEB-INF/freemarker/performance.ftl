@@ -17,21 +17,28 @@
 		<div class="bodyContainer">
 			<h1>${course.name} Performance</h1>
 			<div class="quadrant">
-				<label for="bytopic_test_filter">Filter test:</label>
+				<label for="bytopic_test_filter">Test:</label>
 				<select id="bytopic_test_filter">
 					<option value="-1" selected>All tests...</option>
 					<#list course.tests as test>
 						<option value="${test.testID}">${test.name}</option>
 					</#list>
 				</select>
-				<label for="bytopic_section_filter">Filter section:</label>
+				<label for="bytopic_questiontype_filter">Question Type:</label>
+				<select id="bytopic_questiontype_filter">
+					<option value="-1" selected>All types...</option>
+					<#list course.questionTypes as type>
+						<option value="${type.questionTypeID}">${type.name}</option>
+					</#list>
+				</select>
+				<label for="bytopic_section_filter">Section:</label>
 				<select id="bytopic_section_filter">
 					<option value="-1" selected>All sections...</option>
 					<#list course.sections as section>
 						<option value="${section.sectionID}">${section.name}</option>
 					</#list>
 				</select>
-				<label for="bytopic_student_filter">Filter student:</label>
+				<label for="bytopic_student_filter">Student:</label>
 				<select id="bytopic_student_filter">
 					<option value="-1" selected>All students...</option>
 					<#list course.enrolledStudents as student>
@@ -39,6 +46,7 @@
 					</#list>
 				</select>
 				<button type="button" id="bytopic_button">Add</button>
+				<button type="button" id="bytopic_clear">Clear</button>
 				<div id="bytopic_graph">
 				</div>
 				<div class="lds-ring" id="bytopic_loading"><div></div><div></div><div></div><div></div></div>
@@ -49,7 +57,7 @@
 		</div>
 		
 		<script>
-		function bytopic(testID, sectionID, userID) {
+		function bytopic(testID, questionTypeID, sectionID, userID) {
 			$("#bytopic_loading").show();
 			$.ajax({
 				url:'${urlMappings.performanceUrl}/bytopic',
@@ -58,14 +66,15 @@
 				data: {
 					courseID: ${course.courseID},
 					testID: testID,
+					questionTypeID: questionTypeID,
 					sectionID: sectionID,
 					userID: userID
 				},
 				contentType: 'application/json',
 				success: function(jqxhr, textStatus, data) {
 					$("#bytopic_loading").hide();
-					json = JSON.parse(data.responseText);
-					Plotly.plot("bytopic_graph",[{
+					var json = JSON.parse(data.responseText);
+					Plotly.plot("bytopic_graph", [{
 						x: Object.keys(json),
 						y: Object.values(json),
 						name: (function(){
@@ -78,25 +87,33 @@
 															"All Students" :
 															$("#bytopic_student_filter option:selected").text()) :
 														$("#bytopic_section_filter option:selected").text();
-							return testName + " - " + studentSectionName;
+							var questionTypeName = questionTypeID == -1 ?
+													"All Types" :
+													$("#bytopic_questiontype_filter option:selected").text();
+							return testName + " - " + studentSectionName + " - " + questionTypeName;
 						})(),
 						type: "bar"
 					}], {title: "Performance by Topics"}, {responsive: true});
 				},
 				error: function(jqxhr, textStatus, error){ console.log(error); }
 			});
-		}
+		};
 		
 		$("#bytopic_button").on("click", function (e) {
 			bytopic($("#bytopic_test_filter").val(),
+					$("#bytopic_questiontype_filter").val(),
 					$("#bytopic_section_filter").val(),
 					$("#bytopic_student_filter").val());
-		})
+		});
 		
-		$("#bytopic_section_filter").on("change", function (e) {$("#bytopic_student_filter").val("-1");})
-		$("#bytopic_student_filter").on("change", function (e) {$("#bytopic_section_filter").val("-1");})
+		$("#bytopic_clear").on("click", function (e) {
+			Plotly.react("bytopic_graph", [{"type": "bar"}], {responsive: true});
+		});
 		
-		bytopic(-1, -1, -1)
+		$("#bytopic_section_filter").on("change", function (e) {$("#bytopic_student_filter").val("-1");});
+		$("#bytopic_student_filter").on("change", function (e) {$("#bytopic_section_filter").val("-1");});
+		
+		bytopic(-1, -1, -1, -1, false);
 		</script>
 		
 	</body>
