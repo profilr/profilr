@@ -17,8 +17,10 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
+import io.github.profilr.domain.Answer;
 import io.github.profilr.domain.Course;
 import io.github.profilr.domain.Test;
+import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.DateFormatterExtensions;
 import io.github.profilr.web.Session;
@@ -60,6 +62,27 @@ public class PageViewResponses extends WebResource {
 					 							  ts.getTsCreated().formatHuman()));
 		
 		return Response.ok(getView("course", c, "test", t, "submissionTimes", submissionTimes)).build();
+	}
+
+	@GET
+	@Path("{user-id}")
+	@Template(name="/responseview")
+	public Response get(@PathParam("user-id") String userID) {
+		User admin = session.getUser();
+		User u = entityManager.find(User.class, userID);
+		Test t = entityManager.find(Test.class, testID);
+		
+		ExceptionUtils.checkToEdit(t, admin);
+		
+		List<Answer> answers =  u.getAnswersForTest(t, entityManager);
+		Map<String, Answer> answerMap = new HashMap<String, Answer>();
+		
+		for (Answer a : answers)
+			answerMap.put(String.valueOf(a.getQuestion().getQuestionID()), a);
+		
+		TestResponse response = u.getResponsesForTest(t, entityManager).get(0);
+		
+		return Response.ok(getView("user", u, "test", t, "answers", answerMap, "response", response)).build();
 	}
 	
 }
