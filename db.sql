@@ -1,3 +1,4 @@
+/*
 DROP DATABASE IF EXISTS `profilr`;
 
 CREATE DATABASE `profilr`;
@@ -107,7 +108,7 @@ CREATE TABLE `Answers` (
 	`question_id` int(10) not null,
 	`user_id` varchar(30) not null,
 	`correct` int(16) not null,
-	`reason_id` int(10), /*explicitly nullable*/
+	`reason_id` int(10), -- explicitly nullable --
 	`notes` varchar(500) not null,
 	PRIMARY KEY (`answer_id`),
 	FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`)
@@ -143,3 +144,4 @@ INSERT INTO `Reasons` (`reason_id`, `text`) values 	(1, 'Arithmetic error'),
 							(9, 'Bubbling error'),
 							(10, 'Calculator mistake'),
 							(11, 'Other');
+*/
