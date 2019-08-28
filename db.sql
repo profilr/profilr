@@ -124,8 +124,8 @@ CREATE TABLE `Responses` (
 	`user_id` varchar(30) not null,
 	`test_id` int(10) not null,
 	`text` varchar(255),
-	`ts_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	`ts_updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`ts_created` TIMESTAMP,
+	`ts_updated` TIMESTAMP,
 	PRIMARY KEY (`response_id`),
 	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE,
