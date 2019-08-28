@@ -15,6 +15,7 @@ import io.github.profilr.web.resources.PageHome;
 import io.github.profilr.web.resources.PageInvite;
 import io.github.profilr.web.resources.PageKick;
 import io.github.profilr.web.resources.PageLeaveCourse;
+import io.github.profilr.web.resources.PageLogout;
 import io.github.profilr.web.resources.PagePerformance;
 import io.github.profilr.web.resources.PageProfile;
 import io.github.profilr.web.resources.PageRename;
@@ -115,6 +116,7 @@ public abstract class WebResource {
 			params.put("homeUrl", buildUri(PageHome.class));
 			params.put("authUrl", buildUri(PageAuthorize.class));
 			params.put("profileUrl", buildUri(PageProfile.class));
+			params.put("logoutUrl", buildUri(PageLogout.class));
 			
 			params.put("courseViewUrl", buildUri(PageCourseView.class));
 			

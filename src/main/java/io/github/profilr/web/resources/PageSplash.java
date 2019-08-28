@@ -25,5 +25,5 @@ public class PageSplash extends WebResource {
 	public Response get() {
 		return Response.ok(super.getView()).build();
 	}
-
+	
 }

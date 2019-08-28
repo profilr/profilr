@@ -12,8 +12,6 @@
 		<!-- <meta name="google-signin-client_id" content="128861007694-u6svnj6vpmaqneu5hc9kjoefk617j4l4.apps.googleusercontent.com"> -->
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		
-		<script> function signOut() { gapi.auth2.getAuthInstance().signOut(); } </script>
-		
 	</HEAD>
 
 	<BODY>
@@ -23,7 +21,7 @@
 		<div class="bodyContainer">
 			<h1>Profile</h1>
 			
-			<div class="button blue" onclick="signOut()"><p>Logout</p></div>
+			<a href="${urlMappings.logoutUrl}"><div class="button blue"><p>Logout</p></div></a>
 		</div>
 		
 	</BODY>

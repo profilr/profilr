@@ -26,7 +26,7 @@ import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
 @PreAuth
-@Path("/authorize")
+@Path("authorize")
 @Produces(MediaType.TEXT_HTML)
 public class PageAuthorize extends WebResource {
 	
@@ -70,5 +70,5 @@ public class PageAuthorize extends WebResource {
 		
 		return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageHome.class).build()).build();
 	}
-
+	
 }
