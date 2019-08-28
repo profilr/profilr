@@ -1,6 +1,7 @@
 package io.github.profilr.domain;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -66,18 +67,20 @@ public class User implements Comparable<User> {
 				 .getResultList();
 	}
 	
-	public List<Answer> getAnswersForQuestion(Question q, EntityManager em) {
+	public Optional<Answer> getAnswersForQuestion(Question q, EntityManager em) {
 		return em.createNamedQuery(Answer.GET_BY_USER_AND_QUESTION_NQ, Answer.class)
 				 .setParameter("user", this)
 				 .setParameter("question", q)
-				 .getResultList();
+				 .getResultStream()
+				 .findFirst();
 	}
 	
-	public List<TestResponse> getResponsesForTest(Test t, EntityManager em) {
+	public Optional<TestResponse> getResponsesForTest(Test t, EntityManager em) {
 		return em.createNamedQuery(TestResponse.GET_BY_USER_AND_TEST_NQ, TestResponse.class)
 				.setParameter("user", this)
 				.setParameter("test", t)
-				.getResultList();
+				.getResultStream()
+				.findFirst();
 	}
 	
 	public boolean enrolledInCourse(Course c) {

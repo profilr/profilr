@@ -80,7 +80,7 @@ public class PageViewResponses extends WebResource {
 		for (Answer a : answers)
 			answerMap.put(String.valueOf(a.getQuestion().getQuestionID()), a);
 		
-		TestResponse response = u.getResponsesForTest(t, entityManager).get(0);
+		TestResponse response = u.getResponsesForTest(t, entityManager).get();
 		
 		return Response.ok(getView("user", u, "test", t, "answers", answerMap, "response", response)).build();
 	}

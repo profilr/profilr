@@ -1,8 +1,8 @@
 package io.github.profilr.web.resources;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -19,12 +19,15 @@ import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.User;
+import io.github.profilr.web.DateFormatterExtensions;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
 import io.github.profilr.web.exceptions.UserNotAuthorizedException;
+import lombok.experimental.ExtensionMethod;
 
 @Path("courses")
+@ExtensionMethod(DateFormatterExtensions.class)
 public class PageCourseView extends WebResource {
 	
 	@Inject
@@ -57,12 +60,10 @@ public class PageCourseView extends WebResource {
 		Map<String, String> submissionTimes = new HashMap<String, String>();
 		
 		for (Test t : c.getTests()) {
-			List<TestResponse> r = u.getResponsesForTest(t, entityManager);
+			Optional<TestResponse> r = u.getResponsesForTest(t, entityManager);
 			
-			if (r.size() < 1)
-				continue;
-			
-			submissionTimes.put(String.valueOf(t.getTestID()), r.get(0).getTsCreated().toString());
+			if (r.isPresent())
+				submissionTimes.put(String.valueOf(t.getTestID()), r.get().getTsCreated().formatHuman());
 		}
 		
 		// If the user doesn't have a section with a matching course, the user is not a part of the course.

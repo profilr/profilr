@@ -1,6 +1,8 @@
 package io.github.profilr.web.resources;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -75,12 +77,7 @@ public class PageEditResponse extends WebResource {
 		
 		ExceptionUtils.checkToRespond(t, u);
 		
-		List<TestResponse> r = u.getResponsesForTest(t, entityManager);
-		
-		if (r.size() < 1)
-			return null;
-		else
-			return r.get(0);
+		return u.getResponsesForTest(t, entityManager).orElse(null);
 	}
 	
 	@POST
@@ -94,9 +91,10 @@ public class PageEditResponse extends WebResource {
 		
 		a.setUser(u);
 		
-		List<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
-		if (old.size() > 0) {
-			a.setAnswerID(old.get(0).getAnswerID());
+		Optional<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
+		
+		if (old.isPresent()) {
+			a.setAnswerID(old.get().getAnswerID());
 			entityManager.merge(a);
 		} else {
 			entityManager.persist(a);
@@ -117,9 +115,9 @@ public class PageEditResponse extends WebResource {
 		for (Answer a : l) {
 			a.setUser(u);
 			
-			List<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
-			if (old.size() > 0) {
-				a.setAnswerID(old.get(0).getAnswerID());
+			Optional<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
+			if (old.isPresent()) {
+				a.setAnswerID(old.get().getAnswerID());
 				entityManager.merge(a);
 			} else {
 				entityManager.persist(a);
@@ -140,13 +138,17 @@ public class PageEditResponse extends WebResource {
 		r.setUser(u);
 		r.setTest(t);
 		
-		List<TestResponse> old = u.getResponsesForTest(t, entityManager);
-		
-		if (old.size() > 0) {
-			r.setResponseID(old.get(0).getResponseID());
-			r.setTsCreated(old.get(0).getTsCreated());
+		Instant now = Instant.now();
+		Optional<TestResponse> old = u.getResponsesForTest(t, entityManager);
+
+		if (old.isPresent()) {
+			r.setResponseID(old.get().getResponseID());
+			r.setTsCreated(old.get().getTsCreated());
+			r.setTsUpdated(now);
 			entityManager.merge(r);
 		} else {
+			r.setTsCreated(now);
+			r.setTsUpdated(now);
 			entityManager.persist(r);
 		}
 		
