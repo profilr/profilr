@@ -111,7 +111,7 @@
 				var notes = document.getElementById(rsp.question.questionID + ".notes");
 				
 				correct.value = rsp.correct;
-				reason.value = rsp.reason.reasonID;
+				reason.value = rsp.reason ? rsp.reason.reasonID : -1;
 				notes.value = rsp.notes;
 				updateReasonVisibility(rsp.question.questionID);
 			}
