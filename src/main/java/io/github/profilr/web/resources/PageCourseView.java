@@ -25,7 +25,9 @@ import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
 import io.github.profilr.web.exceptions.UserNotAuthorizedException;
 import lombok.experimental.ExtensionMethod;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Path("courses")
 @ExtensionMethod(DateFormatterExtensions.class)
 public class PageCourseView extends WebResource {
@@ -62,8 +64,11 @@ public class PageCourseView extends WebResource {
 		for (Test t : c.getTests()) {
 			Optional<TestResponse> r = u.getResponsesForTest(t, entityManager);
 
-			if (r == null)
+			// Got a random null pointer error. Might as well leave this to prevent anything sketchy in the future.
+			if (r == null) {
+				log.warn("u.getResponsesForTest returned a null optional ???");
 				continue;
+			}
 			
 			if (r.isPresent())
 				submissionTimes.put(String.valueOf(t.getTestID()), r.get().getTsCreated().formatHuman());
