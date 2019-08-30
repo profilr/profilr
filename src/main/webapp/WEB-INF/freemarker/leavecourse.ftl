@@ -14,9 +14,9 @@
 		<div class="bodyContainer">
 		
 			<h1 id="title">Leave Course?</h1>
-			<p>Are you sure you want to stop administrating ${course.name}?</p>
+			<p>Are you sure you want to stop administering ${course.name}?</p>
 			<#if course.admins?size == 1>
-				<p><strong>You are the ONLY admin of this course. If you leave this course, it will be deleted.</strong></p> 
+				<p><strong>You are the ONLY administrator of this course. If you leave this course, it will be hidden.</strong></p> 
 			<#else>
 				<p>There will be ${course.admins?size - 1} administrators left.</p>
 			</#if>
@@ -30,12 +30,16 @@
 	
 		<script>
 			$("#yes").on("click", function() {
+				
+				var params = {};
+				params["courseId"] = ${course.courseID};
+				
 				$.ajax({
 	                url: '${urlMappings.deleteCourseUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseId=${course.courseID}",
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${urlMappings.homeUrl}");
 	                },

@@ -12,12 +12,16 @@
 				if ($("#joinCode").val() === "") {
 					return $("#requiredTooltip").html("(Required Field)");
 				}
+				
+				var params = {};
+				params["joinCode"] = $("#joinCode").val();
+				
 				$.ajax({
 	                url: '${urlMappings.enrollUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "joinCode=" + $("#joinCode").val(),
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${urlMappings.homeUrl}");
 	                },

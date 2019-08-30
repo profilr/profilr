@@ -61,6 +61,9 @@ public class PageCourseView extends WebResource {
 		
 		for (Test t : c.getTests()) {
 			Optional<TestResponse> r = u.getResponsesForTest(t, entityManager);
+
+			if (r == null)
+				continue;
 			
 			if (r.isPresent())
 				submissionTimes.put(String.valueOf(t.getTestID()), r.get().getTsCreated().formatHuman());

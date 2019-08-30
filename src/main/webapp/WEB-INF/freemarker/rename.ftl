@@ -11,12 +11,16 @@
 			function rename() {
 				if ($("#name").val() === "")
 					return $("#requiredTooltip").show();
+				
+				var params = {};
+				params["name"] = $("#name").val();
+				
 				$.ajax({
 	                url: '${renameUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "name=" + $("#name").val(),
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${redirect}");
 	                },

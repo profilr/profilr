@@ -25,12 +25,17 @@
 			function createSection() {
 				if ($("#sectionName").val() === "")
 					return $("#sectionRequiredTooltip").show();
+				
+				var params = {};
+				params["sectionName"] = $("#sectionName").val();
+				params["courseId"] = ${course.courseID};
+				
 				$.ajax({
 	                url: '${urlMappings.createSectionUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "sectionName=" + $("#sectionName").val() + "&courseId=" + ${course.courseID},
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#sectionsTab";
 	                	window.location.reload();
@@ -44,12 +49,17 @@
 			function createTopic() {
 				if ($("#topicName").val() === "")
 					return $("#topicRequiredTooltip").show();
+				
+				var params = {};
+				params["topicName"] = $("#topicName").val();
+				params["courseId"] = ${course.courseID};
+				
 				$.ajax({
 	                url: '${urlMappings.createTopicUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "topicName=" + $("#topicName").val() + "&courseId=" + ${course.courseID},
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#topicsTab";
 	                	window.location.reload();
@@ -63,12 +73,17 @@
 			function createQuestionType() {
 				if ($("#questionTypeName").val() === "")
 					return $("#questionTypeRequiredTooltip").show();
+				
+				var params = {};
+				params["questionTypeName"] = $("#questionTypeName").val();
+				params["courseId"] = ${course.courseID};
+				
 				$.ajax({
 	                url: '${urlMappings.createQuestionTypeUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "questionTypeName=" + $("#questionTypeName").val() + "&courseId=" + ${course.courseID},
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#questionTypesTab";
 	                	window.location.reload();
@@ -82,12 +97,17 @@
 			function createTest() {
 				if ($("#testName").val() === "")
 					return $("#testRequiredTooltip").show();
+				
+				var params = {};
+				params["testName"] = $("#testName").val();
+				params["courseId"] = ${course.courseID};
+				
 				$.ajax({
 	                url: '${urlMappings.createTestUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "testName=" + $("#testName").val() + "&courseId=" + ${course.courseID},
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.hash = "#testsTab";
 	                	window.location.reload();
@@ -101,12 +121,17 @@
 			function inviteAdmin() {
 				if ($("#inviteEmail").val() === "")
 					return $("#inviteErrorTooltip").html("(Required Field)");
+				
+				var params = {};
+				params["email"] = $("#inviteEmail").val();
+				params["courseID"] = ${course.courseID};
+				
 				$.ajax({
 	                url: '${urlMappings.inviteAdminUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "email=" + $("#inviteEmail").val() + "&courseID=" + ${course.courseID},
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.reload();
 	                },
@@ -362,6 +387,7 @@
 				}
 				
 				$("#sectionName").keyup(function(e) { if (e.keyCode == 13) { createSection(); } });
+				$("#questionTypeName").keyup(function(e) { if (e.keyCode == 13) { createQuestionType(); } });
 				$("#topicName").keyup(function(e) { if (e.keyCode == 13) { createTopic(); } });
 				$("#testName").keyup(function(e) { if (e.keyCode == 13) { createTest(); } });
 				$("#inviteEmail").keyup(function(e) { if (e.keyCode == 13) { inviteAdmin(); } });

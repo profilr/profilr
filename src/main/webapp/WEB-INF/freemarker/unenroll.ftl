@@ -25,12 +25,15 @@
 	
 		<script>
 			$("#yes").on("click", function() {
-				$.ajax({
+				var params = {};
+				params["courseId"] = ${course.courseID};
+				
+				$.ajax({	
 	                url: '${urlMappings.unenrollUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseId=${course.courseID}",
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${urlMappings.homeUrl}");
 	                },

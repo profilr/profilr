@@ -11,12 +11,16 @@
 			function createCourse() {
 				if ($("#courseName").val() === "")
 					return $("#requiredTooltip").show();
+				
+				var params = {};
+				params["courseName"] = $("#courseName").val();
+				
 				$.ajax({
 	                url: '${urlMappings.createCourseUrl}',
 	                dataType: 'text',
 	                type: 'post',
 	                contentType: 'application/x-www-form-urlencoded',
-	                data: "courseName=" + $("#courseName").val(),
+	                data: $.param(params),
 	                success: function( data, textStatus, jQxhr ){
 	                	window.location.replace("${urlMappings.homeUrl}");
 	                },
