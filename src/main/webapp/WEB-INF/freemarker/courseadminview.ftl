@@ -31,19 +31,19 @@
 				params["courseId"] = ${course.courseID};
 				
 				$.ajax({
-	                url: '${urlMappings.createSectionUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.hash = "#sectionsTab";
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.createSectionUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.hash = "#sectionsTab";
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 		
 			function createTopic() {
@@ -55,19 +55,19 @@
 				params["courseId"] = ${course.courseID};
 				
 				$.ajax({
-	                url: '${urlMappings.createTopicUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.hash = "#topicsTab";
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.createTopicUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.hash = "#topicsTab";
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 			
 			function createQuestionType() {
@@ -79,19 +79,19 @@
 				params["courseId"] = ${course.courseID};
 				
 				$.ajax({
-	                url: '${urlMappings.createQuestionTypeUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.hash = "#questionTypesTab";
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.createQuestionTypeUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.hash = "#questionTypesTab";
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 			
 			function createTest() {
@@ -103,19 +103,19 @@
 				params["courseId"] = ${course.courseID};
 				
 				$.ajax({
-	                url: '${urlMappings.createTestUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.hash = "#testsTab";
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.createTestUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.hash = "#testsTab";
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 			
 			function inviteAdmin() {
@@ -127,55 +127,55 @@
 				params["courseID"] = ${course.courseID};
 				
 				$.ajax({
-	                url: '${urlMappings.inviteAdminUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    if (jqXhr.status === 404) {
-	                    	$("#inviteErrorTooltip").html("Error: User not found");
-	                    } else if (jqXhr.status == 400) {
-	                    	$("#inviteErrorTooltip").html("Error: User is already a student or admin"); 
-	                    } else {
-	                    	$("#inviteErrorTooltip").html("An unknown error occured. Please try again later");
-	                    	console.log(errorThrown);	
-	                    }
-	                }
-	            });
+					url: '${urlMappings.inviteAdminUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						if (jqXhr.status === 404) {
+							$("#inviteErrorTooltip").html("Error: User not found");
+						} else if (jqXhr.status == 400) {
+							$("#inviteErrorTooltip").html("Error: User is already a student or admin"); 
+						} else {
+							$("#inviteErrorTooltip").html("An unknown error occured. Please try again later");
+							console.log(errorThrown);	
+						}
+					}
+				});
 			}
 			
 			function publishTest(testID) {
 				$.ajax({
-	                url: '${urlMappings.editTestUrl}/' + testID + '/publish',
-	                dataType: 'text',
-	                type: 'post',
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.hash = "#testsTab";
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.editTestUrl}/' + testID + '/publish',
+					dataType: 'text',
+					type: 'post',
+					success: function( data, textStatus, jQxhr ){
+						window.location.hash = "#testsTab";
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 			
 			function unpublishTest(testID) {
 				$.ajax({
-	                url: '${urlMappings.editTestUrl}/' + testID + '/unpublish',
-	                dataType: 'text',
-	                type: 'post',
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.hash = "#testsTab";
-	                	window.location.reload();
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.editTestUrl}/' + testID + '/unpublish',
+					dataType: 'text',
+					type: 'post',
+					success: function( data, textStatus, jQxhr ){
+						window.location.hash = "#testsTab";
+						window.location.reload();
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 			
 			function toggleDropdown(dropdownID) {

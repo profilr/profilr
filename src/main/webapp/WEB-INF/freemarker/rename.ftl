@@ -16,18 +16,18 @@
 				params["name"] = $("#name").val();
 				
 				$.ajax({
-	                url: '${renameUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${redirect}");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${renameUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.replace("${redirect}");
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 		</script>
 		

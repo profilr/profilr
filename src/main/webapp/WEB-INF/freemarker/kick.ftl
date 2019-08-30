@@ -30,24 +30,24 @@
 		<script>
 			$("#yes").on("click", function() {
 				$.ajax({
-	                url: '${urlMappings.kickUrl}/${course.courseID}/${user.userID}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.courseViewUrl}/${course.courseID}#membersTab");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    if (jqXhr.status === 404) {
-	                    	$("#errorTooltip").html("Error: The student is not enrolled in your course. Please try again later.")
-	                    } else if (jqXhr.status == 400) {
-	                    	$("#errorTooltip").html("Sorry, can't try to kick yourself from a course. You can leave a course from the homepage.")
-	                    } else {
-	                    	$("#errorTooltip").html("Sorry, an unexpected error occured");
-	                    	console.log(errorThrown);
-	                    }
-	                }
-	            });
+					url: '${urlMappings.kickUrl}/${course.courseID}/${user.userID}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					success: function( data, textStatus, jQxhr ){
+						window.location.replace("${urlMappings.courseViewUrl}/${course.courseID}#membersTab");
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						if (jqXhr.status === 404) {
+							$("#errorTooltip").html("Error: The student is not enrolled in your course. Please try again later.")
+						} else if (jqXhr.status == 400) {
+							$("#errorTooltip").html("Sorry, can't try to kick yourself from a course. You can leave a course from the homepage.")
+						} else {
+							$("#errorTooltip").html("Sorry, an unexpected error occured");
+							console.log(errorThrown);
+						}
+					}
+				});
 			});
 			
 			$("#no").on("click", function() { window.location.replace("${urlMappings.courseViewUrl}/${course.courseID}#membersTab"); });

@@ -195,11 +195,11 @@
 			<textarea id="planOfAction" rows="4" cols="50"></textarea>
 			
 			<table style="float: right; color: #000;">
-                <tr>
+				<tr>
 					<td><p id="saveStatus"></p></td>
-                	<td><div id="submit" class="button blue" style="float: right;" onclick="pushResponse()"><p>Save</p></div></td>
-                </tr>
-            </table>
+					<td><div id="submit" class="button blue" style="float: right;" onclick="pushResponse()"><p>Save</p></div></td>
+				</tr>
+			</table>
 			
 		</div>
 		

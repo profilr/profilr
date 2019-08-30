@@ -31,18 +31,18 @@
 		<script>
 			$("#yes").on("click", function() {
 				$.ajax({
-	                url: '${deleteUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                <#if data??> data: "${data}", </#if>
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${redirect}");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${deleteUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					<#if data??> data: "${data}", </#if>
+					success: function( data, textStatus, jQxhr ){
+						window.location.replace("${redirect}");
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			});
 			
 			$("#no").on("click", function() { window.location.replace("${redirect}"); });

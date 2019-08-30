@@ -17,23 +17,23 @@
 				params["joinCode"] = $("#joinCode").val();
 				
 				$.ajax({
-	                url: '${urlMappings.enrollUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.homeUrl}");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    if (jqXhr.status === 404)
-	                    	return $("#requiredTooltip").html("(Error: Course Not Found)")
-	                   	else if (jqXhr.status === 409)
-	                   		return $("#requiredTooltip").html("(Error: Can't enroll in a course you are already enrolled in or an admin of)")
-	                   	else
-	                   		return $("#requiredTooltip").html("(Something happened on the server, please try again later")
-	                }
-	            });
+					url: '${urlMappings.enrollUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.replace("${urlMappings.homeUrl}");
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						if (jqXhr.status === 404)
+							return $("#requiredTooltip").html("(Error: Course Not Found)")
+					   	else if (jqXhr.status === 409)
+					   		return $("#requiredTooltip").html("(Error: Can't enroll in a course you are already enrolled in or an admin of)")
+					   	else
+					   		return $("#requiredTooltip").html("(Something happened on the server, please try again later")
+					}
+				});
 			}
 		</script>
 		

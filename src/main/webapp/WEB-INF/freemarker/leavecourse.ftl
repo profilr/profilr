@@ -35,18 +35,18 @@
 				params["courseId"] = ${course.courseID};
 				
 				$.ajax({
-	                url: '${urlMappings.deleteCourseUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.homeUrl}");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.deleteCourseUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.replace("${urlMappings.homeUrl}");
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			});
 			
 			$("#no").on("click", function() { window.location.replace("${urlMappings.homeUrl}"); });

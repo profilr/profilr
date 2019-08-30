@@ -16,18 +16,18 @@
 				params["courseName"] = $("#courseName").val();
 				
 				$.ajax({
-	                url: '${urlMappings.createCourseUrl}',
-	                dataType: 'text',
-	                type: 'post',
-	                contentType: 'application/x-www-form-urlencoded',
-	                data: $.param(params),
-	                success: function( data, textStatus, jQxhr ){
-	                	window.location.replace("${urlMappings.homeUrl}");
-	                },
-	                error: function( jqXhr, textStatus, errorThrown ){
-	                    console.log( errorThrown );
-	                }
-	            });
+					url: '${urlMappings.createCourseUrl}',
+					dataType: 'text',
+					type: 'post',
+					contentType: 'application/x-www-form-urlencoded',
+					data: $.param(params),
+					success: function( data, textStatus, jQxhr ){
+						window.location.replace("${urlMappings.homeUrl}");
+					},
+					error: function( jqXhr, textStatus, errorThrown ){
+						console.log( errorThrown );
+					}
+				});
 			}
 		</script>
 		
