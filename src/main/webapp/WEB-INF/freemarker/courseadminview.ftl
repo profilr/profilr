@@ -212,11 +212,12 @@
 			
 			<table class="tabBar">
 				<tr>
-					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
-					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
-					<td class="tabLink" id="questionTypesTabLink" onclick="openTab('questionTypesTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Question Types</p></a></td>
-					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
-					<td class="tabLink" id="membersTabLink" onclick="openTab('membersTab')" style="width: 20%;"><a href="javascript:void(0)"><p>Members</p></a></td>
+					<td class="tabLink highlighted" id ="sectionsTabLink" onclick="openTab('sectionsTab')" style="width: 16%;"><a href="javascript:void(0)"><p>Sections</p></a></td>
+					<td class="tabLink" id="topicsTabLink" onclick="openTab('topicsTab')" style="width: 16%;"><a href="javascript:void(0)"><p>Topics</p></a></td>
+					<td class="tabLink" id="questionTypesTabLink" onclick="openTab('questionTypesTab')" style="width: 16%;"><a href="javascript:void(0)"><p>Question Types</p></a></td>
+					<td class="tabLink" id="testsTabLink" onclick="openTab('testsTab')" style="width: 16%;"><a href="javascript:void(0)"><p>Tests</p></a></td>
+					<td class="tabLink" id="membersTabLink" onclick="openTab('membersTab')" style="width: 16%;"><a href="javascript:void(0)"><p>Members</p></a></td>
+					<td class="tabLink" id="performanceTabLink" onclick="window.location.replace('${urlMappings.performanceUrl}/${course.courseID}')" style="width: 16%;"><a href="javascript:void(0)"><p>Performance</p></a></td>
 				</tr>
 			</table>
 			
