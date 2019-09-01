@@ -11,7 +11,7 @@
 	<body class="animated slideInUp">
 		
 		<div id="title">
-			<H1>Logged Out</H1>
+			<h2>Logged Out</h2>
 		</div>
 	
 	</body>

@@ -1,7 +1,9 @@
 package io.github.profilr.web.resources;
 
 import java.io.IOException;
+import java.net.URI;
 import java.security.GeneralSecurityException;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -67,8 +69,12 @@ public class PageAuthorize extends WebResource {
 		}
 		
 		session.put("user", u);
-		
-		return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageHome.class).build()).build();
+
+		return Response.seeOther(Optional.ofNullable((URI) session.remove("redirect"))
+										 .orElseGet(() -> uriInfo.getBaseUriBuilder()
+												 				 .path(PageHome.class)
+												 				 .build()))
+					   .build();
 	}
 	
 }

@@ -67,8 +67,9 @@ public class Session implements Map<String, Object> {
 
 	@Override
 	public Object remove(Object key) {
+		Object value = session.getAttribute((String) key);
 		session.removeAttribute((String) key);
-		return null;
+		return value;
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class Session implements Map<String, Object> {
 		return Collections.unmodifiableSet(s);
 	}
 	
-	/** same as <code>((User) get("user)) convenience method because we kept doing this */
+	/** same as <code>((User) get("user))</code> convenience method because we kept doing this */
 	public User getUser() {
 		return (User) get("user");
 	}

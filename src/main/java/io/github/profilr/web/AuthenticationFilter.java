@@ -37,6 +37,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 		Session session = new Session(request.getSession());
 		
 		if (session.get("token") == null) {
+			session.put("redirect", requestContext.getUriInfo().getRequestUri());
 			requestContext.abortWith(Response.seeOther(
 								requestContext.getUriInfo().getBaseUriBuilder()
 											  .path(PageSplash.class)

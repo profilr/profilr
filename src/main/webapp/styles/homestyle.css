@@ -15,6 +15,11 @@ body {
 	margin-bottom: 0;
 }
 
+#title h2 {
+	font-size: 72px;
+	margin-bottom: 0;
+}
+
 #title p {
 	margin-top: 0;
 	font-style: italic;
