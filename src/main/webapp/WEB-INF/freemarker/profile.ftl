@@ -5,12 +5,20 @@
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 		
-		<!-- This one is for the .tk -->
-		<meta name="google-signin-client_id" content="128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com">
-		
-		<!-- This one is for the .org -->
-		<!-- <meta name="google-signin-client_id" content="128861007694-u6svnj6vpmaqneu5hc9kjoefk617j4l4.apps.googleusercontent.com"> -->
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		
+		<script>
+			function signOut() {
+				gapi.load("auth2", function() {
+					gapi.auth2.init({client_id:'128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com'}).then(function() {
+						gapi.auth2.getAuthInstance().signOut().then(function() {
+							console.log("Logged out?");
+							window.location.replace('${urlMappings.logoutUrl}');
+						});
+					});
+				});
+			}
+		</script>
 		
 	</HEAD>
 
@@ -21,7 +29,7 @@
 		<div class="bodyContainer">
 			<h1>Profile</h1>
 			
-			<a href="${urlMappings.logoutUrl}"><div class="button blue"><p>Logout</p></div></a>
+			<div class="button blue" onclick="signOut()" style="cursor: pointer;"><p>Logout</p></div>
 		</div>
 		
 	</BODY>

@@ -7,12 +7,10 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 		
-		<meta name="google-signin-client_id" content="128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com">
-		
+		<meta name="google-signin-client_id"content="128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
-		<script>
-			gapi.auth2.getAuthInstance().signOut();	
 		
+		<script>
 			function onSuccess(user) {
 				var id_token = user.getAuthResponse().id_token;
 				setTimeout(function() {
@@ -32,7 +30,7 @@
 			<h1>Profilr</h1>
 			<p>The online test-profiling service</p>
 			<br/><br/>
-			<div class="g-signin2" data-onsuccess="onSuccess"></div>
+			<div onload="signOut()" class="g-signin2" data-onsuccess="onSuccess" data-prompt="select_account"></div>
 		</div>
 	
 	</body>

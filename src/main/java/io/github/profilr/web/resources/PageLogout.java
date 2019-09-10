@@ -26,22 +26,7 @@ public class PageLogout extends WebResource {
 	@Produces(MediaType.TEXT_HTML)
 	public Response logout() {
 		session.clear();
-		return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageLogout.class).path("/success").build()).build();
-	}
-	
-	@GET
-	@Template(name="/loggedout")
-	@Path("success")
-	@Produces(MediaType.TEXT_HTML)
-	public Response loggedOut() {
-		
-		return Response.ok(super.getView()).build();
-	}
-	
-	@GET
-	@Path("test")
-	public String test() {
-		return "HUH";
+		return Response.seeOther(uriInfo.getBaseUriBuilder().path(PageSplash.class).build()).build();
 	}
 	
 }
