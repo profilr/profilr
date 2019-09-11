@@ -1,17 +1,12 @@
 package io.github.profilr.web.resources;
 
-import static lombok.Lombok.sneakyThrow;
-
-import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.math.BigDecimal;
 
 import javax.inject.Inject;
@@ -82,7 +77,8 @@ public class PagePerformance extends WebResource {
 
 			SelectJoinStep<Record2<String, BigDecimal>> joins = 
 				database.select(field("Topics.name", String.class).as("Topic"),
-								avg(field("Answers.correct", int.class).div(field("Questions.weight", int.class))).as("Performance"))
+								sum(field("Answers.correct", int.class))
+									.div(sum(field("Questions.weight", int.class))).as("Performance"))
 						.from(table("Answers"))
 						.join(table("Questions"))
 							.on(field("Questions.question_id", int.class)
