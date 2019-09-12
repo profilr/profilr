@@ -130,6 +130,56 @@
 			<div class="quadrant">
 				<table>
 					<tr>
+						<td><label for="bytype-test-filter">Test</label></td>
+						<td><label for="bytype-topic-filter">Topic</label></td>
+						<td><label for="bytype-section-filter">Section</label></td>
+						<td><label for="bytype-student-filter">Student</label></td>
+					</tr>
+					<tr>
+						<td>
+							<select id="bytype-test-filter">
+								<option value="-1" selected>All tests...</option>
+								<#list course.tests as test>
+									<option value="${test.testID}">${test.name}</option>
+								</#list>
+							</select>
+						</td>
+						<td>
+							<select id="bytype-topic-filter">
+								<option value="-1" selected>All topics...</option>
+								<#list course.topics as topic>
+									<option value="${topic.topicID}">${topic.name}</option>
+								</#list>
+							</select>
+						</td>
+						<td>
+							<select id="bytype-section-filter">
+								<option value="-1" selected>All sections...</option>
+								<#list course.sections as section>
+									<option value="${section.sectionID}">${section.name}</option>
+								</#list>
+							</select>
+						</td>
+						<td>
+							<select id="bytype-student-filter">
+								<option value="-1" selected>All students...</option>
+								<#list course.enrolledStudents as student>
+									<option value="${student.userID}">${student.fullName}</option>
+								</#list>
+							</select>
+						</td>
+						<td>
+							<button type="button" id="bytype-button">Add</button>
+							<button type="button" id="bytype-clear">Clear</button>
+						</td>
+					</tr>
+				</table>
+				<div id="bytype-graph"></div>
+				<div class="lds-ring" id="bytype-loading"><div></div><div></div><div></div><div></div></div>
+			</div>
+			<div class="quadrant">
+				<table>
+					<tr>
 						<td><label for="bytest-topic-filter">Topic</label></td>
 						<td><label for="bytest-questiontype-filter">Question Type</label></td>
 						<td><label for="bytest-section-filter">Section</label></td>
@@ -177,7 +227,6 @@
 				<div id="bytest-graph"></div>
 				<div class="lds-ring" id="bytest-loading"><div></div><div></div><div></div><div></div></div>
 			</div>
-			<div class="quadrant" style="background: #444"> </div>
 		</div>
 		
 		<script>
@@ -260,6 +309,57 @@
 			});
 		};
 		
+		function bytype(testID, topicID, sectionID, userID) {
+			$("#bytype-loading").show();
+			$.ajax({
+				url:'${urlMappings.performanceUrl}/bytype',
+				dataType: 'text',
+				type: 'get',
+				data: {
+					courseID: ${course.courseID},
+					testID: testID,
+					topicID: topicID,
+					sectionID: sectionID,
+					userID: userID
+				},
+				contentType: 'application/json',
+				success: function(jqxhr, textStatus, data) {
+					$("#bytype-loading").hide();
+					var json = JSON.parse(data.responseText);
+					Plotly.plot("bytype-graph", [{
+						x: Object.keys(json),
+						y: Object.values(json),
+						name: (function(){
+							// Specifically using double equals instead of triple equals
+							var testName = testID == -1 ?
+											"All Tests" :
+											$("#bytype-test-filter option:selected").text();
+							var topicName = topicName == -1 ?
+													"All Topics" :
+													$("#bytype-topic-filter option:selected").text();
+							var studentSectionName = sectionID == -1 ?
+														(userID == -1 ?
+															"All Students" :
+															$("#bytype-student-filter option:selected").text()) :
+														$("#bytype-section-filter option:selected").text();
+							return testName + " - " + topicName + " - " + studentSectionName;
+						})(),
+						type: "bar"
+					}], {
+						xaxis: {
+							title: "Question Type"
+						},
+						yaxis: {
+							title: "Performance",
+							range: [0, 1]
+						},
+						title: "Performance by Question Type"
+					}, {responsive: true});
+				},
+				error: function(jqxhr, textStatus, error){ console.log(error); }
+			});
+		};
+		
 		function bytest(topicID, questionTypeID, sectionID, userID) {
 			$("#bytest-loading").show();
 			$.ajax({
@@ -336,6 +436,17 @@
 		$("#byreason-section-filter").on("change", function (e) {$("#byreason-student-filter").val("-1");});
 		$("#byreason-student-filter").on("change", function (e) {$("#byreason-section-filter").val("-1");});
 		
+		$("#bytype-button").on("click", function (e) {
+			bytopic($("#bytype-test-filter").val(),
+					$("#bytype-topic-filter").val(),
+					$("#bytype-section-filter").val(),
+					$("#bytype-student-filter").val());
+		});
+		
+		$("#bytype-clear").on("click", function (e) {
+			Plotly.react("bytype-graph", [{type: "bar"}], {responsive: true});
+		});
+		
 		$("#bytest-button").on("click", function (e) {
 			bytest($("#bytest-topic-filter").val(),
 				   $("#bytest-questiontype-filter").val(),
@@ -352,6 +463,7 @@
 
 		bytopic(-1, -1, -1, -1);
 		byreason(-1, -1, -1, -1, -1);
+		bytype(-1, -1, -1, -1);
 		bytest(-1, -1, -1, -1);
 		
 		</script>

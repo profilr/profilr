@@ -108,7 +108,7 @@ public class PagePerformance extends WebResource {
 				where = where.and(field("Tests.course_id", int.class).eq(courseID));
 			
 			if (questionTypeID != -1)
-				where = where.and(field("Questions.question_type_id").eq(questionTypeID));
+				where = where.and(field("Questions.question_type_id", int.class).eq(questionTypeID));
 			
 			return where.groupBy(field("Questions.topic_id", int.class))
 						.orderBy(field("Performance", BigDecimal.class).desc(),
@@ -167,7 +167,7 @@ public class PagePerformance extends WebResource {
 				where = where.and(field("Tests.course_id", int.class).eq(courseID));
 
 			if (questionTypeID != -1)
-				where = where.and(field("Questions.question_type_id").eq(questionTypeID));
+				where = where.and(field("Questions.question_type_id", int.class).eq(questionTypeID));
 
 			if (topicID != -1)
 				where = where.and(field("Questions.topic_id").eq(topicID));
@@ -175,6 +175,66 @@ public class PagePerformance extends WebResource {
 			return where.groupBy(field("Answers.reason_id", int.class))
 						.orderBy(field("Count", int.class).desc())
 						.fetchMap(field("Reason", String.class), field("Count", Integer.class));
+			
+		})).build();
+		
+	}
+	
+	@GET
+	@Path("bytype")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response byType(@QueryParam("courseID") int courseID,
+						   @QueryParam("testID") @DefaultValue("-1") int testID,
+						   @QueryParam("topicID") @DefaultValue("-1") int topicID,
+						   @QueryParam("sectionID") @DefaultValue("-1") int sectionID,
+						   @QueryParam("userID") @DefaultValue("-1") String userID) {
+
+		Course c = entityManager.find(Course.class, courseID);
+		ExceptionUtils.check(c, session);
+		
+		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
+			
+			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+
+			SelectJoinStep<Record2<String, BigDecimal>> joins = 
+				database.select(field("QuestionTypes.name", String.class).as("Type"),
+								sum(field("Answers.correct", int.class))
+									.div(sum(field("Questions.weight", int.class))).as("Performance"))
+						.from(table("Answers"))
+						.join(table("Questions"))
+							.on(field("Questions.question_id")
+								.eq(field("Answers.question_id")))
+						.join(table("Tests"))
+							.on(field("Tests.test_id")
+								.eq(field("Questions.test_id")))
+						.join(table("QuestionTypes"))
+							.on(field("QuestionTypes.question_type_id")
+								.eq(field("Questions.question_type_id")));
+			
+			SelectConditionStep<Record2<String, BigDecimal>> where;
+			
+			if (sectionID != -1)
+				where = joins.join(table("SectionUsers"))
+							 	.on(field("SectionUsers.user_id")
+									 .eq(field("Answers.user_id")))
+							 .where(field("SectionUsers.section_id").eq(sectionID));
+			else if (!userID.equals("-1"))
+				where = joins.where(field("Answers.user_id").eq(userID));
+			else
+				where = joins.where(noCondition());
+			
+			if (testID != -1)
+				where = where.and(field("Tests.test_id").eq(testID));
+			else
+				where = where.and(field("Tests.course_id").eq(courseID));
+			
+			if (topicID != -1)
+				where = where.and(field("Questions.topic_id").eq(topicID));
+			
+			return where.groupBy(field("Questions.question_type_id"))
+						.orderBy(field("Performance").desc(),
+								 field("Type").asc())
+						.fetchMap(field("Type", String.class), field("Performance", BigDecimal.class));
 			
 		})).build();
 		
@@ -202,21 +262,21 @@ public class PagePerformance extends WebResource {
 									.div(sum(field("Questions.weight", int.class))).as("Performance"))
 						.from(table("Answers"))
 						.join(table("Questions"))
-							.on(field("Questions.question_id", int.class)
-								.eq(field("Answers.question_id", int.class)))
+							.on(field("Questions.question_id")
+								.eq(field("Answers.question_id")))
 						.join(table("Tests"))
-							.on(field("Tests.test_id", int.class)
-								.eq(field("Questions.test_id", int.class)));
+							.on(field("Tests.test_id")
+								.eq(field("Questions.test_id")));
 			
 			SelectConditionStep<Record2<String, BigDecimal>> where;
 			
 			if (sectionID != -1)
 				where = joins.join(table("SectionUsers"))
-							 	.on(field("SectionUsers.user_id", int.class)
-									 .eq(field("Answers.user_id", int.class)))
-							 .where(field("SectionUsers.section_id", int.class).eq(sectionID));
+							 	.on(field("SectionUsers.user_id")
+									 .eq(field("Answers.user_id")))
+							 .where(field("SectionUsers.section_id").eq(sectionID));
 			else if (!userID.equals("-1"))
-				where = joins.where(field("Answers.user_id", String.class).eq(userID));
+				where = joins.where(field("Answers.user_id").eq(userID));
 			else
 				where = joins.where(noCondition());
 			
@@ -227,11 +287,12 @@ public class PagePerformance extends WebResource {
 			if (topicID != -1)
 				where = where.and(field("Questions.topic_id").eq(topicID));
 
-			where = where.and(field("Tests.course_id", int.class).eq(courseID));
+			where = where.and(field("Tests.course_id").eq(courseID));
 			
-			return where.groupBy(field("Tests.test_id", int.class))
-						.orderBy(field("Tests.test_id", int.class).asc())
-						.fetchMap(field("Test", String.class), field("Performance", BigDecimal.class));
+			return where.groupBy(field("Tests.test_id"))
+						.orderBy(field("Tests.test_id").asc())
+						.fetchMap(field("Test", String.class),
+								  field("Performance", BigDecimal.class));
 			
 		})).build();
 		
@@ -250,7 +311,9 @@ public class PagePerformance extends WebResource {
 			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
 			
 			return
-				database.select(concat(field("Users.family_name", String.class), field("\", \"", String.class), field("Users.given_name", String.class)).as("Student"),
+				database.select(concat(field("Users.family_name", String.class),
+									   field("\", \"", String.class),
+									   field("Users.given_name", String.class)).as("Student"),
 								field("Tests.name", String.class).as("Test"),
 								field("Questions.label", String.class).as("Question"),
 								field("Topics.name", String.class).as("Topic"),
@@ -260,20 +323,20 @@ public class PagePerformance extends WebResource {
 								field("Reasons.text", String.class).as("Reason"))
 						.from(table("Answers"))
 						.join(table("Questions"))
-							.on(field("Answers.question_id", int.class)
-								.eq(field("Questions.question_id", int.class)))
+							.on(field("Answers.question_id")
+								.eq(field("Questions.question_id")))
 						.join(table("Tests"))
-							.on(field("Questions.test_id", int.class)
-								.eq(field("Tests.test_id", int.class)))
+							.on(field("Questions.test_id")
+								.eq(field("Tests.test_id")))
 						.join(table("Users"))
-							.on(field("Answers.user_id", int.class)
-								.eq(field("Users.user_id", int.class)))
+							.on(field("Answers.user_id")
+								.eq(field("Users.user_id")))
 						.join(table("Topics"))
-							.on(field("Questions.topic_id", int.class)
-								.eq(field("Topics.topic_id", int.class)))
+							.on(field("Questions.topic_id")
+								.eq(field("Topics.topic_id")))
 						.join(table("QuestionTypes"))
-							.on(field("Questions.question_type_id", int.class)
-								.eq(field("QuestionTypes.question_type_id", int.class)))
+							.on(field("Questions.question_type_id")
+								.eq(field("QuestionTypes.question_type_id")))
 						.leftJoin(table("Reasons"))
 							.on(field("Answers.reason_id")
 								.eq(field("Reasons.reason_id")))
