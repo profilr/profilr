@@ -4,8 +4,8 @@ import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.sum;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.trueCondition;
 
 import java.math.BigDecimal;
 
@@ -47,7 +47,7 @@ public class PagePerformance extends WebResource {
 	}
 	
 	@GET
-	@Path("{courseID}")
+	@Path("{courseID : \\d+}")
 	@Produces(MediaType.TEXT_HTML)
 	@Template(name="/performance")
 	public Response getPerformance(@PathParam("courseID") int courseID) {
@@ -100,7 +100,7 @@ public class PagePerformance extends WebResource {
 			else if (!userID.equals("-1"))
 				where = joins.where(field("Answers.user_id", String.class).eq(userID));
 			else
-				where = joins.where(trueCondition());
+				where = joins.where(noCondition());
 			
 			if (testID != -1)
 				where = where.and(field("Tests.test_id", int.class).eq(testID));
@@ -113,8 +113,7 @@ public class PagePerformance extends WebResource {
 			return where.groupBy(field("Questions.topic_id", int.class))
 						.orderBy(field("Performance", BigDecimal.class).desc(),
 								 field("Topic", String.class).asc())
-						.fetchMap(field("Topic", String.class),
-								  field("Performance", BigDecimal.class));
+						.fetchMap(field("Topic", String.class), field("Performance", BigDecimal.class));
 			
 		})).build();
 		
@@ -160,7 +159,7 @@ public class PagePerformance extends WebResource {
 			else if (!userID.equals("-1"))
 				where = joins.where(field("Answers.user_id", String.class).eq(userID));
 			else
-				where = joins.where(trueCondition());
+				where = joins.where(noCondition());
 			
 			if (testID != -1)
 				where = where.and(field("Tests.test_id", int.class).eq(testID));
@@ -173,9 +172,66 @@ public class PagePerformance extends WebResource {
 			if (topicID != -1)
 				where = where.and(field("Questions.topic_id").eq(topicID));
 			
-			return where.groupBy(field("Reason", int.class))
+			return where.groupBy(field("Answers.reason_id", int.class))
 						.orderBy(field("Count", int.class).desc())
 						.fetchMap(field("Reason", String.class), field("Count", Integer.class));
+			
+		})).build();
+		
+	}
+	
+	@GET
+	@Path("bytest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response byTest(@QueryParam("courseID") int courseID,
+						   @QueryParam("topicID") @DefaultValue("-1") int topicID,
+						   @QueryParam("questionTypeID") @DefaultValue("-1") int questionTypeID,
+						   @QueryParam("sectionID") @DefaultValue("-1") int sectionID,
+						   @QueryParam("userID") @DefaultValue("-1") String userID) {
+
+		Course c = entityManager.find(Course.class, courseID);
+		ExceptionUtils.check(c, session);
+		
+		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
+			
+			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+
+			SelectJoinStep<Record2<String, BigDecimal>> joins = 
+				database.select(field("Tests.name", String.class).as("Test"),
+								sum(field("Answers.correct", int.class))
+									.div(sum(field("Questions.weight", int.class))).as("Performance"))
+						.from(table("Answers"))
+						.join(table("Questions"))
+							.on(field("Questions.question_id", int.class)
+								.eq(field("Answers.question_id", int.class)))
+						.join(table("Tests"))
+							.on(field("Tests.test_id", int.class)
+								.eq(field("Questions.test_id", int.class)));
+			
+			SelectConditionStep<Record2<String, BigDecimal>> where;
+			
+			if (sectionID != -1)
+				where = joins.join(table("SectionUsers"))
+							 	.on(field("SectionUsers.user_id", int.class)
+									 .eq(field("Answers.user_id", int.class)))
+							 .where(field("SectionUsers.section_id", int.class).eq(sectionID));
+			else if (!userID.equals("-1"))
+				where = joins.where(field("Answers.user_id", String.class).eq(userID));
+			else
+				where = joins.where(noCondition());
+			
+
+			if (questionTypeID != -1)
+				where = where.and(field("Questions.question_type_id").eq(questionTypeID));
+
+			if (topicID != -1)
+				where = where.and(field("Questions.topic_id").eq(topicID));
+
+			where = where.and(field("Tests.course_id", int.class).eq(courseID));
+			
+			return where.groupBy(field("Tests.test_id", int.class))
+						.orderBy(field("Tests.test_id", int.class).asc())
+						.fetchMap(field("Test", String.class), field("Performance", BigDecimal.class));
 			
 		})).build();
 		

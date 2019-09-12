@@ -15,5 +15,6 @@
 	</root>
 
 	<logger name="org.hibernate" level="INFO" />
+	<logger name="org.jooq" level="INFO" />
 	<logger name="com.zaxxer.hikari" level="INFO" />
 </configuration>
