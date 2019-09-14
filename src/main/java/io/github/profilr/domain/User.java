@@ -92,7 +92,9 @@ public class User implements Comparable<User> {
 	}
 	
 	public Set<Course> getEnrolledCourses() {
-		return getSectionsJoined().stream().map(s -> s.getCourse()).collect(Collectors.toSet());
+		return getSectionsJoined().stream()
+								  .map(s -> s.getCourse())
+								  .collect(Collectors.toSet());
 	}
 	
 	public boolean isCourseAdmin(Course c) {

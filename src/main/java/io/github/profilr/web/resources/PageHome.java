@@ -1,6 +1,7 @@
 package io.github.profilr.web.resources;
 
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -41,7 +42,7 @@ public class PageHome extends WebResource {
 											 .getEnrolledCourses()
 											 .stream()
 											 .filter(c -> c.getAdmins().size() > 0)
-											 .collect(Collectors.toSet());
+											 .collect(Collectors.toCollection(TreeSet::new));
 
 		Set<Course> administratedCourses = session.getUser().getAdministratedCourses();
 		
