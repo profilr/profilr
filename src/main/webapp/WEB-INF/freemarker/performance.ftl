@@ -15,9 +15,9 @@
 		<#include "navbar.ftl">
 		
 		<div class="bodyContainer">
-			<div style="display: flex; align-items: baseline">
-				<h1 id="title" style="flex-grow: 1">${course.name} Performance</h1>
-				<span style="flex-grow: 0"><a href="${urlMappings.performanceUrl}/raw?courseID=${course.courseID}"><img src="${urlMappings.images}/baseline-get_app-24px.svg"/>Download Raw</a></span>
+			<div class="header">
+				<h1 class="header-title" id="title">${course.name} Performance</h1>
+				<span class="header-raw"><a href="${urlMappings.performanceUrl}/raw?courseID=${course.courseID}"><img src="${urlMappings.images}/baseline-get_app-24px.svg"/>Download Raw</a></span>
 			</div>
 			<div class="quadrant">
 				<table>
@@ -437,10 +437,10 @@
 		$("#byreason-student-filter").on("change", function (e) {$("#byreason-section-filter").val("-1");});
 		
 		$("#bytype-button").on("click", function (e) {
-			bytopic($("#bytype-test-filter").val(),
-					$("#bytype-topic-filter").val(),
-					$("#bytype-section-filter").val(),
-					$("#bytype-student-filter").val());
+			bytype($("#bytype-test-filter").val(),
+				   $("#bytype-topic-filter").val(),
+				   $("#bytype-section-filter").val(),
+				   $("#bytype-student-filter").val());
 		});
 		
 		$("#bytype-clear").on("click", function (e) {

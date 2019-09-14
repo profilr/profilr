@@ -1,6 +1,19 @@
+.header {
+	display: flex;
+	align-items: baseline;
+}
+
+.header-title {
+	flex-grow: 1;
+}
+
+.header-raw {
+	flex-grow: 0;
+}
+
 .quadrant {
 	width: 50%;
-	height: 50%;
+	/*height: 50%;*/
 	float: left;
 	position: relative;
 }
@@ -15,3 +28,4 @@
 table td {
 	color: black;
 }
+
