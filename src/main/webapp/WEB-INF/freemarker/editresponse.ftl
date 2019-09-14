@@ -27,8 +27,15 @@
 					type: 'post',
 					contentType: 'application/json',
 					data: JSON.stringify(response),
-					success: function(jqxhr, textStatus, data) { document.getElementById("saveStatus").innerHTML = "Saved!" },
-					error: function(error, textStatus, s){ console.log(error); }
+					success: function(jqxhr, textStatus, data) { $("#saveStatus").text("Saved!") },
+					error: function(jqXhr, textStatus, errorThrown ){
+						console.log(errorThrown);
+						if (jqXhr.status == 413) {
+							$("#saveStatus").text("Your plan of action was too long.");
+						} else {
+							$("#saveStatus").text("Something went wrong. Please try again.");
+						}
+					}
 				});
 			}
 			

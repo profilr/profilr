@@ -22,100 +22,92 @@
 				window.location.hash = "#"+tabName;
 			}
 		
-			function createSection() {
-				if ($("#sectionName").val() === "")
-					return $("#sectionRequiredTooltip").show();
-				
-				var params = {};
-				params["sectionName"] = $("#sectionName").val();
-				params["courseId"] = ${course.courseID};
-				
+			function postUrlEncoded(url, params, onSuccess, feedback) {
 				$.ajax({
-					url: '${urlMappings.createSectionUrl}',
+					url: url,
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/x-www-form-urlencoded',
 					data: $.param(params),
-					success: function( data, textStatus, jQxhr ){
-						window.location.hash = "#sectionsTab";
-						window.location.reload();
-					},
+					success: onSuccess,
 					error: function( jqXhr, textStatus, errorThrown ){
 						console.log( errorThrown );
+						if (jqXhr.status == 413) {
+							feedback.text("Too many characters");
+						} else {
+							feedback.text("Something went wrong.");
+							feedback.show();
+						}
 					}
 				});
+			}
+			
+			function createSection() {
+				tooltip = $("#sectionTooltip");
+				
+				if ($("#sectionName").val() === "") {
+					tooltip.text("Required Field");
+					tooltip.show();
+					return ;
+				}
+				
+				onSuccess = function( data, textStatus, jQxhr ){
+					window.location.hash = "#sectionsTab";
+					window.location.reload();
+				};
+				
+				postUrlEncoded("${urlMappings.createSectionUrl}", { "sectionName" : $("#sectionName").val(), "courseId" : ${course.courseID} }, onSuccess, tooltip);
 			}
 		
 			function createTopic() {
-				if ($("#topicName").val() === "")
-					return $("#topicRequiredTooltip").show();
+				tooltip = $("#topicTooltip")
 				
-				var params = {};
-				params["topicName"] = $("#topicName").val();
-				params["courseId"] = ${course.courseID};
+				if ($("#topicName").val() === "") {
+					tooltip.text("Required Field");
+					tooltip.show();
+					return ;
+				}
 				
-				$.ajax({
-					url: '${urlMappings.createTopicUrl}',
-					dataType: 'text',
-					type: 'post',
-					contentType: 'application/x-www-form-urlencoded',
-					data: $.param(params),
-					success: function( data, textStatus, jQxhr ){
-						window.location.hash = "#topicsTab";
-						window.location.reload();
-					},
-					error: function( jqXhr, textStatus, errorThrown ){
-						console.log( errorThrown );
-					}
-				});
+				onSuccess = function( data, textStatus, jQxhr ){
+					window.location.hash = "#topicsTab";
+					window.location.reload();
+				};
+				
+				postUrlEncoded("${urlMappings.createTopicUrl}", { "topicName" : $("#topicName").val(), "courseId" : ${course.courseID} }, onSuccess, tooltip);
 			}
 			
 			function createQuestionType() {
-				if ($("#questionTypeName").val() === "")
-					return $("#questionTypeRequiredTooltip").show();
+				tooltip = $("#questionTypeTooltip");
 				
-				var params = {};
-				params["questionTypeName"] = $("#questionTypeName").val();
-				params["courseId"] = ${course.courseID};
+				if ($("#questionTypeName").val() === "") {
+					tooltip.text("Required Field");
+					tooltip.show();
+					return ;
+				}
 				
-				$.ajax({
-					url: '${urlMappings.createQuestionTypeUrl}',
-					dataType: 'text',
-					type: 'post',
-					contentType: 'application/x-www-form-urlencoded',
-					data: $.param(params),
-					success: function( data, textStatus, jQxhr ){
-						window.location.hash = "#questionTypesTab";
-						window.location.reload();
-					},
-					error: function( jqXhr, textStatus, errorThrown ){
-						console.log( errorThrown );
-					}
-				});
+				onSuccess = function( data, textStatus, jQxhr ){
+					window.location.hash = "#questionTypesTab";
+					window.location.reload();
+				};
+				
+				postUrlEncoded("${urlMappings.createQuestionTypeUrl}", { "questionTypeName" : $("#questionTypeName").val(), "courseId" : ${course.courseID} }, onSuccess, tooltip);
 			}
 			
 			function createTest() {
-				if ($("#testName").val() === "")
-					return $("#testRequiredTooltip").show();
+				tooltip = $("#testTooltip");
 				
-				var params = {};
-				params["testName"] = $("#testName").val();
-				params["courseId"] = ${course.courseID};
+				if ($("#testName").val() === "") {
+					tooltip.text("Required Field");
+					tooltip.show();
+					return ;
+				}
 				
-				$.ajax({
-					url: '${urlMappings.createTestUrl}',
-					dataType: 'text',
-					type: 'post',
-					contentType: 'application/x-www-form-urlencoded',
-					data: $.param(params),
-					success: function( data, textStatus, jQxhr ){
-						window.location.hash = "#testsTab";
-						window.location.reload();
-					},
-					error: function( jqXhr, textStatus, errorThrown ){
-						console.log( errorThrown );
-					}
-				});
+				onSuccess = function( data, textStatus, jQxhr ){
+					window.location.hash = "#testsTab";
+					window.location.reload();
+				};
+				
+				postUrlEncoded("${urlMappings.createTestUrl}", { "testName" : $("#testName").val(), "courseId" : ${course.courseID} }, onSuccess, tooltip);
 			}
 			
 			function inviteAdmin() {
@@ -236,7 +228,7 @@
 					</#list>
 					<tr><td>
 						<input type="text" id="sectionName" placeholder="Section Name..."/>
-						<span id="sectionRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+						<span id="sectionTooltip" class="tooltip" style="display: none"></span>
 					</td>
 					<td><!-- no join code here --></td>
 					<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
@@ -258,7 +250,7 @@
 					<tr>
 						<td>
 							<input type="text" id="topicName" placeholder="Topic Name..."/>
-							<span id="topicRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+							<span id="topicTooltip" class="tooltip" style="display: none"></span>
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/>
@@ -282,7 +274,7 @@
 					<tr>
 						<td>
 							<input type="text" id="questionTypeName" placeholder="Question Type..."/>
-							<span id="questionTypeRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+							<span id="questionTypeTooltip" class="tooltip" style="display: none"> (Required field) </span>
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createQuestionType()"/>
@@ -298,7 +290,7 @@
 						<tr>
 							<td class="testNameColumn"><a href="${urlMappings.editTestUrl}/${test.testID}">${test.name}</a></td>
 							<td style="text-align: right;"><div class="dropdown">
-								<img src="${urlMappings.images}/baseline-more_vert-24px.svg" class="dropdownButton" onclick="toggleDropdown('${test.testID}.dropdown')"/>
+								<img src="${urlMappings.images}/baseline-more_vert-24px.svg" style="cursor: pointer;" class="dropdownButton" onclick="toggleDropdown('${test.testID}.dropdown')"/>
 								<div id="${test.testID}.dropdown" class="dropdown-content">
 									<table class="list" style="margin: 0px; width: 100%;">
 										<tr style="vertical-align: middle;">
@@ -332,7 +324,7 @@
 					<tr>
 						<td>
 							<input type="text" id="testName" placeholder="Test Name..."/>
-							<span id="testRequiredTooltip" class="tooltip" style="display: none"> (Required field) </span>
+							<span id="testTooltip" class="tooltip" style="display: none"></span>
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
