@@ -9,10 +9,30 @@
 
 		<script>
 		
+			var lengthExceeded = false;
+			var ajaxRequests = [];
 		
 			function pushResponse() {
+				$("#saveStatus").removeClass("tooltip");
+				$("saveStatus").text("Saving...");
 				pushAnswers();
 				pushPlanOfAction();
+				$.when.apply($, ajaxRequests).then(
+					function() { //on success
+						$("#saveStatus").text("Saved successfully");
+						$("#saveStatus").removeClass("tooltip");
+					},
+					function() { //on failiure
+						if (lengthExceeded) {
+							$("#saveStatus").text("Plan of action must have less than 1000 characters, and notes must have less than 500 characters.");
+							$("#saveStatus").addClass("tooltip");
+						} else {
+							// TODO: fill in with better AJAX error handling code.
+							$("#saveStatus").text("Something went wrong. Please try again later.");
+							$("#saveStatus").addClass("tooltip");
+						}
+					}
+				);
 			}
 			
 			function pushPlanOfAction() {
@@ -22,58 +42,26 @@
 						"text" : text.value
 					};
 				
-				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/update-response',
+				ajaxRequests.push($.ajax({
+					url:'${urlMappings.editResponseUrl}/${test.testID}/update-response',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
 					data: JSON.stringify(response),
-					success: function(jqxhr, textStatus, data) { $("#saveStatus").text("Saved!") },
+					success: function(jqxhr, textStatus, data) {},
 					error: function(jqXhr, textStatus, errorThrown ){
-						console.log(errorThrown);
-						if (jqXhr.status == 413) {
-							$("#saveStatus").text("Your plan of action was too long.");
-						} else {
-							$("#saveStatus").text("Something went wrong. Please try again.");
-						}
+						if (jqXhr.status == 413)
+							lengthExceeded = true;
 					}
-				});
+				}));
 			}
 			
 			function pushAnswers() {
 				elements = document.getElementsByClassName("question");
-				var i;
-				for (i = 0; i < elements.length; i++) {
+				for (var i = 0; i < elements.length; i++) {
 					questionID = elements[i].getAttribute("name");
-					pushAnswer(questionID);
+					pushAnswer(questionID)
 				}
-			}
-			
-			function pushAnswers2() {
-				arr = [];
-				elements = document.getElementsByClassName("question");
-				var i;
-				for (i = 0; i < elements.length; i++) {
-					questionID = elements[i].getAttribute("name");
-					
-					var response = {
-						"question_id": parseInt(questionID),
-						"correct": parseInt(document.getElementById(questionID + ".correct").value),
-						"reason_id": parseInt(document.getElementById(questionID + ".reason").value) === -1 
-									? null : parseInt(document.getElementById(questionID + ".reason").value),
-						"notes": document.getElementById(questionID + ".notes").value
-					};
-					
-					arr.push(response);
-				}
-				
-				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/update-answers',
-					dataType: 'text',
-					type: 'post',
-					contentType: 'application/json',
-					data: JSON.stringify(arr),
-					success: function(jqxhr, textStatus, data) { document.getElementById("saveStatus").innerHTML = "Saved!" },
-					error: function(error, textStatus, s){ console.log(error); }
-				});
 			}
 			
 			function pushAnswer(questionID) {
@@ -86,14 +74,19 @@
 					"notes": document.getElementById(questionID + ".notes").value
 				};
 				
-				$.ajax({url:'${urlMappings.editResponseUrl}/${test.testID}/update-answer',
+				ajaxRequests.push($.ajax({
+					url:'${urlMappings.editResponseUrl}/${test.testID}/update-answer',
 					dataType: 'text',
 					type: 'post',
 					contentType: 'application/json',
 					data: JSON.stringify(response),
-					success: function(jqxhr, textStatus, data) { document.getElementById("saveStatus").innerHTML = "Saved!" },
-					error: function(error, textStatus, s){ console.log(error); }
-				});
+					success: function(jqxhr, textStatus, data) {},
+					error: function(jqXhr, textStatus, errorThrown ){
+						if (jqXhr.status == 413)
+							lengthExceeded = true;
+					}
+				}));
+
 			}
 
 			function updateReasonVisibility(questionID) {
