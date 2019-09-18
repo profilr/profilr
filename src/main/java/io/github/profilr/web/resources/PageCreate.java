@@ -60,6 +60,8 @@ public class PageCreate extends WebResource {
 		c.setName(name);
 		c.setAdmins(Arrays.asList(session.getUser()));
 		
+		ExceptionUtils.checkLength(c);
+		
 		entityManager.persist(c);
 
 		QuestionType mc = new QuestionType(),
@@ -78,12 +80,14 @@ public class PageCreate extends WebResource {
 	@Path("question-type")
 	public Response createQuestionType(@FormParam("questionTypeName") String name, @FormParam("courseId") int course) {
 		Course c = entityManager.find(Course.class, course);
-		
 		ExceptionUtils.check(c, session);
 		
 		QuestionType qt = new QuestionType();
 		qt.setName(name);
 		qt.setCourse(c);
+
+		ExceptionUtils.checkLength(qt);
+		
 		entityManager.persist(qt);
 		
 		return Response.noContent().build();
@@ -99,6 +103,8 @@ public class PageCreate extends WebResource {
 		Topic t = new Topic();
 		t.setName(name);
 		t.setCourse(c);
+		
+		ExceptionUtils.checkLength(t);
 		
 		entityManager.persist(t);
 		
@@ -117,6 +123,8 @@ public class PageCreate extends WebResource {
 		t.setCourse(c);
 		t.setQuestions(new TreeSet<Question>());
 		
+		ExceptionUtils.checkLength(t);
+		
 		entityManager.persist(t);
 		
 		return Response.noContent().build();
@@ -132,6 +140,8 @@ public class PageCreate extends WebResource {
 		Section s = new Section();
 		s.setCourse(c);
 		s.setName(name);
+		
+		ExceptionUtils.checkLength(s);
 
 		String joinCode;
 

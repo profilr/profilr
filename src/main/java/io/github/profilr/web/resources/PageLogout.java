@@ -8,8 +8,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.glassfish.jersey.server.mvc.Template;
-
 import io.github.profilr.web.PreAuth;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;

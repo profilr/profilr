@@ -7,6 +7,7 @@ import java.time.temporal.TemporalAccessor;
 
 import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class DateFormatterExtensions {
 
 	/**

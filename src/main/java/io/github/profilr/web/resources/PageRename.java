@@ -64,6 +64,8 @@ public class PageRename extends WebResource {
 		
 		qt.setName(name);
 		
+		ExceptionUtils.checkLength(qt);
+		
 		return Response.ok().build();
 	}
 	
@@ -93,6 +95,8 @@ public class PageRename extends WebResource {
 		ExceptionUtils.check(t, session);
 		
 		t.setName(name);
+		
+		ExceptionUtils.checkLength(t);
 		
 		return Response.ok().build();
 	}
@@ -124,6 +128,8 @@ public class PageRename extends WebResource {
 
 		s.setName(name);
 		
+		ExceptionUtils.checkLength(s);
+		
 		return Response.ok().build();
 	}
 	
@@ -154,6 +160,8 @@ public class PageRename extends WebResource {
 		
 		t.setName(name);
 		
+		ExceptionUtils.checkLength(t);
+		
 		return Response.ok().build();
 	}
 	
@@ -183,6 +191,8 @@ public class PageRename extends WebResource {
 		ExceptionUtils.check(c, session);
 		
 		c.setName(name);
+		
+		ExceptionUtils.checkLength(c);
 		
 		return Response.ok().build();
 	}

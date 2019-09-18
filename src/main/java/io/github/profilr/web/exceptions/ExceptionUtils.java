@@ -6,6 +6,7 @@ import io.github.profilr.domain.Question;
 import io.github.profilr.domain.QuestionType;
 import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
+import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.Topic;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
@@ -118,5 +119,52 @@ public class ExceptionUtils {
 		if (o == null)
 			throw new ResourceNotFoundException();
 	}
-
+	
+	private static final int RESPONSE_TEXT_MAX_LENGTH = 1000;
+	public static void checkLength(TestResponse r) {
+		if (r.getText().length() > RESPONSE_TEXT_MAX_LENGTH)
+			throw new CharacterLimitExceededException(RESPONSE_TEXT_MAX_LENGTH);
+	}
+	
+	private static final int ANSWER_NOTES_MAX_LENGTH = 500;
+	public static void checkLength(Answer a) {
+		if (a.getNotes().length() > ANSWER_NOTES_MAX_LENGTH)
+			throw new CharacterLimitExceededException(ANSWER_NOTES_MAX_LENGTH);
+	}
+	
+	private static final int COURSE_NAME_MAX_LENGTH = 50; 
+	public static void checkLength(Course c) {
+		if (c.getName().length() > COURSE_NAME_MAX_LENGTH)
+			throw new CharacterLimitExceededException(COURSE_NAME_MAX_LENGTH);
+	}
+	
+	private static final int QUESTION_LABEL_MAX_LENGTH = 30;
+	public static void checkLength(Question q) {
+		if (q.getLabel().length() > QUESTION_LABEL_MAX_LENGTH)
+			throw new CharacterLimitExceededException(QUESTION_LABEL_MAX_LENGTH);
+	}
+	
+	private static final int TOPIC_NAME_MAX_LENGTH = 50;
+	public static void checkLength(Topic t) {
+		if (t.getName().length() > TOPIC_NAME_MAX_LENGTH)
+			throw new CharacterLimitExceededException(TOPIC_NAME_MAX_LENGTH);
+	}
+	
+	private static final int TEST_NAME_MAX_LENGTH = 50;
+	public static void checkLength(Test t) {
+		if (t.getName().length() > TEST_NAME_MAX_LENGTH)
+			throw new CharacterLimitExceededException(TEST_NAME_MAX_LENGTH);
+	}
+	
+	private static final int SECTION_NAME_MAX_LENGTH = 50;
+	public static void checkLength(Section s) {
+		if (s.getName().length() > SECTION_NAME_MAX_LENGTH)
+			throw new CharacterLimitExceededException(SECTION_NAME_MAX_LENGTH);
+	}
+	
+	private static final int QUESTION_TYPE_NAME_MAX_LENGTH = 50;
+	public static void checkLength(QuestionType t) {
+		if (t.getName().length() > QUESTION_TYPE_NAME_MAX_LENGTH)
+			throw new CharacterLimitExceededException(QUESTION_TYPE_NAME_MAX_LENGTH);
+	}
 }

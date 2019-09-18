@@ -83,12 +83,11 @@ public class PageEditResponse extends WebResource {
 	@POST
 	@Path("update-answer")
 	public Response editResponse(Answer a) {
-		User u = session.getUser();
-		
-		Test test = entityManager.find(Test.class, testID);
+		ExceptionUtils.checkLength(a);
 
+		User u = session.getUser();
+		Test test = entityManager.find(Test.class, testID);
 		ExceptionUtils.checkToRespond(test, u);
-		
 		a.setUser(u);
 		
 		Optional<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
@@ -113,6 +112,7 @@ public class PageEditResponse extends WebResource {
 		ExceptionUtils.checkToRespond(test, u);
 		
 		for (Answer a : l) {
+			ExceptionUtils.checkLength(a);
 			a.setUser(u);
 			
 			Optional<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
@@ -130,6 +130,8 @@ public class PageEditResponse extends WebResource {
 	@POST
 	@Path("update-response/")
 	public Response updateResponse(TestResponse r) {
+		ExceptionUtils.checkLength(r);
+		
 		User u = session.getUser();
 		Test t = entityManager.find(Test.class, testID);
 		
