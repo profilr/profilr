@@ -340,6 +340,7 @@ public class PagePerformance extends WebResource {
 						.leftJoin(table("Reasons"))
 							.on(field("Answers.reason_id")
 								.eq(field("Reasons.reason_id")))
+						.where(field("Tests.course_id", int.class).eq(c.getCourseID()))
 						.fetch()
 						.formatCSV(new CSVFormat().nullString("(Correct)"));
 			
