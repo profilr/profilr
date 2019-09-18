@@ -6,7 +6,7 @@ Profilr is a new way to learn from your mistakes. Profile your tests to see what
 
 Visit [profilr.org](https://profilr.org) and create an account.
 
-Sign up using your Google account. You Àcan then create and join courses. Currently, course creation is limited to people whitelisted by the admins in order to avoid abuse.
+Sign up using your Google account. You can then create and join courses. Currently, course creation is limited to people whitelisted by the admins in order to avoid abuse.
 
 ## Technical details
 
