@@ -36,7 +36,6 @@
 							feedback.text("Too many characters");
 						} else {
 							feedback.text("Something went wrong.");
-							feedback.show();
 						}
 					}
 				});
@@ -46,9 +45,8 @@
 				tooltip = $("#sectionTooltip");
 				
 				if ($("#sectionName").val() === "") {
-					tooltip.text("Required Field");
-					tooltip.show();
-					return ;
+					tooltip.text("(Required Field)");
+					return;
 				}
 				
 				onSuccess = function( data, textStatus, jQxhr ){
@@ -63,9 +61,8 @@
 				tooltip = $("#topicTooltip")
 				
 				if ($("#topicName").val() === "") {
-					tooltip.text("Required Field");
-					tooltip.show();
-					return ;
+					tooltip.text("(Required Field)");
+					return;
 				}
 				
 				onSuccess = function( data, textStatus, jQxhr ){
@@ -80,9 +77,8 @@
 				tooltip = $("#questionTypeTooltip");
 				
 				if ($("#questionTypeName").val() === "") {
-					tooltip.text("Required Field");
-					tooltip.show();
-					return ;
+					tooltip.text("(Required Field)");
+					return;
 				}
 				
 				onSuccess = function( data, textStatus, jQxhr ){
@@ -97,9 +93,8 @@
 				tooltip = $("#testTooltip");
 				
 				if ($("#testName").val() === "") {
-					tooltip.text("Required Field");
-					tooltip.show();
-					return ;
+					tooltip.text("(Required Field)");
+					return;
 				}
 				
 				onSuccess = function( data, textStatus, jQxhr ){
@@ -112,7 +107,7 @@
 			
 			function inviteAdmin() {
 				if ($("#inviteEmail").val() === "")
-					return $("#inviteErrorTooltip").html("(Required Field)");
+					return $("#inviteErrorTooltip").text("(Required Field)");
 				
 				var params = {};
 				params["email"] = $("#inviteEmail").val();
@@ -228,7 +223,7 @@
 					</#list>
 					<tr><td>
 						<input type="text" id="sectionName" placeholder="Section Name..."/>
-						<span id="sectionTooltip" class="tooltip" style="display: none"></span>
+						<span id="sectionTooltip" class="tooltip"></span>
 					</td>
 					<td><!-- no join code here --></td>
 					<td style="text-align: right;"><img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createSection()"/></td></tr>
@@ -250,7 +245,7 @@
 					<tr>
 						<td>
 							<input type="text" id="topicName" placeholder="Topic Name..."/>
-							<span id="topicTooltip" class="tooltip" style="display: none"></span>
+							<span id="topicTooltip" class="tooltip"></span>
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTopic()"/>
@@ -274,7 +269,7 @@
 					<tr>
 						<td>
 							<input type="text" id="questionTypeName" placeholder="Question Type..."/>
-							<span id="questionTypeTooltip" class="tooltip" style="display: none"> (Required field) </span>
+							<span id="questionTypeTooltip" class="tooltip"></span>
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createQuestionType()"/>
@@ -324,7 +319,7 @@
 					<tr>
 						<td>
 							<input type="text" id="testName" placeholder="Test Name..."/>
-							<span id="testTooltip" class="tooltip" style="display: none"></span>
+							<span id="testTooltip" class="tooltip"></span>
 						</td>
 						<td style="text-align: right;">
 							<img src="${urlMappings.images}/baseline-add-24px.svg" style="cursor: pointer;" onclick="createTest()"/>
