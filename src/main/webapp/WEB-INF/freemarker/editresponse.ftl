@@ -15,6 +15,8 @@
 			function pushResponse() {
 				$("#saveStatus").removeClass("tooltip");
 				$("saveStatus").text("Saving...");
+				lengthExceeded = false;
+				ajaxRequests = [];
 				pushAnswers();
 				pushPlanOfAction();
 				$.when.apply($, ajaxRequests).then(
