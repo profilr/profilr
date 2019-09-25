@@ -47,14 +47,14 @@ CREATE TABLE `SectionUsers` (
 	`section_id` int(10) not null,
 	PRIMARY KEY (`user_id`, `section_id`),
 	FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`)
-		ON DELETE CASCADE  ON UPDATE CASCADE,	
+		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`section_id`) REFERENCES `Sections` (`section_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `Tests` (
 	`test_id` int(10) not null auto_increment,
-	`name` varchar(50) not null,
+	`name` varchar(100) not null,
 	`course_id` int(10) not null,
 	`published` boolean default false,
 	PRIMARY KEY (`test_id`),
@@ -65,7 +65,7 @@ CREATE TABLE `Tests` (
 CREATE TABLE `QuestionTypes` (
 	`question_type_id` int(10) not null auto_increment,
 	`name` varchar(50) not null,
-	`course_id` int(30) not null,
+	`course_id` int(10) not null,
 	PRIMARY KEY (`question_type_id`),
 	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
@@ -74,7 +74,7 @@ CREATE TABLE `QuestionTypes` (
 CREATE TABLE `Topics` (
 	`topic_id` int(10) not null auto_increment,
 	`name` varchar(50) not null,
-	`course_id` int(30) not null,
+	`course_id` int(10) not null,
 	PRIMARY KEY (`topic_id`),
 	FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)
 		ON DELETE CASCADE ON UPDATE CASCADE
@@ -107,7 +107,7 @@ CREATE TABLE `Answers` (
 	`answer_id` int(10) not null auto_increment,
 	`question_id` int(10) not null,
 	`user_id` varchar(30) not null,
-	`correct` int(16) not null,
+	`correct` int(10) not null,
 	`reason_id` int(10), -- explicitly nullable --
 	`notes` varchar(500) not null,
 	PRIMARY KEY (`answer_id`),
@@ -123,7 +123,7 @@ CREATE TABLE `Responses` (
 	`response_id` int(10) not null auto_increment,
 	`user_id` varchar(30) not null,
 	`test_id` int(10) not null,
-	`text` varchar(255),
+	`text` varchar(1000),
 	`ts_created` TIMESTAMP,
 	`ts_updated` TIMESTAMP,
 	PRIMARY KEY (`response_id`),
@@ -133,7 +133,7 @@ CREATE TABLE `Responses` (
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `Reasons` (`reason_id`, `text`) values 	(1, 'Arithmetic error'),
+INSERT INTO `Reasons` (`reason_id`, `text`) values	 (1, 'Arithmetic error'),
 							(2, 'Significant digits or rounding'),
 							(3, 'Silly mistake'),
 							(4, 'Misunderstood question'),
