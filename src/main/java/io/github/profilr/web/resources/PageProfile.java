@@ -8,7 +8,6 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import io.github.profilr.web.NavElement;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
@@ -24,18 +23,7 @@ public class PageProfile extends WebResource {
 	@GET
 	@Template(name="/profile")
 	public Response get() {
-		if (session.containsKey("username"))
-			super.getNavElement(navElementName).put("displayName", session.get("username"));
-		
-		super.highlightNavElement(super.getNavElement(navElementName));
 		return Response.ok(getView()).build();
-	}
-	
-	public NavElement createNavElement() {
-		NavElement element =  new NavElement(navElementName, "Profile", super.buildUri(this.getClass()).toString());
-		element.put("align", "right");
-		
-		return element;
 	}
 	
 }

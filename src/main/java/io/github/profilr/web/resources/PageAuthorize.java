@@ -22,7 +22,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import io.github.profilr.domain.User;
-import io.github.profilr.web.NavElement;
 import io.github.profilr.web.PreAuth;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
@@ -52,9 +51,6 @@ public class PageAuthorize extends WebResource {
 		
 		// This bit is used to set the navbar entry for the profile page to display as the user's name.
 		// The navbar should have been created by this point.... unless somebody is super weird and navigates straight to the authorize endpoint when they first access the app.
-		NavElement e = super.getNavElement(PageProfile.navElementName);
-		if (e != null)
-			e.setDisplayName(name);
 		
 		User u = entityManager.find(User.class, userID);
 		

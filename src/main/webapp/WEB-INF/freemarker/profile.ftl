@@ -1,6 +1,6 @@
-<HTML>
+<html>
 
-	<HEAD>
+	<head>
 		<Title>Profilr</Title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
@@ -20,18 +20,21 @@
 			}
 		</script>
 		
-	</HEAD>
+	</head>
 
-	<BODY>
+	<body>
 	
+		<#assign highlight = "Profile">
 		<#include "navbar.ftl">
 		
 		<div class="bodyContainer">
 			<h1>Profile</h1>
-			
+			<p> Name: ${session.user.givenName} ${session.user.familyName} </p>
+			<p> Email: ${session.user.emailAddress} </p>
+			<br/>
 			<div class="button blue" onclick="signOut()" style="cursor: pointer;"><p>Logout</p></div>
 		</div>
 		
-	</BODY>
+	</body>
 
-</HTML>
+</html>

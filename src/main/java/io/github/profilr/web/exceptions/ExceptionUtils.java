@@ -150,7 +150,7 @@ public class ExceptionUtils {
 			throw new CharacterLimitExceededException(TOPIC_NAME_MAX_LENGTH);
 	}
 	
-	private static final int TEST_NAME_MAX_LENGTH = 50;
+	private static final int TEST_NAME_MAX_LENGTH = 100;
 	public static void checkLength(Test t) {
 		if (t.getName().length() > TEST_NAME_MAX_LENGTH)
 			throw new CharacterLimitExceededException(TEST_NAME_MAX_LENGTH);

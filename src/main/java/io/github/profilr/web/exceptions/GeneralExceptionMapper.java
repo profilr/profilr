@@ -17,20 +17,17 @@ import lombok.extern.slf4j.Slf4j;
 @Provider
 @Slf4j
 @ExtensionMethod(DateFormatterExtensions.class)
-public class GeneralExceptionMapper implements ExceptionMapper<Throwable> {
+public class GeneralExceptionMapper extends ViewableExceptionMapper<Throwable> implements ExceptionMapper<Throwable> {
 
-	@Context
-	Session session;
-	
-	@Context
-	UriInfo uriInfo;
+	protected GeneralExceptionMapper(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
+	}
 	
 	@Override
 	public Response toResponse(Throwable t) {
 		log.error("Returned 500 Internal Server Error because of the following exception", t);
 		return Response.status(Status.INTERNAL_SERVER_ERROR)
-					   .entity(new ExceptionMapperViewable(session, uriInfo)
-							.getViewable("/500", "e", t, "date", Instant.now().formatSystem()))
+					   .entity(getViewable("/500", "e", t, "date", Instant.now().formatSystem()))
 					   .build();
 	}
 

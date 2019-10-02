@@ -16,14 +16,18 @@ import io.github.profilr.domain.User;
 public class Session implements Map<String, Object> {
 
 	private HttpSession session;
-	
-	public Session(HttpSession session) {
-		this.session = session;
-	}
 
+	protected Session() {
+		// For dependency injection purposes only.
+		// Do not remove this constructor!
+		// HK2 fails to inject a proxy of this class 
+		// into an ExceptionMapper unless there is
+		// an additional no-arg constructor
+	}
+	
 	@Inject
 	public Session(HttpServletRequest request) {
-		this(request.getSession());
+		this.session = request.getSession();
 	}
 	
 	@Override

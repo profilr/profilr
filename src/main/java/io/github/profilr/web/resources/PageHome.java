@@ -15,7 +15,6 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.mvc.Template;
 
 import io.github.profilr.domain.Course;
-import io.github.profilr.web.NavElement;
 import io.github.profilr.web.Session;
 import io.github.profilr.web.WebResource;
 
@@ -34,8 +33,6 @@ public class PageHome extends WebResource {
 	@GET
 	@Template(name="/home")
 	public Response get() {
-		super.highlightNavElement(super.getNavElement(navElementName));
-		
 		entityManager.refresh(session.getUser());
 		
 		Set<Course> enrolledCourses = session.getUser()
@@ -49,10 +46,6 @@ public class PageHome extends WebResource {
 		return Response.ok(getView("enrolledCourses", enrolledCourses,
 								   "administratedCourses", administratedCourses,
 								   "canCreate", session.getUser().canCreateCourse())).build();
-	}
-	
-	public NavElement createNavElement() {
-		return new NavElement(navElementName, "Home", super.buildUri(this.getClass()).toString());
 	}
 	
 }

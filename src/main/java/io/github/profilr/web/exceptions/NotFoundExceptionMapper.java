@@ -11,19 +11,16 @@ import javax.ws.rs.ext.Provider;
 import io.github.profilr.web.Session;
 
 @Provider
-public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
+public class NotFoundExceptionMapper extends ViewableExceptionMapper<NotFoundException> implements ExceptionMapper<NotFoundException> {
 
-	@Context
-	Session session;
-	
-	@Context
-	UriInfo uriInfo;
+	protected NotFoundExceptionMapper(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
+	}
 	
 	@Override
 	public Response toResponse(NotFoundException exception) {
 		return Response.status(Status.NOT_FOUND)
-					   .entity(new ExceptionMapperViewable(session, uriInfo)
-								.getViewable("/404"))
+					   .entity(getViewable("/404"))
 					   .build();
 	}
 

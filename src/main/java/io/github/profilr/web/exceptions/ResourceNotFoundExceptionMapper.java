@@ -10,19 +10,16 @@ import javax.ws.rs.ext.Provider;
 import io.github.profilr.web.Session;
 
 @Provider
-public class ResourceNotFoundMapper implements ExceptionMapper<ResourceNotFoundException> {
+public class ResourceNotFoundExceptionMapper extends ViewableExceptionMapper<ResourceNotFoundException> implements ExceptionMapper<ResourceNotFoundException> {
 
-	@Context
-	Session session;
-	
-	@Context
-	UriInfo uriInfo;
+	protected ResourceNotFoundExceptionMapper(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
+	}
 	
 	@Override
 	public Response toResponse(ResourceNotFoundException exception) {
 		return Response.status(Status.NOT_FOUND)
-					   .entity(new ExceptionMapperViewable(session, uriInfo)
-								.getViewable("/404-resource"))
+					   .entity(getViewable("/404-resource"))
 					   .build();
 	}
 

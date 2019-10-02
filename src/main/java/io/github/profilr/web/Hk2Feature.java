@@ -20,6 +20,7 @@ public class Hk2Feature implements Feature {
 			@Override
 			protected void configure() {
 				bind(Session.class)
+						.proxy(true).proxyForSameScope(false)
 						.to(Session.class).in(RequestScoped.class);
 				bindFactory(EntityManagerFactory.class, Singleton.class)
 						.proxy(true).proxyForSameScope(false)

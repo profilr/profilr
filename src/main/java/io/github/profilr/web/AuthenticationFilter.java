@@ -34,7 +34,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 		if (info.getResourceClass().isAnnotationPresent(PreAuth.class) || info.getResourceMethod().isAnnotationPresent(PreAuth.class))
 			return;
 
-		Session session = new Session(request.getSession());
+		Session session = new Session(request);
 		
 		if (session.get("token") == null) {
 			session.put("redirect", requestContext.getUriInfo().getRequestUri());

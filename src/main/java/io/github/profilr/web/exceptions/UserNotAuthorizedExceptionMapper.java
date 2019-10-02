@@ -10,19 +10,16 @@ import javax.ws.rs.ext.Provider;
 import io.github.profilr.web.Session;
 
 @Provider
-public class UserNotAuthorizedMapper implements ExceptionMapper<UserNotAuthorizedException> {
+public class UserNotAuthorizedExceptionMapper extends ViewableExceptionMapper<UserNotAuthorizedException> implements ExceptionMapper<UserNotAuthorizedException> {
 
-	@Context
-	Session session;
-	
-	@Context
-	UriInfo uriInfo;
+	protected UserNotAuthorizedExceptionMapper(Session session, @Context UriInfo uriInfo) {
+		super(session, uriInfo);
+	}
 	
 	@Override
 	public Response toResponse(UserNotAuthorizedException exception) {
 		return Response.status(Status.FORBIDDEN)
-					   .entity(new ExceptionMapperViewable(session, uriInfo)
-								.getViewable("/403"))
+					   .entity(getViewable("/403"))
 					   .build();
 	}
 
