@@ -5,8 +5,7 @@
 		class="ch.qos.logback.core.ConsoleAppender">
 		<target>System.err</target>
 		<encoder>
-			<pattern>%-5level %d{MM/dd/yyyy HH:mm:ss} %-36.36logger{36} %msg%n
-			</pattern>
+			<pattern>%-5level %d{MM/dd/yyyy HH:mm:ss} %-36.36logger{36} %msg%n</pattern>
 		</encoder>
 	</appender>
 
@@ -17,4 +16,5 @@
 	<logger name="org.hibernate" level="INFO" />
 	<logger name="org.jooq" level="INFO" />
 	<logger name="com.zaxxer.hikari" level="INFO" />
+	<logger name="io.sentry" level="INFO" />
 </configuration>
