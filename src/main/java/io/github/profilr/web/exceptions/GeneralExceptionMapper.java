@@ -46,17 +46,25 @@ public class GeneralExceptionMapper extends ViewableExceptionMapper<Throwable> i
 	}
 
 	private void sentryRecordException(Throwable t) {
-		Sentry.getContext().setUser(new UserBuilder().setUsername(session.getUser().getFullName())
-													 .setEmail(session.getUser().getEmailAddress())
-													 .setId(session.getUser().getUserID())
-													 .build());
-		Sentry.getContext().setHttp(new HttpInterface(request));
-		Sentry.getContext().addTag("version", context.getWebappVersion());
-		Sentry.getContext().addExtra("timestamp", Instant.now().formatSystem());
-		for (Entry<String, Object> attribute : session.entrySet())
-			Sentry.getContext().addExtra("session."+attribute.getKey(), attribute.getValue().toString());
-		Sentry.capture(t);
-		Sentry.clearContext();
+		try {
+			Sentry.getContext().setUser(new UserBuilder().setUsername(session.getUser().getFullName())
+														 .setEmail(session.getUser().getEmailAddress())
+														 .setId(session.getUser().getUserID())
+														 .build());
+			Sentry.getContext().setHttp(new HttpInterface(request));
+			Sentry.getContext().addTag("version", context.getWebappVersion());
+			Sentry.getContext().addExtra("timestamp", Instant.now().formatSystem());
+			for (Entry<String, Object> attribute : session.entrySet())
+				Sentry.getContext().addExtra("session."+attribute.getKey(), attribute.getValue().toString());
+			Sentry.capture(t);
+			Sentry.clearContext();
+		} catch (NoClassDefFoundError e) {
+			// For whatever reason, when running locally Eclipse can't find Sentry's classes,
+			// despite them being added through Maven and the app compiling successfully against it.
+			// When this NoClassDefFoundError occurs, we ignore it because it means that we're likely
+			// running on a local machine, where we don't want to report errors to Sentry.
+			log.warn("Sentry class ({}) not found", e.getMessage());
+		}
 	}
 
 }
