@@ -128,7 +128,15 @@ public class PageCreate extends WebResource {
 		t.setName(name);
 		t.setCourse(c);
 		t.setQuestions(new TreeSet<Question>());
-		t.cleanse();
+		
+		/*
+		 * For whatever reason, Eclipse compiles `test.cleanse()` correctly using
+		 * Lombok's extension method system, but Maven fails to do so successfully.
+		 * Oddly enough, `topic.cleanse()`, `course.cleanse()`, etc all compile fine
+		 * in both Eclipse and Maven. As a workaround, I am using the static method here.
+		 * The same workaround is used at PageRename#renameTest()
+		 */
+		StringCleanseExtensions.cleanse(t);
 		
 		ExceptionUtils.checkLength(t);
 		
