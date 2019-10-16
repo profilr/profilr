@@ -26,12 +26,15 @@ import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.StringCleanseExtensions;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
 import io.github.profilr.web.exceptions.UserNotAuthorizedException;
+import lombok.experimental.ExtensionMethod;
 
 @Path("create")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@ExtensionMethod(StringCleanseExtensions.class)
 public class PageCreate extends WebResource {
 	
 	@Inject
@@ -59,6 +62,7 @@ public class PageCreate extends WebResource {
 		Course c = new Course();
 		c.setName(name);
 		c.setAdmins(Arrays.asList(session.getUser()));
+		c.cleanse();
 		
 		ExceptionUtils.checkLength(c);
 		
@@ -85,6 +89,7 @@ public class PageCreate extends WebResource {
 		QuestionType qt = new QuestionType();
 		qt.setName(name);
 		qt.setCourse(c);
+		qt.cleanse();
 
 		ExceptionUtils.checkLength(qt);
 		
@@ -103,6 +108,7 @@ public class PageCreate extends WebResource {
 		Topic t = new Topic();
 		t.setName(name);
 		t.setCourse(c);
+		t.cleanse();
 		
 		ExceptionUtils.checkLength(t);
 		
@@ -122,6 +128,7 @@ public class PageCreate extends WebResource {
 		t.setName(name);
 		t.setCourse(c);
 		t.setQuestions(new TreeSet<Question>());
+		t.cleanse();
 		
 		ExceptionUtils.checkLength(t);
 		
@@ -140,6 +147,7 @@ public class PageCreate extends WebResource {
 		Section s = new Section();
 		s.setCourse(c);
 		s.setName(name);
+		s.cleanse();
 		
 		ExceptionUtils.checkLength(s);
 

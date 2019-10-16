@@ -25,12 +25,15 @@ import io.github.profilr.domain.Test;
 import io.github.profilr.domain.TestResponse;
 import io.github.profilr.domain.User;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.StringCleanseExtensions;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
+import lombok.experimental.ExtensionMethod;
 
 @Path("tests/{test-id}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ExtensionMethod(StringCleanseExtensions.class)
 public class PageEditResponse extends WebResource {
 	
 	@Inject
@@ -84,6 +87,7 @@ public class PageEditResponse extends WebResource {
 	@Path("update-answer")
 	public Response editResponse(Answer a) {
 		ExceptionUtils.checkLength(a);
+		a.cleanse();
 
 		User u = session.getUser();
 		Test test = entityManager.find(Test.class, testID);
@@ -114,6 +118,7 @@ public class PageEditResponse extends WebResource {
 		for (Answer a : l) {
 			ExceptionUtils.checkLength(a);
 			a.setUser(u);
+			a.cleanse();
 			
 			Optional<Answer> old = u.getAnswersForQuestion(a.getQuestion(), entityManager);
 			if (old.isPresent()) {
@@ -139,6 +144,7 @@ public class PageEditResponse extends WebResource {
 
 		r.setUser(u);
 		r.setTest(t);
+		r.cleanse();
 		
 		Instant now = Instant.now();
 		Optional<TestResponse> old = u.getResponsesForTest(t, entityManager);

@@ -23,11 +23,14 @@ import io.github.profilr.domain.Section;
 import io.github.profilr.domain.Test;
 import io.github.profilr.domain.Topic;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.StringCleanseExtensions;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
+import lombok.experimental.ExtensionMethod;
 
 @Path("rename")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@ExtensionMethod(StringCleanseExtensions.class)
 public class PageRename extends WebResource {
 	
 	@Inject
@@ -63,6 +66,7 @@ public class PageRename extends WebResource {
 		ExceptionUtils.check(qt, session);
 		
 		qt.setName(name);
+		qt.cleanse();
 		
 		ExceptionUtils.checkLength(qt);
 		
@@ -95,6 +99,7 @@ public class PageRename extends WebResource {
 		ExceptionUtils.check(t, session);
 		
 		t.setName(name);
+		t.cleanse();
 		
 		ExceptionUtils.checkLength(t);
 		
@@ -127,6 +132,7 @@ public class PageRename extends WebResource {
 		ExceptionUtils.check(s, session);
 
 		s.setName(name);
+		s.cleanse();
 		
 		ExceptionUtils.checkLength(s);
 		
@@ -159,6 +165,7 @@ public class PageRename extends WebResource {
 		ExceptionUtils.checkToEdit(t, session);
 		
 		t.setName(name);
+		t.cleanse();
 		
 		ExceptionUtils.checkLength(t);
 		
@@ -191,6 +198,7 @@ public class PageRename extends WebResource {
 		ExceptionUtils.check(c, session);
 		
 		c.setName(name);
+		c.cleanse();
 		
 		ExceptionUtils.checkLength(c);
 		

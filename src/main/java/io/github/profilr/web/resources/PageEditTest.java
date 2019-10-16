@@ -18,12 +18,15 @@ import org.glassfish.jersey.server.mvc.Template;
 import io.github.profilr.domain.Question;
 import io.github.profilr.domain.Test;
 import io.github.profilr.web.Session;
+import io.github.profilr.web.StringCleanseExtensions;
 import io.github.profilr.web.WebResource;
 import io.github.profilr.web.exceptions.ExceptionUtils;
+import lombok.experimental.ExtensionMethod;
 
 @Path("edit-test/{test-id}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ExtensionMethod(StringCleanseExtensions.class)
 public class PageEditTest extends WebResource {
 	
 	@Inject
@@ -55,6 +58,7 @@ public class PageEditTest extends WebResource {
 		ExceptionUtils.checkToEdit(t, session);
 		
 		question.setTest(t);
+		question.cleanse();
 		entityManager.persist(question);
 		return Response.created(uriInfo.getBaseUriBuilder()
 									   .path(PageEditTest.class, "editQuestion")
@@ -72,6 +76,7 @@ public class PageEditTest extends WebResource {
 		
 		question.setQuestionID(questionID);
 		question.setTest(t);
+		question.cleanse();
 		entityManager.merge(question);
 		return Response.ok().build();
 	}
