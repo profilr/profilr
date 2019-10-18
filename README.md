@@ -8,6 +8,10 @@ Visit [profilr.org](https://profilr.org) and create an account.
 
 Sign up using your Google account. You can then create and join courses. Currently, course creation is limited to people whitelisted by the admins in order to avoid abuse.
 
+## Deploying Profilr at your own school or other institution
+
+Please create an issue and we will be happy to discuss with you. We would love for our platform to be used by more schools, and we can help work with your IT team to make that happen!
+
 ## Technical details
 
 Profilr is developed in Java using the Jersey 2.27 (JAX-RS) framework. Views are written as Freemarker templates, and populated with domain models from the database. The database layer uses Hibernate as the ORM framework, using JPA annotations on the domain objects. Dependency Injection is leveraged in order to maintain the cleanliness of the codebase, as well as to abstract away JPA-level transaction management from resource classes.
