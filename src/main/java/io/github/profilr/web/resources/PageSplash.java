@@ -23,7 +23,7 @@ public class PageSplash extends WebResource {
 	@GET
 	@Template(name="/splash")
 	public Response get() {
-		return Response.ok(super.getView()).build();
+		return Response.ok(getView()).build();
 	}
 	
 }

@@ -4,6 +4,11 @@
 		<li class="<#if !highlight?? || highlight == "Home"> active </#if>">
 			<a href="${urlMappings.homeUrl}">Home</a>
 		</li>
+		<#-- HIDE THE ABOUT PAGE FOR NOW
+		<li class="<#if highlight?? && highlight == "About"> active </#if>">
+			<a href="${urlMappings.aboutUrl}">About</a>
+		</li>
+		-->
 		<li class="right <#if highlight?? && highlight == "Profile"> active </#if>"> 
 			<#if session?? && session.username??>
 				<a href="${urlMappings.profileUrl}">${session.username}</a>

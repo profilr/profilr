@@ -26,7 +26,7 @@
 
 	<body class="animated slideInUp">
 		
-		<div id="title">
+		<div id="title" class="splash">
 			<h1>Profilr</h1>
 			<p>The online test-profiling service</p>
 			<br/><br/>

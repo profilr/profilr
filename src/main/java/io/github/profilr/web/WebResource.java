@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
+import io.github.profilr.web.resources.PageAbout;
 import io.github.profilr.web.resources.PageAuthorize;
 import io.github.profilr.web.resources.PageCourseView;
 import io.github.profilr.web.resources.PageCreate;
@@ -26,7 +27,7 @@ import io.github.profilr.web.resources.PageUnenroll;
 
 public abstract class WebResource {
 	
-	public static final boolean DEBUG_MODE_ENABLED = false; //TODO make false in production
+	public static final boolean DEBUG_MODE_ENABLED = true; //TODO make false in production
 	
 	protected Session session;
 	protected UriInfo uriInfo;
@@ -85,6 +86,7 @@ public abstract class WebResource {
 			params.put("images",				buildUri("/images"));
 			params.put("favicon",				buildUri("/favicon.ico"));
 			params.put("splashUrl",				buildUri(PageSplash.class));
+			params.put("aboutUrl",				buildUri(PageAbout.class));
 			params.put("homeUrl",				buildUri(PageHome.class));
 			params.put("authUrl",				buildUri(PageAuthorize.class));
 			params.put("profileUrl",			buildUri(PageProfile.class));
