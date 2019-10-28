@@ -47,10 +47,13 @@ public class GeneralExceptionMapper extends ViewableExceptionMapper<Throwable> i
 
 	private void sentryRecordException(Throwable t) {
 		try {
-			Sentry.getContext().setUser(new UserBuilder().setUsername(session.getUser().getFullName())
-														 .setEmail(session.getUser().getEmailAddress())
-														 .setId(session.getUser().getUserID())
-														 .build());
+			if (session.getUser() != null)
+				Sentry.getContext().setUser(new UserBuilder().setUsername(session.getUser().getFullName())
+															 .setEmail(session.getUser().getEmailAddress())
+															 .setId(session.getUser().getUserID())
+															 .build());
+			else
+				Sentry.getContext().setUser(new UserBuilder().setUsername("LOGGED OUT").build());
 			Sentry.getContext().setHttp(new HttpInterface(request));
 			Sentry.getContext().addTag("version", context.getWebappVersion());
 			Sentry.getContext().addExtra("timestamp", Instant.now().formatSystem());
