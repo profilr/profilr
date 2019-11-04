@@ -53,7 +53,7 @@ public class PageEnroll extends WebResource {
 		
 		Course co = s.getCourse();
 		
-		User u = (User) this.session.get("user");
+		User u = session.getUser();
 		
 		entityManager.refresh(u);
 		

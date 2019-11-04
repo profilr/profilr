@@ -1,7 +1,5 @@
 package io.github.profilr.web.resources;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
@@ -43,16 +41,13 @@ public class PageDelete extends WebResource {
 		
 		ExceptionUtils.check(t, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"type", "Question Type",
 				"name", t.getName(),
 				"message", "This will delete ALL questions under this question type. You likely don't want to do this.",
 				"strong", true,
-				"deleteUrl", urlMappings.get("deleteQuestionTypeUrl")+"/"+t.getQuestionTypeID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#questionTypesTab"
+				"deleteUrl", getUrlMapping("deleteQuestionTypeUrl")+"/"+t.getQuestionTypeID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#questionTypesTab"
 		)).build();
 	}
 	
@@ -76,16 +71,13 @@ public class PageDelete extends WebResource {
 		
 		ExceptionUtils.check(t, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"type", "Topic",
 				"name", t.getName(),
 				"message", "This will delete ALL questions under this topic. You likely don't want to do this.",
 				"strong", true,
-				"deleteUrl", urlMappings.get("deleteTopicUrl")+"/"+t.getTopicID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#topicsTab"
+				"deleteUrl", getUrlMapping("deleteTopicUrl")+"/"+t.getTopicID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#topicsTab"
 		)).build();
 	}
 	
@@ -109,16 +101,13 @@ public class PageDelete extends WebResource {
 		
 		ExceptionUtils.check(s, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"type", "Section",
 				"name", s.getName(),
 				"message", "This will remove all "+s.getUsers().size()+" students enrolled in this section.",
 				"strong", true,
-				"deleteUrl", urlMappings.get("deleteSectionUrl")+"/"+s.getSectionID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+s.getCourse().getCourseID()+"#sectionsTab"
+				"deleteUrl", getUrlMapping("deleteSectionUrl")+"/"+s.getSectionID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+s.getCourse().getCourseID()+"#sectionsTab"
 		)).build();
 	}
 	
@@ -142,15 +131,12 @@ public class PageDelete extends WebResource {
 		
 		ExceptionUtils.checkToEdit(t, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"type", "Test",
 				"name", t.getName(),
 				"message", "All questions and student responses will be deleted as well",
-				"deleteUrl", urlMappings.get("deleteTestUrl")+"/"+t.getTestID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#testsTab"
+				"deleteUrl", getUrlMapping("deleteTestUrl")+"/"+t.getTestID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#testsTab"
 		)).build();
 	}
 	

@@ -1,7 +1,5 @@
 package io.github.profilr.web.resources;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
@@ -48,13 +46,10 @@ public class PageRename extends WebResource {
 		
 		ExceptionUtils.check(qt, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"name", qt.getName(),
-				"renameUrl", urlMappings.get("renameQuestionTypeUrl")+"/"+qt.getQuestionTypeID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+qt.getCourse().getCourseID()+"#questionTypesTab"
+				"renameUrl", getUrlMapping("renameQuestionTypeUrl")+"/"+qt.getQuestionTypeID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+qt.getCourse().getCourseID()+"#questionTypesTab"
 		)).build();
 	}
 	
@@ -81,13 +76,10 @@ public class PageRename extends WebResource {
 		
 		ExceptionUtils.check(t, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"name", t.getName(),
-				"renameUrl", urlMappings.get("renameTopicUrl")+"/"+t.getTopicID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#topicsTab"
+				"renameUrl", getUrlMapping("renameTopicUrl")+"/"+t.getTopicID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#topicsTab"
 		)).build();
 	}
 	
@@ -114,13 +106,10 @@ public class PageRename extends WebResource {
 		
 		ExceptionUtils.check(s, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"name", s.getName(),
-				"renameUrl", urlMappings.get("renameSectionUrl")+"/"+s.getSectionID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+s.getCourse().getCourseID()+"#sectionsTab"
+				"renameUrl", getUrlMapping("renameSectionUrl")+"/"+s.getSectionID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+s.getCourse().getCourseID()+"#sectionsTab"
 		)).build();
 	}
 	
@@ -147,13 +136,10 @@ public class PageRename extends WebResource {
 		
 		ExceptionUtils.checkToEdit(t, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"name", t.getName(),
-				"renameUrl", urlMappings.get("renameTestUrl")+"/"+t.getTestID(),
-				"redirect", urlMappings.get("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#testsTab"
+				"renameUrl", getUrlMapping("renameTestUrl")+"/"+t.getTestID(),
+				"redirect", getUrlMapping("courseViewUrl")+"/"+t.getCourse().getCourseID()+"#testsTab"
 		)).build();
 	}
 	
@@ -188,13 +174,10 @@ public class PageRename extends WebResource {
 		
 		ExceptionUtils.check(c, session);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, String> urlMappings = (Map<String, String>) session.get("urlMappings");
-		
 		return Response.ok(getView(
 				"name", c.getName(),
-				"renameUrl", urlMappings.get("renameCourseUrl")+"/"+c.getCourseID(),
-				"redirect", urlMappings.get("homeUrl")
+				"renameUrl", getUrlMapping("renameCourseUrl")+"/"+c.getCourseID(),
+				"redirect", getUrlMapping("homeUrl")
 		)).build();
 	}
 	

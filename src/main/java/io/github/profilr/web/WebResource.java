@@ -27,7 +27,7 @@ import io.github.profilr.web.resources.PageUnenroll;
 
 public abstract class WebResource {
 	
-	public static final boolean DEBUG_MODE_ENABLED = true; //TODO make false in production
+	public static final boolean DEBUG_MODE_ENABLED = false; //TODO make false in production
 	
 	protected Session session;
 	protected UriInfo uriInfo;
@@ -129,6 +129,10 @@ public abstract class WebResource {
 			cachedURLMappings.put(uriInfo.getBaseUri(), Collections.unmodifiableMap(params));
 		}
 		return cachedURLMappings.get(uriInfo.getBaseUri());
+	}
+	
+	protected String getUrlMapping(String name) {
+		return getUrlMappings().get(name);
 	}
 	
 }

@@ -49,7 +49,7 @@ public class PageLeaveCourse extends WebResource {
 	public Response delete(@FormParam("courseId") int courseId) {
 		Course c = entityManager.find(Course.class, courseId);
 		
-		User u = (User) session.get("user");
+		User u = session.getUser();
 		
 		ExceptionUtils.check(c, u);
 		
