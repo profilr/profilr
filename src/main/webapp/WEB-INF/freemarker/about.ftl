@@ -27,8 +27,13 @@
 					<td><center><h3>Arjun Vikram</h3></center></td>
 				</tr>
 			</table>
-			<p>Profilr is an innovative application that helps teachers track student performance over time across different topics and question types, so that they can better understand the knowledge gaps of their students. Profilr gives students a platform to "profile" their tests, or to break down which questions they missed and why. By profiling their tests, students can learn from their mistakes and determine the topics and question types to spend more time studying. The data collected from students' profiles is then displayed in a dashboard for teachers, allowing them to use this data to identify the topics that they need to spend more time reviewing in class. The teacher dashboard contains 4 graphs, a bar graph of student performance on different topics, a bar graph of student performance on different question types, a pie chart of the reasons that students miss questions, and a line graph of student performance over time. In addition, teachers can use filters to compare this data between different sections, individual students, and the class average.
-</p>
+			<p>
+				<iframe width="883" height="497" src="https://www.youtube.com/embed/rfbA1hdhPqA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</p>
+			<br/>
+			<p>
+				Profilr is an innovative application that helps teachers track student performance over time across different topics and question types, so that they can better understand the knowledge gaps of their students. Profilr gives students a platform to "profile" their tests, or to break down which questions they missed and why. By profiling their tests, students can learn from their mistakes and determine the topics and question types to spend more time studying. The data collected from students' profiles is then displayed in a dashboard for teachers, allowing them to use this data to identify the topics that they need to spend more time reviewing in class. The teacher dashboard contains 4 graphs, a bar graph of student performance on different topics, a bar graph of student performance on different question types, a pie chart of the reasons that students miss questions, and a line graph of student performance over time. In addition, teachers can use filters to compare this data between different sections, individual students, and the class average.
+			</p>
 			<h2>Sponsors</h2>
 			<!-- JRebel -->
 			<a height="50" href="https://jrebel.com/software/jrebel/" target="_blank" class="sponsor">
