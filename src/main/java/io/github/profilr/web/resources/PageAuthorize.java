@@ -33,6 +33,8 @@ public class PageAuthorize extends WebResource {
 	
 	@Inject
 	EntityManager entityManager;
+	
+	private static GoogleIdTokenVerifier verifier;
 
 	public PageAuthorize(Session session, @Context UriInfo uriInfo) {
 		super(session, uriInfo);
@@ -40,11 +42,26 @@ public class PageAuthorize extends WebResource {
 	
 	@GET
 	public Response get(@QueryParam("token") String tokenString) throws GeneralSecurityException, IOException {
-		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport.Builder().build(), new JacksonFactory()).build();
 		
-		GoogleIdToken token = verifier.verify(tokenString);
-		String name = (String)token.getPayload().get("given_name");
-		String userID = (String)token.getPayload().getSubject();
+		GoogleIdToken token;
+		try {
+			if (tokenString == null)
+				throw new NullPointerException("Empty token");
+			token = getVerifier().verify(tokenString);
+			if (token == null)
+				throw new NullPointerException("Invalid token");
+		} catch (NullPointerException | IllegalArgumentException e) {
+			// If the user does not provide a JWT token in the query string, we throw a NullPointerError intentionally, and handle it here
+			// If tokenString is not a valid JWT token, verify(tokenString) will throw a IllegalArgumentException, and we will handle it here
+			// If the provided tokenString is not verified, we will throw a NullPointerException intentionally, and handle it here
+			// If any of the above occurs, we will redirect the user back to the splash page
+			return Response.seeOther(uriInfo.getBaseUriBuilder()
+											.path(PageSplash.class)
+											.build())
+						   .build();
+		}
+		String name = (String) token.getPayload().get("given_name");
+		String userID = (String) token.getPayload().getSubject();
 		
 		session.put("token", token);
 		session.put("username", name);
@@ -59,7 +76,7 @@ public class PageAuthorize extends WebResource {
 			u.setUserID(userID);
 			u.setEmailAddress(token.getPayload().getEmail());
 			u.setGivenName(name);
-			u.setFamilyName((String)token.getPayload().get("family_name"));
+			u.setFamilyName((String) token.getPayload().get("family_name"));
 			
 			entityManager.persist(u);
 		}
@@ -71,6 +88,13 @@ public class PageAuthorize extends WebResource {
 												 				 .path(PageHome.class)
 												 				 .build()))
 					   .build();
+	}
+	
+	private GoogleIdTokenVerifier getVerifier() {
+		if (verifier == null)
+			verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport.Builder().build(),
+														 new JacksonFactory()).build();
+		return verifier;
 	}
 	
 }
