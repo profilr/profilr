@@ -2,6 +2,11 @@
 
 Profilr is a new way to learn from your mistakes. Profile your tests to see what type of questions you miss the most, and track your performance over time. Profilr is perfect for teachers who want their students to get better at the subject they teach.
 
+## Demo
+
+[![Demo Video](https://img.youtube.com/vi/rfbA1hdhPqA/0.jpg)](https://youtu.be/rfbA1hdhPqA)
+
+
 ## Getting started
 
 Visit [profilr.org](https://profilr.org) and create an account.
