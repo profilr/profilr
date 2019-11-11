@@ -14,8 +14,9 @@
 			function onSuccess(user) {
 				var id_token = user.getAuthResponse().id_token;
 				setTimeout(function() {
-					document.body.classList.add('slideOutUp');
-					document.body.addEventListener('animationend', function() { 
+					title = document.getElementById("title")
+					title.classList.add('slideFromCenter');
+					title.addEventListener('animationend', function() { 
 						window.location.replace('${urlMappings.authUrl}' + '?token=' + id_token);
 					})
 				}, 1000);
@@ -24,9 +25,15 @@
 		
 	</head>
 
-	<body class="animated slideInUp">
+	<body>
+	
+		<div id="header">
 		
-		<div id="title" class="splash">
+			<a href="about"> About </a>
+		
+		</div>
+	
+		<div id="title" class="splash animated slideToCenter">
 			<h1>Profilr</h1>
 			<p>The online test-profiling service</p>
 			<br/><br/>
