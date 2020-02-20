@@ -20,7 +20,7 @@
 				<table class="List">
 					<#list section.users?sort as student>
 						<tr style="cursor: pointer;">
-							<td><a href="${urlMappings.viewResponsesUrl}/${test.testID}/${student.userID}">${student.fullName}</a></td>
+							<td><#if submissionTimes[student.userID]??><a href="${urlMappings.viewResponsesUrl}/${test.testID}/${student.userID}"><#else><p></#if>${student.fullName}<#if submissionTimes[student.userID]??></a><#else></p></#if></td>
 							<td><p><#if submissionTimes[student.userID]??>Submitted at: ${submissionTimes[student.userID]}<#else>Not Submitted Yet</#if></p></td>
 						</tr>
 					</#list>
