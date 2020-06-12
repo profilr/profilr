@@ -4,7 +4,6 @@
 		<title>Profilr</title>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/style.css"/>
 		<link rel="stylesheet" href="${urlMappings.stylesheets}/homestyle.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${urlMappings.favicon}"/>
 		
 		<meta name="google-signin-client_id"content="128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com">
@@ -19,7 +18,7 @@
 					title.addEventListener('animationend', function() { 
 						window.location.replace('${urlMappings.authUrl}' + '?token=' + id_token);
 					})
-				}, 1000);
+				}, 1500);
 			}
 		</script>
 		
@@ -28,12 +27,10 @@
 	<body>
 	
 		<div id="header">
-		
 			<a href="about"> About </a>
-		
 		</div>
 	
-		<div id="title" class="splash animated slideToCenter">
+		<div id="title" class="splash slideToCenter">
 			<h1>Profilr</h1>
 			<p>The online test-profiling service</p>
 			<br/><br/>

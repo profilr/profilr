@@ -4,11 +4,12 @@ body {
 
 @keyframes slideToCenter {
   from {
-    transform: translate3d(-50%, 1000%, 0);
     visibility: visible;
+    transform: translate3d(-50%, 1000%, 0);
   }
 
   to {
+    visibility: visible;
     transform: translate3d(-50%, -50%, 0);
   }
 }
@@ -16,21 +17,31 @@ body {
 .slideToCenter {
   -webkit-animation-name: slideToCenter;
   animation-name: slideToCenter;
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 @keyframes slideFromCenter {
   from {
+    visibility: visible;
     transform: translate3d(-50%, -50%, 0);
   }
   
   to {
-    transform: translate3d(-50%, -1000%, 0);
     visibility: visible;
+    transform: translate3d(-50%, -1000%, 0);
   }
 }
 
 .slideFromCenter {
+  -webkit-animation-name: slideFromCenter;
   animation-name: slideFromCenter;
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 #title {
@@ -66,8 +77,8 @@ body {
 	color: white;
 	text-align: right;
 	
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 #header a {
