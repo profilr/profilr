@@ -39,6 +39,8 @@ import io.github.profilr.web.exceptions.ExceptionUtils;
 @Path("performance")
 public class PagePerformance extends WebResource {
 	
+	private static final SQLDialect DIALECT = SQLDialect.MYSQL_8_0;
+
 	@Inject
 	EntityManager entityManager;
 	
@@ -73,7 +75,7 @@ public class PagePerformance extends WebResource {
 		
 		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
 			
-			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+			DSLContext database = DSL.using(connection, DIALECT);
 
 			SelectJoinStep<Record2<String, BigDecimal>> joins = 
 				database.select(field("Topics.name", String.class).as("Topic"),
@@ -134,7 +136,7 @@ public class PagePerformance extends WebResource {
 		
 		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
 			
-			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+			DSLContext database = DSL.using(connection, DIALECT);
 
 			SelectJoinStep<Record2<String, Integer>> joins = 
 				database.select(field("Reasons.text", String.class).as("Reason"), count().as("Count"))
@@ -194,7 +196,7 @@ public class PagePerformance extends WebResource {
 		
 		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
 			
-			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+			DSLContext database = DSL.using(connection, DIALECT);
 
 			SelectJoinStep<Record2<String, BigDecimal>> joins = 
 				database.select(field("QuestionTypes.name", String.class).as("Type"),
@@ -254,7 +256,7 @@ public class PagePerformance extends WebResource {
 		
 		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
 			
-			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+			DSLContext database = DSL.using(connection, DIALECT);
 
 			SelectJoinStep<Record2<String, BigDecimal>> joins = 
 				database.select(field("Tests.name", String.class).as("Test"),
@@ -308,7 +310,7 @@ public class PagePerformance extends WebResource {
 		
 		return Response.ok(entityManager.unwrap(org.hibernate.Session.class).doReturningWork(connection -> {
 			
-			DSLContext database = DSL.using(connection, SQLDialect.MYSQL_5_7);
+			DSLContext database = DSL.using(connection, DIALECT);
 			
 			return
 				database.select(concat(field("Users.family_name", String.class),
