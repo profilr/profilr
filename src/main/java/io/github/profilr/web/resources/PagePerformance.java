@@ -39,7 +39,7 @@ import io.github.profilr.web.exceptions.ExceptionUtils;
 @Path("performance")
 public class PagePerformance extends WebResource {
 	
-	private static final SQLDialect DIALECT = SQLDialect.MYSQL_8_0;
+	private static final SQLDialect DIALECT = SQLDialect.MYSQL;
 
 	@Inject
 	EntityManager entityManager;
