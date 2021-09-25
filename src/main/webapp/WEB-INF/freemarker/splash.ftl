@@ -38,7 +38,7 @@
 
 			<script src="https://accounts.google.com/gsi/client" async defer></script>
 			<div id="g_id_onload"
-				 data-client_id="128861007694-c9to43lrkm7t7pa7it4lnu6c0p3msjhn.apps.googleusercontent.com"
+				 data-client_id="587058858563-nolgj75b6ntuu8uv6no3v7bs34fp2fb0.apps.googleusercontent.com"
 				 data-callback="onSuccess">
 			</div>
 			<div class="g_id_signin" data-type="standard"></div>
